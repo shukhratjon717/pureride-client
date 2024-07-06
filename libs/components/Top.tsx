@@ -162,19 +162,23 @@ const Top = () => {
 	} else {
 		return (
 			<Stack className={'navbar'}>
+				<Stack className="top-info">
+					<div className="tttitle">PureRide</div>
+					<div className="tttitle">The Land of Joy</div>
+				</Stack>
 				<Stack className={`navbar-main ${colorChange ? 'transparent' : ''} ${bgColor ? 'transparent' : ''}`}>
 					<Stack className={'container'}>
 						<Box component={'div'} className={'logo-box'}>
 							<Link href={'/'}>
-								<img src="/img/logo/logoWhite.svg" alt="" />
+								<img src="/img/logo/PureRide.png" alt="" />
 							</Link>
 						</Box>
 						<Box component={'div'} className={'router-box'}>
 							<Link href={'/'}>
 								<div>{t('Home')}</div>
 							</Link>
-							<Link href={'/property'}>
-								<div>{t('Properties')}</div>
+							<Link href={'/product'}>
+								<div>{t('Products')}</div>
 							</Link>
 							<Link href={'/agent'}>
 								<div> {t('Agents')} </div>
