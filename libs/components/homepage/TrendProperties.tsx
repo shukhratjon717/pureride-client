@@ -29,7 +29,7 @@ const TrendProperties = (props: TrendPropertiesProps) => {
 			<Stack className={'trend-properties'}>
 				<Stack className={'container'}>
 					<Stack className={'info-box'}>
-						<span>Trend Properties</span>
+						<span>--------- Highlights --------- </span>
 					</Stack>
 					<Stack className={'card-box'}>
 						{trendProperties.length === 0 ? (
@@ -63,16 +63,48 @@ const TrendProperties = (props: TrendPropertiesProps) => {
 				<Stack className={'container'}>
 					<Stack className={'info-box'}>
 						<Box component={'div'} className={'left'}>
-							<span>Trend Properties</span>
-							<p>Trend is based on likes</p>
+							<span>--------- Highlights --------- </span>
 						</Box>
 						<Box component={'div'} className={'right'}>
 							<div className={'pagination-box'}>
-								<WestIcon className={'swiper-trend-prev'} />
-								<div className={'swiper-trend-pagination'}></div>
-								<EastIcon className={'swiper-trend-next'} />
+								{/* <WestIcon className={'swiper-trend-prev'} /> */}
+								{/* <div className={'swiper-trend-pagination'}></div> */}
+								{/* <EastIcon className={'swiper-trend-next'} /> */}
 							</div>
 						</Box>
+					</Stack>
+					<Stack className={'hgts-container'}>
+						<Stack className={'highlights-up'}>
+							<Box component={'div'} className={'hgts-up'}>
+								<div className={'hgts-hold'}>
+									<p className={'hgts-ttl'}>MOTOGP</p>
+									<p className={'hgts-text'}>
+										The PureRide R&E Team on Sachsenring Sprint Race Podium With Bagnaia, third
+									</p>
+									<p className={'hgts-place'}>Fourth place at finish line for Bastianini</p>
+									<p className={'hgts-section'}>GO TO MOTOGP SECTION</p>
+								</div>
+								<div>
+									{' '}
+									<img className={'hgts-img'} src="/img/banner/motogp.jpg" alt="" />
+								</div>
+							</Box>
+							<Box component={'div'} className={'hgts-down'}>
+								<div className={'hgts-hold'}>
+									<p className={'hgts-ttl'}>WDW 2024</p>
+									<p className={'hgts-text'}>Notte dei Campioni</p>
+									<p className={'hgts-place'}>
+										July 24, Misano World Simoncelli: An unprecedented competition between world chempions and circuit
+										that becomesa disco for the night. Indeed, for Notte dei Cempioni!
+									</p>
+									<p className={'hgts-section'}>Discover more</p>
+								</div>
+								<div>
+									<img className={'hgts-img'} src="/img/banner/note.jpg" alt="" />
+								</div>
+							</Box>
+						</Stack>
+						<Stack className={'highlights-down'}>Step2</Stack>
 					</Stack>
 					<Stack className={'card-box'}>
 						{trendProperties.length === 0 ? (
