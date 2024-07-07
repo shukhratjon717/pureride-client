@@ -47,17 +47,17 @@ body::-webkit-scrollbar {
 	#top {
 		.navbar {
 			.top-info {
+				position: absolute;
 				width: 100%;
-				height: 50px;
-				// border: 1px solid red;
+				height: 70px;
 				display: flex;
 				flex-direction: row;
 				justify-content: center;
 				align-items: center;
-				background-color: blue;
 			}
 			.tttitle {
-				color: rgb(230, 223, 223);
+				position: relative;
+				color: rgb(248, 248, 248);
 				font-weight: bold;
 				font-family: $font;
 				width: 100%;
@@ -69,19 +69,16 @@ body::-webkit-scrollbar {
 				position: fixed;
 				padding: 22px 0px;
 				width: 100%;
-				// height: 150px;
-				margin-top: 28px;
+				margin-top: 50px;
 				height: 150px;
 				display: flex;
 				box-sizing: border-box;
 				z-index: 99;
 				align-items: center;
-				// border-top: 1px solid rgba(255, 255, 255, 0.07);
 				.container {
 					border-radius: 5px;
 					flex-direction: row;
 					align-items: center;
-					// border: 1px solid red;
 					height: 250px;
 					background-color: rgb(238, 237, 237);
 					color: black;
@@ -90,6 +87,7 @@ body::-webkit-scrollbar {
 						img {
 							width: 150px;
 							cursor: pointer;
+							border-radius: 5px 0px 0px 5px;
 						}
 					}
 					.router-box {
@@ -194,19 +192,76 @@ body::-webkit-scrollbar {
 	}
 
 	.header-main {
-		position: relative;
 		width: 100%;
 		height: 860px;
-		background-image: url('/img/banner/header1.svg');
+		background-image: url('/img/banner/header1.webp');
 		background-size: cover;
+		display: flex;
+		align-items: center;
+		.intro {
+			width: 1300px;
+			height: auto;
+			display: flex;
+			flex-direction: row;
+			justify-content: space-evenly;
+			justify-content: center;
+			margin-left: 5%;
+			margin-top: 20%;
+			.intro-left {
+				width: 100%;
+				height: auto;
+				display: flex;
+				flex-direction: column;
+				gap: 10px;
+				.intro1 {
+					font-size: 20px;
+					font-weight: $font;
+					color: white;
+					font-size: 20px;
+				}
+				.intro2 {
+					width: 400px;
+					height: 50px;
+					font-size: 35px;
+					font-weight: $font;
+					color: white;
+				}
+				.intro3 {
+					width: 50%;
+					height: auto;
+					font-weight: $font;
+					color: white;
+					font-size: 15px;
+					letter-spacing: 2px;
+				}
+			}
+			.intro-right {
+				margin-top: 200px;
+				margin-right: 20px;
+				.intro-btn {
+					width: 150px;
+					height: 50px;
+					background-color: red;
+					color: white;
+					display: flex;
+					font-weight: bold;
+					flex-direction: row;
+					border: 2px solid red;
+					justify-content: center;
+					align-items: center;
+				}
+			}
+		}
+
 		.container {
 			position: relative;
 			margin-top: 20px;
 			flex-direction: column;
 			align-items: center;
+
 			.search-box {
 				position: relative;
-				margin-top: 56px;
+				margin-top: 206px;
 				padding: 16px 29px;
 				width: 1094px;
 				height: 96px;

@@ -170,14 +170,14 @@ const Top = () => {
 					<Stack className={'container'}>
 						<Box component={'div'} className={'logo-box'}>
 							<Link href={'/'}>
-								<img src="/img/logo/PureRide.png" alt="" />
+								<img className="nav-pic" src="/img/logo/PureRide.png" alt="" />
 							</Link>
 						</Box>
 						<Box component={'div'} className={'router-box'}>
 							<Link href={'/'}>
 								<div>{t('Home')}</div>
 							</Link>
-							<Link href={'/product'}>
+							<Link href={'/property'}>
 								<div>{t('Products')}</div>
 							</Link>
 							<Link href={'/agent'}>
@@ -283,8 +283,22 @@ const Top = () => {
 									</MenuItem>
 								</StyledMenu>
 							</div>
+							<Stack></Stack>
 						</Box>
 					</Stack>
+					{/* <Stack className={"intro"}>
+						<Stack className={'intro-left'}>
+							<p className={'intro1'}>Discover</p>
+							<p className={'intro2'}>DesertX Discovery</p>
+							<p className={'intro3'}>
+								Designed and accessorised to offer unprecedented versatility, DesertX Discovery is the ideal choice for
+								those seeking touring agility and off-road character.
+							</p>
+						</Stack>
+						<Stack className={'intro-right'}>
+							<Button className={'intro-btn'}>Discover More</Button>
+						</Stack>
+					</Stack> */}
 				</Stack>
 			</Stack>
 		);
