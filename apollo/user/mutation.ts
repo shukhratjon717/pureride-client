@@ -7,7 +7,6 @@ import { gql } from '@apollo/client';
 export const SIGN_UP = gql`
 	mutation Signup($input: MemberInput!) {
 		signup(input: $input) {
-			_id
 			memberType
 			memberStatus
 			memberAuthType
@@ -17,14 +16,17 @@ export const SIGN_UP = gql`
 			memberImage
 			memberAddress
 			memberDesc
-			memberWarnings
-			memberBlocks
 			memberProperties
-			memberRank
 			memberArticles
+			memberFollowers
+			memberFollowings
 			memberPoints
 			memberLikes
 			memberViews
+			memberComments
+			memberRank
+			memberWarnings
+			memberBlocks
 			deletedAt
 			createdAt
 			updatedAt
@@ -36,7 +38,6 @@ export const SIGN_UP = gql`
 export const LOGIN = gql`
 	mutation Login($input: LoginInput!) {
 		login(input: $input) {
-			_id
 			memberType
 			memberStatus
 			memberAuthType
@@ -46,13 +47,17 @@ export const LOGIN = gql`
 			memberImage
 			memberAddress
 			memberDesc
-			memberWarnings
-			memberBlocks
-			memberProperties
-			memberRank
+			memberProducts
+			memberArticles
+			memberFollowers
+			memberFollowings
 			memberPoints
 			memberLikes
 			memberViews
+			memberComments
+			memberRank
+			memberWarnings
+			memberBlocks
 			deletedAt
 			createdAt
 			updatedAt
@@ -74,12 +79,15 @@ export const UPDATE_MEMBER = gql`
 			memberImage
 			memberAddress
 			memberDesc
-			memberProperties
-			memberRank
+			memberProducts
 			memberArticles
+			memberFollowers
+			memberFollowings
 			memberPoints
 			memberLikes
 			memberViews
+			memberComments
+			memberRank
 			memberWarnings
 			memberBlocks
 			deletedAt
@@ -103,13 +111,17 @@ export const LIKE_TARGET_MEMBER = gql`
 			memberImage
 			memberAddress
 			memberDesc
-			memberWarnings
-			memberBlocks
-			memberProperties
-			memberRank
+			memberProducts
+			memberArticles
+			memberFollowers
+			memberFollowings
 			memberPoints
 			memberLikes
 			memberViews
+			memberComments
+			memberRank
+			memberWarnings
+			memberBlocks
 			deletedAt
 			createdAt
 			updatedAt
@@ -123,24 +135,28 @@ export const LIKE_TARGET_MEMBER = gql`
  *************************/
 
 export const CREATE_PROPERTY = gql`
-	mutation CreateProperty($input: PropertyInput!) {
-		createProperty(input: $input) {
+	mutation CreateProduct($input: ProductInput!) {
+		createProduct(input: $input) {
 			_id
-			propertyType
-			propertyStatus
-			propertyLocation
-			propertyAddress
-			propertyTitle
-			propertyPrice
-			propertySquare
-			propertyBeds
-			propertyRooms
-			propertyViews
-			propertyLikes
-			propertyImages
-			propertyDesc
-			propertyBarter
-			propertyRent
+			productType
+			productStatus
+			productLocation
+			productAddress
+			productTitle
+			productPrice
+			productEngineSize
+			productFuelType
+			productModel
+			productBrand
+			productYear
+			productMilage
+			productViews
+			productLikes
+			productComments
+			productRank
+			productImages
+			productDesc
+			productBarter
 			memberId
 			soldAt
 			deletedAt
@@ -152,24 +168,28 @@ export const CREATE_PROPERTY = gql`
 `;
 
 export const UPDATE_PROPERTY = gql`
-	mutation UpdateProperty($input: PropertyUpdate!) {
-		updateProperty(input: $input) {
+	mutation UpdateProduct($input: ProductUpdate!) {
+		updateProduct(input: $input) {
 			_id
-			propertyType
-			propertyStatus
-			propertyLocation
-			propertyAddress
-			propertyTitle
-			propertyPrice
-			propertySquare
-			propertyBeds
-			propertyRooms
-			propertyViews
-			propertyLikes
-			propertyImages
-			propertyDesc
-			propertyBarter
-			propertyRent
+			productType
+			productStatus
+			productLocation
+			productAddress
+			productTitle
+			productPrice
+			productEngineSize
+			productFuelType
+			productModel
+			productBrand
+			productYear
+			productMilage
+			productViews
+			productLikes
+			productComments
+			productRank
+			productImages
+			productDesc
+			productBarter
 			memberId
 			soldAt
 			deletedAt
@@ -181,24 +201,28 @@ export const UPDATE_PROPERTY = gql`
 `;
 
 export const LIKE_TARGET_PROPERTY = gql`
-	mutation LikeTargetProperty($input: String!) {
-		likeTargetProperty(propertyId: $input) {
+	mutation LikeTargetProduct($input: String!) {
+		likeTargetProduct(productId: $input) {
 			_id
-			propertyType
-			propertyStatus
-			propertyLocation
-			propertyAddress
-			propertyTitle
-			propertyPrice
-			propertySquare
-			propertyBeds
-			propertyRooms
-			propertyViews
-			propertyLikes
-			propertyImages
-			propertyDesc
-			propertyBarter
-			propertyRent
+			productType
+			productStatus
+			productLocation
+			productAddress
+			productTitle
+			productPrice
+			productEngineSize
+			productFuelType
+			productModel
+			productBrand
+			productYear
+			productMilage
+			productViews
+			productLikes
+			productComments
+			productRank
+			productImages
+			productDesc
+			productBarter
 			memberId
 			soldAt
 			deletedAt

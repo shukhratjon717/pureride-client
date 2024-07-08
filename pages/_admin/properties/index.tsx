@@ -172,7 +172,7 @@ const AdminProperties: NextPage = ({ initialInquiry, ...props }: any) => {
 							<Divider />
 						</Box>
 						<PropertyPanelList
-							properties={properties}
+							products={properties}
 							anchorEl={anchorEl}
 							menuIconClickHandler={menuIconClickHandler}
 							menuIconCloseHandler={menuIconCloseHandler}

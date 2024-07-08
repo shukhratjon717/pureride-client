@@ -104,7 +104,6 @@ const TrendProperties = (props: TrendPropertiesProps) => {
 								</div>
 							</Box>
 						</Stack>
-						<Stack className={'highlights-down'}>Step2</Stack>
 					</Stack>
 					<Stack className={'card-box'}>
 						{trendProperties.length === 0 ? (
@@ -125,10 +124,10 @@ const TrendProperties = (props: TrendPropertiesProps) => {
 									el: '.swiper-trend-pagination',
 								}}
 							>
-								{trendProperties.map((property: Property) => {
+								{trendProperties.map((product: Property) => {
 									return (
-										<SwiperSlide key={property._id} className={'trend-property-slide'}>
-											<TrendPropertyCard property={property} />
+										<SwiperSlide key={product._id} className={'trend-property-slide'}>
+											<TrendPropertyCard property={product} />
 										</SwiperSlide>
 									);
 								})}
@@ -145,7 +144,7 @@ TrendProperties.defaultProps = {
 	initialInput: {
 		page: 1,
 		limit: 8,
-		sort: 'propertyLikes',
+		sort: 'productLikes',
 		direction: 'DESC',
 		search: {},
 	},

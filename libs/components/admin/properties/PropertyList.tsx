@@ -1,229 +1,194 @@
-import React from 'react';
-import Link from 'next/link';
-import {
-	TableCell,
-	TableHead,
-	TableBody,
-	TableRow,
-	Table,
-	TableContainer,
-	Button,
-	Menu,
-	Fade,
-	MenuItem,
-} from '@mui/material';
-import Avatar from '@mui/material/Avatar';
-import { Stack } from '@mui/material';
-import { Property } from '../../../types/property/property';
-import { REACT_APP_API_URL } from '../../../config';
-import DeleteIcon from '@mui/icons-material/Delete';
-import Typography from '@mui/material/Typography';
-import { PropertyStatus } from '../../../enums/property.enum';
+import React, { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
+import { NextPage } from 'next';
+import { Box, Button, Menu, MenuItem, Pagination, Stack, Typography } from '@mui/material';
+import { useRouter } from 'next/router';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
+import { PropertiesInquiry } from '../../../types/product/property.input';
+import useDeviceDetect from '../../../hooks/useDeviceDetect';
+import { Property } from '../../../types/product/property';
+import { Direction } from '../../../enums/common.enum';
+import { PropertyCard } from '../../mypage/PropertyCard';
+import withLayoutBasic from '../../layout/LayoutBasic';
 
-interface Data {
-	id: string;
-	title: string;
-	price: string;
-	agent: string;
-	location: string;
-	type: string;
-	status: string;
-}
+export const getStaticProps = async ({ locale }: any) => ({
+	props: {
+		...(await serverSideTranslations(locale, ['common'])),
+	},
+});
 
-type Order = 'asc' | 'desc';
-
-interface HeadCell {
-	disablePadding: boolean;
-	id: keyof Data;
-	label: string;
-	numeric: boolean;
-}
-
-const headCells: readonly HeadCell[] = [
-	{
-		id: 'id',
-		numeric: true,
-		disablePadding: false,
-		label: 'MB ID',
-	},
-	{
-		id: 'title',
-		numeric: true,
-		disablePadding: false,
-		label: 'TITLE',
-	},
-	{
-		id: 'price',
-		numeric: false,
-		disablePadding: false,
-		label: 'PRICE',
-	},
-	{
-		id: 'agent',
-		numeric: false,
-		disablePadding: false,
-		label: 'AGENT',
-	},
-	{
-		id: 'location',
-		numeric: false,
-		disablePadding: false,
-		label: 'LOCATION',
-	},
-	{
-		id: 'type',
-		numeric: false,
-		disablePadding: false,
-		label: 'TYPE',
-	},
-	{
-		id: 'status',
-		numeric: false,
-		disablePadding: false,
-		label: 'STATUS',
-	},
-];
-
-interface EnhancedTableProps {
-	numSelected: number;
-	onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void;
-	onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
-	order: Order;
-	orderBy: string;
-	rowCount: number;
-}
-
-function EnhancedTableHead(props: EnhancedTableProps) {
-	const { onSelectAllClick } = props;
-
-	return (
-		<TableHead>
-			<TableRow>
-				{headCells.map((headCell) => (
-					<TableCell
-						key={headCell.id}
-						align={headCell.numeric ? 'left' : 'center'}
-						padding={headCell.disablePadding ? 'none' : 'normal'}
-					>
-						{headCell.label}
-					</TableCell>
-				))}
-			</TableRow>
-		</TableHead>
+const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
+	const device = useDeviceDetect();
+	const router = useRouter();
+	const [searchFilter, setSearchFilter] = useState<PropertiesInquiry>(
+		router?.query?.input ? JSON.parse(router?.query?.input as string) : initialInput,
 	);
-}
+	const [properties, setProperties] = useState<Property[]>([]);
+	const [total, setTotal] = useState<number>(0);
+	const [currentPage, setCurrentPage] = useState<number>(1);
+	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+	const [sortingOpen, setSortingOpen] = useState(false);
+	const [filterSortName, setFilterSortName] = useState('New');
 
-interface PropertyPanelListType {
-	properties: Property[];
-	anchorEl: any;
-	menuIconClickHandler: any;
-	menuIconCloseHandler: any;
-	updatePropertyHandler: any;
-	removePropertyHandler: any;
-}
+	/** APOLLO REQUESTS **/
 
-export const PropertyPanelList = (props: PropertyPanelListType) => {
-	const {
-		properties,
-		anchorEl,
-		menuIconClickHandler,
-		menuIconCloseHandler,
-		updatePropertyHandler,
-		removePropertyHandler,
-	} = props;
+	/** LIFECYCLES **/
+	useEffect(() => {
+		if (router.query.input) {
+			const inputObj = JSON.parse(router?.query?.input as string);
+			setSearchFilter(inputObj);
+		}
 
-	return (
-		<Stack>
-			<TableContainer>
-				<Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size={'medium'}>
-					{/*@ts-ignore*/}
-					<EnhancedTableHead />
-					<TableBody>
-						{properties.length === 0 && (
-							<TableRow>
-								<TableCell align="center" colSpan={8}>
-									<span className={'no-data'}>data not found!</span>
-								</TableCell>
-							</TableRow>
-						)}
+		setCurrentPage(searchFilter.page === undefined ? 1 : searchFilter.page);
+	}, [router]);
 
-						{properties.length !== 0 &&
-							properties.map((property: Property, index: number) => {
-								const propertyImage = `${REACT_APP_API_URL}/${property?.propertyImages[0]}`;
+	useEffect(() => {}, [searchFilter]);
 
-								return (
-									<TableRow hover key={property?._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-										<TableCell align="left">{property._id}</TableCell>
-										<TableCell align="left" className={'name'}>
-											<Stack direction={'row'}>
-												<Link href={`/property/detail?id=${property?._id}`}>
-													<div>
-														<Avatar alt="Remy Sharp" src={propertyImage} sx={{ ml: '2px', mr: '10px' }} />
-													</div>
-												</Link>
-												<Link href={`/property/detail?id=${property?._id}`}>
-													<div>{property.propertyTitle}</div>
-												</Link>
-											</Stack>
-										</TableCell>
-										<TableCell align="center">{property.propertyPrice}</TableCell>
-										<TableCell align="center">{property.memberData?.memberNick}</TableCell>
-										<TableCell align="center">{property.propertyLocation}</TableCell>
-										<TableCell align="center">{property.propertyType}</TableCell>
-										<TableCell align="center">
-											{property.propertyStatus === PropertyStatus.DELETE && (
-												<Button
-													variant="outlined"
-													sx={{ p: '3px', border: 'none', ':hover': { border: '1px solid #000000' } }}
-													onClick={() => removePropertyHandler(property._id)}
-												>
-													<DeleteIcon fontSize="small" />
-												</Button>
-											)}
+	/** HANDLERS **/
+	const handlePaginationChange = async (event: ChangeEvent<unknown>, value: number) => {
+		searchFilter.page = value;
+		await router.push(
+			`/property?input=${JSON.stringify(searchFilter)}`,
+			`/property?input=${JSON.stringify(searchFilter)}`,
+			{
+				scroll: false,
+			},
+		);
+		setCurrentPage(value);
+	};
 
-											{property.propertyStatus === PropertyStatus.SOLD && (
-												<Button className={'badge warning'}>{property.propertyStatus}</Button>
-											)}
+	const sortingClickHandler = (e: MouseEvent<HTMLElement>) => {
+		setAnchorEl(e.currentTarget);
+		setSortingOpen(true);
+	};
 
-											{property.propertyStatus === PropertyStatus.ACTIVE && (
-												<>
-													<Button onClick={(e: any) => menuIconClickHandler(e, index)} className={'badge success'}>
-														{property.propertyStatus}
-													</Button>
+	const sortingCloseHandler = () => {
+		setSortingOpen(false);
+		setAnchorEl(null);
+	};
 
-													<Menu
-														className={'menu-modal'}
-														MenuListProps={{
-															'aria-labelledby': 'fade-button',
-														}}
-														anchorEl={anchorEl[index]}
-														open={Boolean(anchorEl[index])}
-														onClose={menuIconCloseHandler}
-														TransitionComponent={Fade}
-														sx={{ p: 1 }}
-													>
-														{Object.values(PropertyStatus)
-															.filter((ele) => ele !== property.propertyStatus)
-															.map((status: string) => (
-																<MenuItem
-																	onClick={() => updatePropertyHandler({ _id: property._id, propertyStatus: status })}
-																	key={status}
-																>
-																	<Typography variant={'subtitle1'} component={'span'}>
-																		{status}
-																	</Typography>
-																</MenuItem>
-															))}
-													</Menu>
-												</>
-											)}
-										</TableCell>
-									</TableRow>
-								);
-							})}
-					</TableBody>
-				</Table>
-			</TableContainer>
-		</Stack>
-	);
+	const sortingHandler = (e: React.MouseEvent<HTMLLIElement>) => {
+		switch (e.currentTarget.id) {
+			case 'new':
+				setSearchFilter({ ...searchFilter, sort: 'createdAt', direction: Direction.ASC });
+				setFilterSortName('New');
+				break;
+			case 'lowest':
+				setSearchFilter({ ...searchFilter, sort: 'productPrice', direction: Direction.ASC });
+				setFilterSortName('Lowest Price');
+				break;
+			case 'highest':
+				setSearchFilter({ ...searchFilter, sort: 'productPrice', direction: Direction.DESC });
+				setFilterSortName('Highest Price');
+		}
+		setSortingOpen(false);
+		setAnchorEl(null);
+	};
+
+	if (device === 'mobile') {
+		return <h1>PROPERTIES MOBILE</h1>;
+	} else {
+		return (
+			<div id="property-list-page" style={{ position: 'relative' }}>
+				<div className="container">
+					<Box component={'div'} className={'right'}>
+						<span>Sort by</span>
+						<div>
+							<Button onClick={sortingClickHandler} endIcon={<KeyboardArrowDownRoundedIcon />}>
+								{filterSortName}
+							</Button>
+							<Menu anchorEl={anchorEl} open={sortingOpen} onClose={sortingCloseHandler} sx={{ paddingTop: '5px' }}>
+								<MenuItem
+									onClick={sortingHandler}
+									id={'new'}
+									disableRipple
+									sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
+								>
+									New
+								</MenuItem>
+								<MenuItem
+									onClick={sortingHandler}
+									id={'lowest'}
+									disableRipple
+									sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
+								>
+									Lowest Price
+								</MenuItem>
+								<MenuItem
+									onClick={sortingHandler}
+									id={'highest'}
+									disableRipple
+									sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
+								>
+									Highest Price
+								</MenuItem>
+							</Menu>
+						</div>
+					</Box>
+					<Stack className={'property-page'}>
+						<Stack className={'filter-config'}>
+							{/* @ts-ignore */}
+							<Filter searchFilter={searchFilter} setSearchFilter={setSearchFilter} initialInput={initialInput} />
+						</Stack>
+						<Stack className="main-config" mb={'76px'}>
+							<Stack className={'list-config'}>
+								{properties?.length === 0 ? (
+									<div className={'no-data'}>
+										<img src="/img/icons/icoAlert.svg" alt="" />
+										<p>No Properties found!</p>
+									</div>
+								) : (
+									properties.map((property: Property) => {
+										return <PropertyCard property={property} key={property?._id} />;
+									})
+								)}
+							</Stack>
+							<Stack className="pagination-config">
+								{properties.length !== 0 && (
+									<Stack className="pagination-box">
+										<Pagination
+											page={currentPage}
+											count={Math.ceil(total / searchFilter.limit)}
+											onChange={handlePaginationChange}
+											shape="circular"
+											color="primary"
+										/>
+									</Stack>
+								)}
+
+								{properties.length !== 0 && (
+									<Stack className="total-result">
+										<Typography>
+											Total {total} propert{total > 1 ? 'ies' : 'y'} available
+										</Typography>
+									</Stack>
+								)}
+							</Stack>
+						</Stack>
+					</Stack>
+				</div>
+			</div>
+		);
+	}
 };
+
+PropertyList.defaultProps = {
+	initialInput: {
+		page: 1,
+		limit: 9,
+		sort: 'createdAt',
+		direction: 'DESC',
+		search: {
+			squaresRange: {
+				start: 0,
+				end: 500,
+			},
+			pricesRange: {
+				start: 0,
+				end: 2000000,
+			},
+		},
+	},
+};
+
+export default withLayoutBasic(PropertyList);
