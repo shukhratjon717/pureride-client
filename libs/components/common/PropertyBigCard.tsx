@@ -3,16 +3,16 @@ import { Stack, Box, Divider, Typography } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { Property } from '../../types/property/property';
 import { REACT_APP_API_URL, topPropertyRank } from '../../config';
 import { formatterStr } from '../../utils';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 import { useRouter } from 'next/router';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import { Product } from '../../types/product/property';
 
 interface PropertyBigCardProps {
-	property: Property;
+	property: Product;
 }
 
 const PropertyBigCard = (props: PropertyBigCardProps) => {
@@ -23,7 +23,7 @@ const PropertyBigCard = (props: PropertyBigCardProps) => {
 
 	/** HANDLERS **/
 	const goPropertyDetatilPage = (propertyId: string) => {
-		router.push(`/property/detail?id=${propertyId}`);
+		router.push(`/product/detail?id=${propertyId}`);
 	};
 
 	if (device === 'mobile') {

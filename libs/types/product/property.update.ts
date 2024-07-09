@@ -1,6 +1,6 @@
 import { ProductEngineSize, ProductFuelType, ProductLocation, ProductStatus, ProductType } from "../../enums/property.enum";
 
-export interface PropertyUpdate {
+export interface ProductUpdate {
 	_id: string;
 	productType: ProductType;
 	productStatus: ProductStatus;

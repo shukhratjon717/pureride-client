@@ -1,25 +1,54 @@
 import React, { useState } from 'react';
-import { Stack, Box } from '@mui/material';
+import { Stack, Box, CircularProgress } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import WestIcon from '@mui/icons-material/West';
 import EastIcon from '@mui/icons-material/East';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination } from 'swiper';
 import TopPropertyCard from './TopPropertyCard';
-import { PropertiesInquiry } from '../../types/property/property.input';
-import { Property } from '../../types/property/property';
+import { GET_PROPERTIES } from '../../../apollo/user/query';
+import { Product } from '../../types/product/property';
+import { ProductsInquiry } from '../../types/product/property.input';
+import { useQuery } from '@apollo/client';
+import { T } from '../../types/common';
 
 interface TopPropertiesProps {
-	initialInput: PropertiesInquiry;
+	initialInput: ProductsInquiry;
 }
 
 const TopProperties = (props: TopPropertiesProps) => {
 	const { initialInput } = props;
 	const device = useDeviceDetect();
-	const [topProperties, setTopProperties] = useState<Property[]>([]);
+	const [topProperties, setTopProperties] = useState<Product[]>([]);
 
 	/** APOLLO REQUESTS **/
+	const {
+		loading: getPropertiesLoading,
+		data: getPropertiesData,
+		error: getPropertiesError,
+		refetch: getPropertiesRefetch,
+	} = useQuery(GET_PROPERTIES, {
+		fetchPolicy: 'cache-and-network',
+		variables: { input: initialInput },
+		notifyOnNetworkStatusChange: true,
+		onCompleted: (data: T) => {
+			setTopProperties(data?.getProducts?.list);
+		},
+	});
+
 	/** HANDLERS **/
+
+	if (getPropertiesLoading) {
+		return <CircularProgress />;
+	}
+
+	if (getPropertiesError) {
+		return <p>Error fetching properties: {getPropertiesError.message}</p>;
+	}
+
+	if (!topProperties || topProperties.length === 0) {
+		return <p>No properties found</p>;
+	}
 
 	if (device === 'mobile') {
 		return (
@@ -36,7 +65,7 @@ const TopProperties = (props: TopPropertiesProps) => {
 							spaceBetween={15}
 							modules={[Autoplay]}
 						>
-							{topProperties.map((property: Property) => {
+							{topProperties.map((property: Product) => {
 								return (
 									<SwiperSlide className={'top-property-slide'} key={property?._id}>
 										<TopPropertyCard property={property} />
@@ -79,7 +108,7 @@ const TopProperties = (props: TopPropertiesProps) => {
 								el: '.swiper-top-pagination',
 							}}
 						>
-							{topProperties.map((property: Property) => {
+							{topProperties.map((property: Product) => {
 								return (
 									<SwiperSlide className={'top-property-slide'} key={property?._id}>
 										<TopPropertyCard property={property} />
@@ -98,7 +127,7 @@ TopProperties.defaultProps = {
 	initialInput: {
 		page: 1,
 		limit: 8,
-		sort: 'propertyRank',
+		sort: 'productRank',
 		direction: 'DESC',
 		search: {},
 	},

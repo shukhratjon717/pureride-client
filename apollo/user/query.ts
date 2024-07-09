@@ -112,7 +112,7 @@ export const GET_PROPERTY = gql`
 `;
 
 export const GET_PROPERTIES = gql`
-	query GetProperties($input: PropertiesInquiry!) {
+	query GetProducts($input: ProductsInquiry!) {
 		getProducts(input: $input) {
 			list {
 				_id
@@ -122,49 +122,25 @@ export const GET_PROPERTIES = gql`
 				productAddress
 				productTitle
 				productPrice
-				productSquare
-				productBeds
-				productRooms
+				productEngineSize
+				productFuelType
+				productModel
+				productBrand
+				productYear
+				productMilage
 				productViews
 				productLikes
+				productComments
 				productRank
 				productImages
 				productDesc
 				productBarter
-				productRent
 				memberId
 				soldAt
 				deletedAt
 				constructedAt
 				createdAt
 				updatedAt
-				memberData {
-					_id
-					memberType
-					memberStatus
-					memberAuthType
-					memberPhone
-					memberNick
-					memberFullName
-					memberImage
-					memberAddress
-					memberDesc
-					memberWarnings
-					memberBlocks
-					memberProducts
-					memberRank
-					memberPoints
-					memberLikes
-					memberViews
-					deletedAt
-					createdAt
-					updatedAt
-				}
-				meLiked {
-					memberId
-					likeRefId
-					myFavorite
-				}
 			}
 			metaCounter {
 				total

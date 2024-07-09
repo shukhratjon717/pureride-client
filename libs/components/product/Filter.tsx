@@ -13,10 +13,10 @@ import {
 	IconButton,
 } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
-import { PropertiesInquiry } from '../../types/product/property.input';
+import { ProductsInquiry } from '../../types/product/property.input';
 import { useRouter } from 'next/router';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
-import { propertySquare } from '../../config';
+import { productEngineSize } from '../../config';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { ProductLocation, ProductType } from '../../enums/property.enum';
 
@@ -29,9 +29,9 @@ const MenuProps = {
 };
 
 interface FilterType {
-	searchFilter: PropertiesInquiry;
+	searchFilter: ProductsInquiry;
 	setSearchFilter: any;
-	initialInput: PropertiesInquiry;
+	initialInput: ProductsInquiry;
 }
 
 const Filter = (props: FilterType) => {
@@ -793,7 +793,7 @@ const Filter = (props: FilterType) => {
 								onChange={(e: any) => propertySquareHandler(e, 'start')}
 								MenuProps={MenuProps}
 							>
-								{propertySquare.map((square: number) => (
+								{productEngineSize.map((square: number) => (
 									<MenuItem
 										value={square}
 										disabled={(searchFilter?.search?.squaresRange?.end || 0) < square}
@@ -815,7 +815,7 @@ const Filter = (props: FilterType) => {
 								onChange={(e: any) => propertySquareHandler(e, 'end')}
 								MenuProps={MenuProps}
 							>
-								{propertySquare.map((square: number) => (
+								{productEngineSize.map((square: number) => (
 									<MenuItem
 										value={square}
 										disabled={(searchFilter?.search?.squaresRange?.start || 0) > square}

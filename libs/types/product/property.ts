@@ -17,7 +17,7 @@ export interface TotalCounter {
 	total: number;
 }
 
-export interface Property {
+export interface Product {
 	_id: string;
 	productType: ProductType;
 	productStatus: ProductStatus;
@@ -49,7 +49,7 @@ export interface Property {
 	memberData?: Member;
 }
 
-export interface Properties {
-	list: Property[];
+export interface Products {
+	list: Product[];
 	metaCounter: TotalCounter[];
 }

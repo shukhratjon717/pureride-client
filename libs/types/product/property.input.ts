@@ -7,7 +7,7 @@ import {
 } from '../../enums/property.enum';
 import { Direction } from '../../enums/common.enum';
 
-export interface PropertyInput {
+export interface ProductInput {
 	productType: ProductType;
 	productStatus: ProductStatus;
 	productLocation: ProductLocation;
@@ -41,7 +41,7 @@ interface PISearch {
 	text?: string;
 }
 
-export interface PropertiesInquiry {
+export interface ProductsInquiry {
 	page: number;
 	limit: number;
 	sort?: string;
@@ -66,7 +66,7 @@ interface ALPISearch {
 	productLocationList?: ProductLocation[];
 }
 
-export interface AllPropertiesInquiry {
+export interface AllProductsInquiry {
 	page: number;
 	limit: number;
 	sort?: string;

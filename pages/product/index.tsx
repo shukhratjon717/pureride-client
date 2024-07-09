@@ -1,16 +1,21 @@
 import React, { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import { Box, Button, Menu, MenuItem, Pagination, Stack, Typography } from '@mui/material';
+import PropertyCard from '../../libs/components/property/PropertyCard';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
+import Filter from '../../libs/components/property/Filter';
 import { useRouter } from 'next/router';
+import { PropertiesInquiry } from '../../libs/types/property/property.input';
+import { Property } from '../../libs/types/property/property';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
-import { Direction } from '../../libs/enums/common.enum';
-import { PropertyCard } from '../../libs/components/mypage/PropertyCard';
-import { PropertiesInquiry } from '../../libs/types/product/property.input';
-import { Property } from '../../libs/types/product/property';
-import Filter from '../../libs/components/product/Filter';
+import { Direction, Message } from '../../libs/enums/common.enum';
+import { useMutation, useQuery } from '@apollo/client';
+import { GET_PROPERTIES } from '../../apollo/user/query';
+import { T } from '../../libs/types/common';
+import { LIKE_TARGET_PROPERTY } from '../../apollo/user/mutation';
+import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -32,6 +37,22 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 	const [filterSortName, setFilterSortName] = useState('New');
 
 	/** APOLLO REQUESTS **/
+	const [likeTargertProperty] = useMutation(LIKE_TARGET_PROPERTY);
+
+	const {
+		loading: getPropertiesLoading,
+		data: getPropertiesData,
+		error: getPropertiesError,
+		refetch: getPropertiesRefetch,
+	} = useQuery(GET_PROPERTIES, {
+		fetchPolicy: 'network-only',
+		variables: { input: searchFilter },
+		notifyOnNetworkStatusChange: true,
+		onCompleted: (data: T) => {
+			setProperties(data?.getProperties?.list);
+			setTotal(data?.getProperties?.metaCounter[0]?.total);
+		},
+	});
 
 	/** LIFECYCLES **/
 	useEffect(() => {
@@ -43,7 +64,10 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 		setCurrentPage(searchFilter.page === undefined ? 1 : searchFilter.page);
 	}, [router]);
 
-	useEffect(() => {}, [searchFilter]);
+	useEffect(() => {
+		console.log('SearchFilter', searchFilter);
+		// getPropertiesRefetch({input: searchFilter}).then();
+	}, [searchFilter]);
 
 	/** HANDLERS **/
 	const handlePaginationChange = async (event: ChangeEvent<unknown>, value: number) => {
@@ -68,6 +92,22 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 		setAnchorEl(null);
 	};
 
+	const likePropertyHandler = async (user: T, id: string) => {
+		try {
+			if (!id) return;
+			if (!user._id) throw new Error(Message.NOT_AUTHENTICATED);
+			// execute likeTargetProperty Mutation
+			await likeTargertProperty({ variables: { input: id } });
+			// execute getPropertiesRefetch
+			await getPropertiesRefetch({ input: initialInput });
+
+			await sweetTopSmallSuccessAlert('success', 800);
+		} catch (err: any) {
+			console.log('ERROR, likeTargetProperty', err.message);
+			sweetMixinErrorAlert(err.message).then();
+		}
+	};
+
 	const sortingHandler = (e: React.MouseEvent<HTMLLIElement>) => {
 		switch (e.currentTarget.id) {
 			case 'new':
@@ -75,11 +115,11 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 				setFilterSortName('New');
 				break;
 			case 'lowest':
-				setSearchFilter({ ...searchFilter, sort: 'productPrice', direction: Direction.ASC });
+				setSearchFilter({ ...searchFilter, sort: 'propertyPrice', direction: Direction.ASC });
 				setFilterSortName('Lowest Price');
 				break;
 			case 'highest':
-				setSearchFilter({ ...searchFilter, sort: 'productPrice', direction: Direction.DESC });
+				setSearchFilter({ ...searchFilter, sort: 'propertyPrice', direction: Direction.DESC });
 				setFilterSortName('Highest Price');
 		}
 		setSortingOpen(false);
@@ -128,6 +168,7 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 					</Box>
 					<Stack className={'property-page'}>
 						<Stack className={'filter-config'}>
+							{/* @ts-ignore */}
 							<Filter searchFilter={searchFilter} setSearchFilter={setSearchFilter} initialInput={initialInput} />
 						</Stack>
 						<Stack className="main-config" mb={'76px'}>
@@ -139,7 +180,7 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 									</div>
 								) : (
 									properties.map((property: Property) => {
-										return <PropertyCard property={property} key={property?._id} />;
+										return <PropertyCard property={property} likePropertyHandler={likePropertyHandler} key={property?._id} />;
 									})
 								)}
 							</Stack>

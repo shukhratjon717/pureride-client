@@ -5,24 +5,40 @@ import WestIcon from '@mui/icons-material/West';
 import EastIcon from '@mui/icons-material/East';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination } from 'swiper';
-import { Property } from '../../types/property/property';
-import { PropertiesInquiry } from '../../types/property/property.input';
 import TrendPropertyCard from './TrendPropertyCard';
+import { ProductsInquiry } from '../../types/product/property.input';
+import { Product } from '../../types/product/property';
+import { GET_PROPERTIES } from '../../../apollo/user/query';
+import { T } from '../../types/common';
+import { useQuery } from '@apollo/client';
 
 interface TrendPropertiesProps {
-	initialInput: PropertiesInquiry;
+	initialInput: ProductsInquiry;
 }
 
 const TrendProperties = (props: TrendPropertiesProps) => {
 	const { initialInput } = props;
 	const device = useDeviceDetect();
-	const [trendProperties, setTrendProperties] = useState<Property[]>([]);
+	const [trendProducts, setTrendProducts] = useState<Product[]>([]);
 
 	/** APOLLO REQUESTS **/
+	// const {
+	// 	loading: getProductsLoading,
+	// 	data: getProductsData,
+	// 	error: getProductsError,
+	// 	refetch: getProductsRefetch,
+	// } = useQuery(GET_PROPERTIES, {
+	// 	fetchPolicy: 'cache-and-network',
+	// 	variables: { input: initialInput },
+	// 	notifyOnNetworkStatusChange: true,
+	// 	onCompleted: (data: T) => {
+	// 		setTrendProducts(data?.getProducts?.list);
+	// 	},
+	// });
 	/** HANDLERS **/
 
-	if (trendProperties) console.log('trendProperties:', trendProperties);
-	if (!trendProperties) return null;
+	if (trendProducts) console.log('trendProperties==>:', trendProducts);
+	if (!trendProducts) return null;
 
 	if (device === 'mobile') {
 		return (
@@ -32,9 +48,9 @@ const TrendProperties = (props: TrendPropertiesProps) => {
 						<span>--------- Highlights --------- </span>
 					</Stack>
 					<Stack className={'card-box'}>
-						{trendProperties.length === 0 ? (
+						{trendProducts.length === 0 ? (
 							<Box component={'div'} className={'empty-list'}>
-								Trends Empty
+								{/* Trends Empty */}
 							</Box>
 						) : (
 							<Swiper
@@ -44,7 +60,7 @@ const TrendProperties = (props: TrendPropertiesProps) => {
 								spaceBetween={15}
 								modules={[Autoplay]}
 							>
-								{trendProperties.map((property: Property) => {
+								{trendProducts.map((property: Product) => {
 									return (
 										<SwiperSlide key={property._id} className={'trend-property-slide'}>
 											<TrendPropertyCard property={property} />
@@ -106,9 +122,9 @@ const TrendProperties = (props: TrendPropertiesProps) => {
 						</Stack>
 					</Stack>
 					<Stack className={'card-box'}>
-						{trendProperties.length === 0 ? (
+						{trendProducts.length === 0 ? (
 							<Box component={'div'} className={'empty-list'}>
-								Trends Empty
+								{/* Trends Empty */}
 							</Box>
 						) : (
 							<Swiper
@@ -124,7 +140,7 @@ const TrendProperties = (props: TrendPropertiesProps) => {
 									el: '.swiper-trend-pagination',
 								}}
 							>
-								{trendProperties.map((product: Property) => {
+								{trendProducts.map((product: Product) => {
 									return (
 										<SwiperSlide key={product._id} className={'trend-property-slide'}>
 											<TrendPropertyCard property={product} />

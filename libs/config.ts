@@ -1,6 +1,6 @@
 export const REACT_APP_API_URL = `${process.env.REACT_APP_API_URL}`;
 
-export const availableOptions = ['propertyBarter', 'propertyRent'];
+export const availableOptions = ['prductBarter', 'productRent'];
 
 const thisYear = new Date().getFullYear();
 
@@ -10,7 +10,7 @@ for (let i = 1970; i <= thisYear; i++) {
 	propertyYears.push(String(i));
 }
 
-export const propertySquare = [0, 25, 50, 75, 100, 125, 150, 200, 300, 500];
+export const productEngineSize = [50, 250, 400, 450, 800, 1000];
 
 export const Messages = {
 	error1: 'Something went wrong!',
