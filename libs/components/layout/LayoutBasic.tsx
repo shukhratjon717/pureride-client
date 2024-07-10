@@ -13,6 +13,8 @@ import { useTranslation } from 'next-i18next';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import TrendProperties from '../homepage/TrendProperties';
+import PopularProperties from '../homepage/PopularProperties';
 
 const withLayoutBasic = (Component: any) => {
 	return (props: any) => {
@@ -28,8 +30,8 @@ const withLayoutBasic = (Component: any) => {
 				bgImage = '';
 
 			switch (router.pathname) {
-				case '/property':
-					title = 'Property Search';
+				case '/product':
+					title = 'Product Search';
 					desc = 'We are glad to see you again!';
 					bgImage = '/img/banner/properties.png';
 					break;
@@ -138,6 +140,7 @@ const withLayoutBasic = (Component: any) => {
 						</Stack>
 
 						<Stack id={'main'}>
+							<PopularProperties />
 							<Component {...props} />
 						</Stack>
 

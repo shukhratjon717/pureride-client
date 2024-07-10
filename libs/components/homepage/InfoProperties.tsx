@@ -24,21 +24,9 @@ const TrendProperties = (props: TrendPropertiesProps) => {
 	const device = useDeviceDetect();
 	const [trendProducts, setTrendProducts] = useState<Product[]>([]);
 
-	/** APOLLO REQUESTS **/ 
+	/** APOLLO REQUESTS **/
 	const [likeTargerProperty] = useMutation(LIKE_TARGET_PROPERTY);
-	const {
-		loading: getProductsLoading,
-		data: getProductsData,
-		error: getProductsError,
-		refetch: getProductsRefetch,
-	} = useQuery(GET_PROPERTIES, {
-		fetchPolicy: 'cache-and-network',
-		variables: { input: initialInput },
-		notifyOnNetworkStatusChange: true,
-		onCompleted: (data: T) => {
-			setTrendProducts(data?.getProducts?.list);
-		},
-	});
+
 	/** HANDLERS **/
 
 	const likePropertyHandler = async (user: T, id: string) => {
@@ -48,7 +36,7 @@ const TrendProperties = (props: TrendPropertiesProps) => {
 			// execute likeTargetProperty Mutation
 			await likeTargerProperty({ variables: { input: id } });
 			// execute getPropertiesRefetch
-			await getProductsRefetch({input: initialInput})
+			// await getProductsRefetch({ input: initialInput });
 
 			await sweetTopSmallSuccessAlert('success', 800);
 		} catch (err: any) {
@@ -56,7 +44,6 @@ const TrendProperties = (props: TrendPropertiesProps) => {
 			sweetMixinErrorAlert(err.message).then();
 		}
 	};
-
 
 	if (trendProducts) console.log('trendProperties==>:', trendProducts);
 	if (!trendProducts) return null;
@@ -84,7 +71,7 @@ const TrendProperties = (props: TrendPropertiesProps) => {
 								{trendProducts.map((property: Product) => {
 									return (
 										<SwiperSlide key={property._id} className={'trend-property-slide'}>
-											<TrendPropertyCard property={property}  likePropertyHandler={likePropertyHandler}  />
+											<TrendPropertyCard property={property} likePropertyHandler={likePropertyHandler} />
 										</SwiperSlide>
 									);
 								})}
@@ -164,7 +151,7 @@ const TrendProperties = (props: TrendPropertiesProps) => {
 								{trendProducts.map((product: Product) => {
 									return (
 										<SwiperSlide key={product._id} className={'trend-property-slide'}>
-											<TrendPropertyCard property={product}  likePropertyHandler={likePropertyHandler} /> 
+											<TrendPropertyCard property={product} likePropertyHandler={likePropertyHandler} />
 										</SwiperSlide>
 									);
 								})}

@@ -352,7 +352,7 @@ export const GET_BOARD_ARTICLES = gql`
 					memberDesc
 					memberWarnings
 					memberBlocks
-					memberProducs
+					memberProducts
 					memberRank
 					memberPoints
 					memberLikes

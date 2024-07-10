@@ -6,7 +6,6 @@ import { Autoplay, Navigation, Pagination } from 'swiper';
 import WestIcon from '@mui/icons-material/West';
 import EastIcon from '@mui/icons-material/East';
 import PopularPropertyCard from './PopularPropertyCard';
-import Link from 'next/link';
 import { GET_PROPERTIES } from '../../../apollo/user/query';
 import { useQuery } from '@apollo/client';
 import { T } from '../../types/common';
@@ -39,26 +38,26 @@ const PopularProperties = (props: PopularPropertiesProps) => {
 	/** HANDLERS **/
 
 	if (!popularProducts) return null;
-console.log("popularProducts::", popularProducts);
+	console.log('popularProducts::', popularProducts);
 
 	if (device === 'mobile') {
 		return (
 			<Stack className={'popular-properties'}>
 				<Stack className={'container'}>
 					<Stack className={'info-box'}>
-						<span>Popular properties</span>
+						<span> Products Range </span>
 					</Stack>
 					<Stack className={'card-box'}>
 						<Swiper
 							className={'popular-property-swiper'}
 							slidesPerView={'auto'}
 							centeredSlides={true}
-							spaceBetween={25}
+							spaceBetween={50}
 							modules={[Autoplay]}
 						>
 							{popularProducts.map((property: Product) => {
 								return (
-									<SwiperSlide key={property._id} className={'popular-property-slide'}>
+									<SwiperSlide key={property._id} className="popular-property-slide">
 										<PopularPropertyCard product={property} />
 									</SwiperSlide>
 								);
@@ -74,12 +73,10 @@ console.log("popularProducts::", popularProducts);
 				<Stack className={'container'}>
 					<Stack className={'info-box'}>
 						<Box component={'div'} className={'left'}>
-							<span>Popular Products</span>
-							<p>Popularity is based on views</p>
+							<span> Products Range</span>
 						</Box>
 						<Box component={'div'} className={'right'}>
-							<div className={'more-box'}>
-							</div>
+							<div className={'more-box'}></div>
 						</Box>
 					</Stack>
 					<Stack className={'card-box'}>

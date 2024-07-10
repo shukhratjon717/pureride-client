@@ -22,6 +22,7 @@ export const logIn = async (nick: string, password: string): Promise<void> => {
 		if (jwtToken) {
 			updateStorage({ jwtToken });
 			updateUserInfo(jwtToken);
+			window.location.reload();
 		}
 	} catch (err) {
 		console.warn('login err', err);
