@@ -9,7 +9,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { ProductLocation, ProductType } from '../../enums/property.enum';
-import { productEngineSize, propertyYears } from '../../config';
+import { engineSize, propertyYears } from '../../config';
 import { ProductsInquiry } from '../../types/product/property.input';
 
 const style = {
@@ -154,7 +154,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 					...searchFilter,
 					search: {
 						...searchFilter.search,
-						roomsList: [value],
+						yearList: [value],
 					},
 				});
 				disableAllStateHandler();
@@ -169,22 +169,22 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 		async (number: Number) => {
 			try {
 				if (number != 0) {
-					if (searchFilter?.search?.bedsList?.includes(number)) {
+					if (searchFilter?.search?.engineList?.includes(number)) {
 						setSearchFilter({
 							...searchFilter,
 							search: {
 								...searchFilter.search,
-								bedsList: searchFilter?.search?.bedsList?.filter((item: Number) => item !== number),
+								engineList: searchFilter?.search?.engineList?.filter((item: Number) => item !== number),
 							},
 						});
 					} else {
 						setSearchFilter({
 							...searchFilter,
-							search: { ...searchFilter.search, bedsList: [...(searchFilter?.search?.bedsList || []), number] },
+							search: { ...searchFilter.search, engineList: [...(searchFilter?.search?.engineList || []), number] },
 						});
 					}
 				} else {
-					delete searchFilter?.search.bedsList;
+					delete searchFilter?.search.engineList;
 					setSearchFilter({ ...searchFilter });
 				}
 
@@ -293,16 +293,16 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 				delete searchFilter.search.typeList;
 			}
 
-			if (searchFilter?.search?.roomsList?.length == 0) {
-				delete searchFilter.search.roomsList;
+			if (searchFilter?.search?.engineList?.length == 0) {
+				delete searchFilter.search.yearList;
 			}
 
 			if (searchFilter?.search?.options?.length == 0) {
 				delete searchFilter.search.options;
 			}
 
-			if (searchFilter?.search?.bedsList?.length == 0) {
-				delete searchFilter.search.bedsList;
+			if (searchFilter?.search?.engineList?.length == 0) {
+				delete searchFilter.search.engineList;
 			}
 
 			await router.push(
@@ -330,9 +330,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 							<ExpandMoreIcon />
 						</Box>
 						<Box className={`box ${openRooms ? 'on' : ''}`} onClick={roomStateChangeHandler}>
-							<span>
-								{searchFilter?.search?.roomsList ? `${searchFilter?.search?.roomsList[0]} rooms}` : t('Rooms')}
-							</span>
+							<span>{searchFilter?.search?.yearList ? `${searchFilter?.search?.yearList[0]} rooms}` : t('Rooms')}</span>
 							<ExpandMoreIcon />
 						</Box>
 					</Stack>
@@ -420,14 +418,14 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 										<span>bedrooms</span>
 										<div className={'inside'}>
 											<div
-												className={`room ${!searchFilter?.search?.bedsList ? 'active' : ''}`}
+												className={`room ${!searchFilter?.search?.engineList ? 'active' : ''}`}
 												onClick={() => propertyBedSelectHandler(0)}
 											>
 												Any
 											</div>
 											{[1, 2, 3, 4, 5].map((bed: number) => (
 												<div
-													className={`room ${searchFilter?.search?.bedsList?.includes(bed) ? 'active' : ''}`}
+													className={`room ${searchFilter?.search?.engineList?.includes(bed) ? 'active' : ''}`}
 													onClick={() => propertyBedSelectHandler(bed)}
 													key={bed}
 												>
@@ -499,16 +497,16 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 										<div className={'inside space-between align-center'}>
 											<FormControl sx={{ width: '122px' }}>
 												<Select
-													value={searchFilter?.search?.squaresRange?.start}
+													value={searchFilter?.search?.engineRange?.start}
 													onChange={(e: any) => propertySquareHandler(e, 'start')}
 													displayEmpty
 													inputProps={{ 'aria-label': 'Without label' }}
 													MenuProps={MenuProps}
 												>
-													{productEngineSize.map((square: number) => (
+													{engineSize.map((square: number) => (
 														<MenuItem
 															value={square}
-															disabled={(searchFilter?.search?.squaresRange?.end || 0) < square}
+															disabled={(searchFilter?.search?.engineRange?.end || 0) < square}
 															key={square}
 														>
 															{square}
@@ -519,16 +517,16 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 											<div className={'minus-line'}></div>
 											<FormControl sx={{ width: '122px' }}>
 												<Select
-													value={searchFilter?.search?.squaresRange?.end}
+													value={searchFilter?.search?.engineRange?.end}
 													onChange={(e: any) => propertySquareHandler(e, 'end')}
 													displayEmpty
 													inputProps={{ 'aria-label': 'Without label' }}
 													MenuProps={MenuProps}
 												>
-													{productEngineSize.map((square: number) => (
+													{engineSize.map((square: number) => (
 														<MenuItem
 															value={square}
-															disabled={(searchFilter?.search?.squaresRange?.start || 0) > square}
+															disabled={(searchFilter?.search?.engineRange?.start || 0) > square}
 															key={square}
 														>
 															{square}

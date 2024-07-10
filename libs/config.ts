@@ -10,7 +10,7 @@ for (let i = 1970; i <= thisYear; i++) {
 	propertyYears.push(String(i));
 }
 
-export const productEngineSize = [50, 250, 400, 450, 800, 1000];
+export const engineSize = [0, 50, 100, 150, 250, 300, 400, 450, 750, 800, 1000];
 
 export const Messages = {
 	error1: 'Something went wrong!',

@@ -27,6 +27,7 @@ export interface Product {
 	productPrice: number;
 	productEngineSize: ProductEngineSize;
 	productFuelType: ProductFuelType;
+	engineSize: number,
 	productModel: string;
 	productBrand: string;
 	productYear: number;
@@ -38,6 +39,7 @@ export interface Product {
 	productImages: string[];
 	productDesc: string;
 	productBarter: boolean;
+	productRent: boolean;
 	memberId: string;
 	soldAt?: Date;
 	deletedAt?: Date;

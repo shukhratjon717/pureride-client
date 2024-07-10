@@ -76,7 +76,7 @@ body::-webkit-scrollbar {
 				z-index: 99;
 				align-items: center;
 				.container {
-					border-radius: 5px;
+					border-radius: 15px;
 					flex-direction: row;
 					align-items: center;
 					height: 250px;
@@ -87,7 +87,7 @@ body::-webkit-scrollbar {
 						img {
 							width: 150px;
 							cursor: pointer;
-							border-radius: 5px 0px 0px 5px;
+							border-radius: 15px 0px 0px 15px;
 						}
 					}
 					.router-box {

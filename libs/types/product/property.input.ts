@@ -19,6 +19,7 @@ export interface ProductInput {
 	productModel: string;
 	productBrand: string;
 	productYear: number;
+	engineSize: number;
 	productMilage: number;
 	productRank: number;
 	productImages: string[];
@@ -32,12 +33,12 @@ interface PISearch {
 	memberId?: string;
 	locationList?: ProductLocation[];
 	typeList?: ProductType[];
-	roomsList?: Number[];
+	yearList? : Number[];   //roomList
+	engineList? : Number[];  //bedList
 	options?: string[];
-	bedsList?: Number[];
 	pricesRange?: Range;
 	periodsRange?: PeriodsRange;
-	squaresRange?: Range;
+	engineRange: Range;
 	text?: string;
 }
 

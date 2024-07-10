@@ -45,16 +45,16 @@ const PopularPropertyCard = (props: PopularPropertyCardProps) => {
 					<p className={'desc'}>{product.productAddress}</p>
 					<div className={'options'}>
 						<div>
-							<img src="/img/icons/bed.svg" alt="" />
+							{/* <img src="/img/icons/bed.svg" alt="" /> */}
 							<span>{product?.productModel} bed</span>
 						</div>
 						<div>
-							<img src="/img/icons/room.svg" alt="" />
+							{/* <img src="/img/icons/room.svg" alt="" /> */}
 							<span>{product?.productBrand} rooms</span>
 						</div>
 						<div>
-							<img src="/img/icons/expand.svg" alt="" />
-							<span>{product?.productEngineSize} m2</span>
+							{/* <img src="/img/icons/expand.svg" alt="" /> */}
+							<span>{product?.productEngineSize} </span>
 						</div>
 					</div>
 					<Divider sx={{ mt: '15px', mb: '17px' }} />
@@ -94,16 +94,16 @@ const PopularPropertyCard = (props: PopularPropertyCardProps) => {
 					<p className={'desc'}>{product.productAddress}</p>
 					<div className={'options'}>
 						<div>
-							<img src="/img/icons/bed.svg" alt="" />
+							{/* <img src="/img/icons/bed.svg" alt="" /> */}
 							<span>{product?.productModel} bed</span>
 						</div>
 						<div>
-							<img src="/img/icons/room.svg" alt="" />
+							{/* <img src="/img/icons/room.svg" alt="" /> */}
 							<span>{product?.productBrand} rooms</span>
 						</div>
 						<div>
-							<img src="/img/icons/expand.svg" alt="" />
-							<span>{product?.productEngineSize} m2</span>
+							{/* <img src="/img/icons/expand.svg" alt="" /> */}
+							<span>{product?.productEngineSize} </span>
 						</div>
 					</div>
 					<Divider sx={{ mt: '15px', mb: '17px' }} />

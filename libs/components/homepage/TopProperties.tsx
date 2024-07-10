@@ -23,10 +23,10 @@ const TopProperties = (props: TopPropertiesProps) => {
 
 	/** APOLLO REQUESTS **/
 	const {
-		loading: getPropertiesLoading,
-		data: getPropertiesData,
-		error: getPropertiesError,
-		refetch: getPropertiesRefetch,
+		loading: getProductsLoading,
+		data: getProductsData,
+		error: getProductssError,
+		refetch: getProductsRefetch,
 	} = useQuery(GET_PROPERTIES, {
 		fetchPolicy: 'cache-and-network',
 		variables: { input: initialInput },
@@ -38,24 +38,13 @@ const TopProperties = (props: TopPropertiesProps) => {
 
 	/** HANDLERS **/
 
-	if (getPropertiesLoading) {
-		return <CircularProgress />;
-	}
-
-	if (getPropertiesError) {
-		return <p>Error fetching properties: {getPropertiesError.message}</p>;
-	}
-
-	if (!topProperties || topProperties.length === 0) {
-		return <p>No properties found</p>;
-	}
 
 	if (device === 'mobile') {
 		return (
 			<Stack className={'top-properties'}>
 				<Stack className={'container'}>
 					<Stack className={'info-box'}>
-						<span>Top properties</span>
+						<span>Top Producs</span>
 					</Stack>
 					<Stack className={'card-box'}>
 						<Swiper

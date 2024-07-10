@@ -16,7 +16,7 @@ import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { ProductsInquiry } from '../../types/product/property.input';
 import { useRouter } from 'next/router';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
-import { productEngineSize } from '../../config';
+import { engineSize } from '../../config';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { ProductLocation, ProductType } from '../../enums/property.enum';
 
@@ -50,7 +50,7 @@ const Filter = (props: FilterType) => {
 			setShowMore(false);
 			router
 				.push(
-					`/prouct?input=${JSON.stringify({
+					`/product?input=${JSON.stringify({
 						...searchFilter,
 						search: {
 							...searchFilter.search,
@@ -87,8 +87,8 @@ const Filter = (props: FilterType) => {
 				.then();
 		}
 
-		if (searchFilter?.search?.roomsList?.length == 0) {
-			delete searchFilter.search.roomsList;
+		if (searchFilter?.search?.yearList?.length == 0) {
+			delete searchFilter.search.yearList;
 			router
 				.push(
 					`/product?input=${JSON.stringify({
@@ -128,8 +128,8 @@ const Filter = (props: FilterType) => {
 				)
 				.then();
 		}
-		if (searchFilter?.search?.bedsList?.length == 0) {
-			delete searchFilter.search.bedsList;
+		if (searchFilter?.search?.engineList?.length == 0) {
+			delete searchFilter.search.engineList;
 			router
 				.push(
 					`/product?input=${JSON.stringify({
@@ -255,20 +255,20 @@ const Filter = (props: FilterType) => {
 		async (number: Number) => {
 			try {
 				if (number != 0) {
-					if (searchFilter?.search?.roomsList?.includes(number)) {
+					if (searchFilter?.search?.yearList?.includes(number)) {
 						await router.push(
 							`/product?input=${JSON.stringify({
 								...searchFilter,
 								search: {
 									...searchFilter.search,
-									roomsList: searchFilter?.search?.roomsList?.filter((item: Number) => item !== number),
+									roomsList: searchFilter?.search?.yearList?.filter((item: Number) => item !== number),
 								},
 							})}`,
 							`/product?input=${JSON.stringify({
 								...searchFilter,
 								search: {
 									...searchFilter.search,
-									roomsList: searchFilter?.search?.roomsList?.filter((item: Number) => item !== number),
+									roomsList: searchFilter?.search?.yearList?.filter((item: Number) => item !== number),
 								},
 							})}`,
 							{ scroll: false },
@@ -277,17 +277,17 @@ const Filter = (props: FilterType) => {
 						await router.push(
 							`/product?input=${JSON.stringify({
 								...searchFilter,
-								search: { ...searchFilter.search, roomsList: [...(searchFilter?.search?.roomsList || []), number] },
+								search: { ...searchFilter.search, roomsList: [...(searchFilter?.search?.yearList || []), number] },
 							})}`,
 							`/product?input=${JSON.stringify({
 								...searchFilter,
-								search: { ...searchFilter.search, roomsList: [...(searchFilter?.search?.roomsList || []), number] },
+								search: { ...searchFilter.search, roomsList: [...(searchFilter?.search?.yearList || []), number] },
 							})}`,
 							{ scroll: false },
 						);
 					}
 				} else {
-					delete searchFilter?.search.roomsList;
+					delete searchFilter?.search.yearList;
 					setSearchFilter({ ...searchFilter });
 					await router.push(
 						`/product?input=${JSON.stringify({
@@ -363,20 +363,20 @@ const Filter = (props: FilterType) => {
 		async (number: Number) => {
 			try {
 				if (number != 0) {
-					if (searchFilter?.search?.bedsList?.includes(number)) {
+					if (searchFilter?.search?.engineList?.includes(number)) {
 						await router.push(
 							`/product?input=${JSON.stringify({
 								...searchFilter,
 								search: {
 									...searchFilter.search,
-									bedsList: searchFilter?.search?.bedsList?.filter((item: Number) => item !== number),
+									bedsList: searchFilter?.search?.engineList?.filter((item: Number) => item !== number),
 								},
 							})}`,
 							`/product?input=${JSON.stringify({
 								...searchFilter,
 								search: {
 									...searchFilter.search,
-									bedsList: searchFilter?.search?.bedsList?.filter((item: Number) => item !== number),
+									bedsList: searchFilter?.search?.engineList?.filter((item: Number) => item !== number),
 								},
 							})}`,
 							{ scroll: false },
@@ -385,17 +385,17 @@ const Filter = (props: FilterType) => {
 						await router.push(
 							`/product?input=${JSON.stringify({
 								...searchFilter,
-								search: { ...searchFilter.search, bedsList: [...(searchFilter?.search?.bedsList || []), number] },
+								search: { ...searchFilter.search, bedsList: [...(searchFilter?.search?.engineList || []), number] },
 							})}`,
 							`/product?input=${JSON.stringify({
 								...searchFilter,
-								search: { ...searchFilter.search, bedsList: [...(searchFilter?.search?.bedsList || []), number] },
+								search: { ...searchFilter.search, bedsList: [...(searchFilter?.search?.engineList || []), number] },
 							})}`,
 							{ scroll: false },
 						);
 					}
 				} else {
-					delete searchFilter?.search.bedsList;
+					delete searchFilter?.search.engineList;
 					setSearchFilter({ ...searchFilter });
 					await router.push(
 						`/product?input=${JSON.stringify({
@@ -432,14 +432,14 @@ const Filter = (props: FilterType) => {
 						...searchFilter,
 						search: {
 							...searchFilter.search,
-							squaresRange: { ...searchFilter.search.squaresRange, start: value },
+							engineRange: { ...searchFilter.search.engineRange, start: value },
 						},
 					})}`,
 					`/product?input=${JSON.stringify({
 						...searchFilter,
 						search: {
 							...searchFilter.search,
-							squaresRange: { ...searchFilter.search.squaresRange, start: value },
+							engineRange: { ...searchFilter.search.engineRange, start: value },
 						},
 					})}`,
 					{ scroll: false },
@@ -450,14 +450,14 @@ const Filter = (props: FilterType) => {
 						...searchFilter,
 						search: {
 							...searchFilter.search,
-							squaresRange: { ...searchFilter.search.squaresRange, end: value },
+							engineRange: { ...searchFilter.search.engineRange, end: value },
 						},
 					})}`,
 					`/product?input=${JSON.stringify({
 						...searchFilter,
 						search: {
 							...searchFilter.search,
-							squaresRange: { ...searchFilter.search.squaresRange, end: value },
+							engineRange: { ...searchFilter.search.engineRange, end: value },
 						},
 					})}`,
 					{ scroll: false },
@@ -626,7 +626,7 @@ const Filter = (props: FilterType) => {
 						<Button
 							sx={{
 								borderRadius: '12px 0 0 12px',
-								border: !searchFilter?.search?.roomsList ? '2px solid #181A20' : '1px solid #b9b9b9',
+								border: !searchFilter?.search?.yearList ? '2px solid #181A20' : '1px solid #b9b9b9',
 							}}
 							onClick={() => propertyRoomSelectHandler(0)}
 						>
@@ -635,8 +635,8 @@ const Filter = (props: FilterType) => {
 						<Button
 							sx={{
 								borderRadius: 0,
-								border: searchFilter?.search?.roomsList?.includes(1) ? '2px solid #181A20' : '1px solid #b9b9b9',
-								borderLeft: searchFilter?.search?.roomsList?.includes(1) ? undefined : 'none',
+								border: searchFilter?.search?.yearList?.includes(1) ? '2px solid #181A20' : '1px solid #b9b9b9',
+								borderLeft: searchFilter?.search?.yearList?.includes(1) ? undefined : 'none',
 							}}
 							onClick={() => propertyRoomSelectHandler(1)}
 						>
@@ -645,8 +645,8 @@ const Filter = (props: FilterType) => {
 						<Button
 							sx={{
 								borderRadius: 0,
-								border: searchFilter?.search?.roomsList?.includes(2) ? '2px solid #181A20' : '1px solid #b9b9b9',
-								borderLeft: searchFilter?.search?.roomsList?.includes(2) ? undefined : 'none',
+								border: searchFilter?.search?.yearList?.includes(2) ? '2px solid #181A20' : '1px solid #b9b9b9',
+								borderLeft: searchFilter?.search?.yearList?.includes(2) ? undefined : 'none',
 							}}
 							onClick={() => propertyRoomSelectHandler(2)}
 						>
@@ -655,8 +655,8 @@ const Filter = (props: FilterType) => {
 						<Button
 							sx={{
 								borderRadius: 0,
-								border: searchFilter?.search?.roomsList?.includes(3) ? '2px solid #181A20' : '1px solid #b9b9b9',
-								borderLeft: searchFilter?.search?.roomsList?.includes(3) ? undefined : 'none',
+								border: searchFilter?.search?.yearList?.includes(3) ? '2px solid #181A20' : '1px solid #b9b9b9',
+								borderLeft: searchFilter?.search?.yearList?.includes(3) ? undefined : 'none',
 							}}
 							onClick={() => propertyRoomSelectHandler(3)}
 						>
@@ -665,9 +665,9 @@ const Filter = (props: FilterType) => {
 						<Button
 							sx={{
 								borderRadius: 0,
-								border: searchFilter?.search?.roomsList?.includes(4) ? '2px solid #181A20' : '1px solid #b9b9b9',
-								borderLeft: searchFilter?.search?.roomsList?.includes(4) ? undefined : 'none',
-								borderRight: searchFilter?.search?.roomsList?.includes(4) ? undefined : 'none',
+								border: searchFilter?.search?.yearList?.includes(4) ? '2px solid #181A20' : '1px solid #b9b9b9',
+								borderLeft: searchFilter?.search?.yearList?.includes(4) ? undefined : 'none',
+								borderRight: searchFilter?.search?.yearList?.includes(4) ? undefined : 'none',
 							}}
 							onClick={() => propertyRoomSelectHandler(4)}
 						>
@@ -676,7 +676,7 @@ const Filter = (props: FilterType) => {
 						<Button
 							sx={{
 								borderRadius: '0 12px 12px 0',
-								border: searchFilter?.search?.roomsList?.includes(5) ? '2px solid #181A20' : '1px solid #b9b9b9',
+								border: searchFilter?.search?.yearList?.includes(5) ? '2px solid #181A20' : '1px solid #b9b9b9',
 							}}
 							onClick={() => propertyRoomSelectHandler(5)}
 						>
@@ -690,7 +690,7 @@ const Filter = (props: FilterType) => {
 						<Button
 							sx={{
 								borderRadius: '12px 0 0 12px',
-								border: !searchFilter?.search?.bedsList ? '2px solid #181A20' : '1px solid #b9b9b9',
+								border: !searchFilter?.search?.engineList ? '2px solid #181A20' : '1px solid #b9b9b9',
 							}}
 							onClick={() => propertyBedSelectHandler(0)}
 						>
@@ -699,8 +699,8 @@ const Filter = (props: FilterType) => {
 						<Button
 							sx={{
 								borderRadius: 0,
-								border: searchFilter?.search?.bedsList?.includes(1) ? '2px solid #181A20' : '1px solid #b9b9b9',
-								borderLeft: searchFilter?.search?.bedsList?.includes(1) ? undefined : 'none',
+								border: searchFilter?.search?.engineList?.includes(1) ? '2px solid #181A20' : '1px solid #b9b9b9',
+								borderLeft: searchFilter?.search?.engineList?.includes(1) ? undefined : 'none',
 							}}
 							onClick={() => propertyBedSelectHandler(1)}
 						>
@@ -709,8 +709,8 @@ const Filter = (props: FilterType) => {
 						<Button
 							sx={{
 								borderRadius: 0,
-								border: searchFilter?.search?.bedsList?.includes(2) ? '2px solid #181A20' : '1px solid #b9b9b9',
-								borderLeft: searchFilter?.search?.bedsList?.includes(2) ? undefined : 'none',
+								border: searchFilter?.search?.engineList?.includes(2) ? '2px solid #181A20' : '1px solid #b9b9b9',
+								borderLeft: searchFilter?.search?.engineList?.includes(2) ? undefined : 'none',
 							}}
 							onClick={() => propertyBedSelectHandler(2)}
 						>
@@ -719,8 +719,8 @@ const Filter = (props: FilterType) => {
 						<Button
 							sx={{
 								borderRadius: 0,
-								border: searchFilter?.search?.bedsList?.includes(3) ? '2px solid #181A20' : '1px solid #b9b9b9',
-								borderLeft: searchFilter?.search?.bedsList?.includes(3) ? undefined : 'none',
+								border: searchFilter?.search?.engineList?.includes(3) ? '2px solid #181A20' : '1px solid #b9b9b9',
+								borderLeft: searchFilter?.search?.engineList?.includes(3) ? undefined : 'none',
 							}}
 							onClick={() => propertyBedSelectHandler(3)}
 						>
@@ -729,8 +729,8 @@ const Filter = (props: FilterType) => {
 						<Button
 							sx={{
 								borderRadius: 0,
-								border: searchFilter?.search?.bedsList?.includes(4) ? '2px solid #181A20' : '1px solid #b9b9b9',
-								borderLeft: searchFilter?.search?.bedsList?.includes(4) ? undefined : 'none',
+								border: searchFilter?.search?.engineList?.includes(4) ? '2px solid #181A20' : '1px solid #b9b9b9',
+								borderLeft: searchFilter?.search?.engineList?.includes(4) ? undefined : 'none',
 								// borderRight: false ? undefined : 'none',
 							}}
 							onClick={() => propertyBedSelectHandler(4)}
@@ -740,8 +740,8 @@ const Filter = (props: FilterType) => {
 						<Button
 							sx={{
 								borderRadius: '0 12px 12px 0',
-								border: searchFilter?.search?.bedsList?.includes(5) ? '2px solid #181A20' : '1px solid #b9b9b9',
-								borderLeft: searchFilter?.search?.bedsList?.includes(5) ? undefined : 'none',
+								border: searchFilter?.search?.engineList?.includes(5) ? '2px solid #181A20' : '1px solid #b9b9b9',
+								borderLeft: searchFilter?.search?.engineList?.includes(5) ? undefined : 'none',
 							}}
 							onClick={() => propertyBedSelectHandler(5)}
 						>
@@ -788,15 +788,15 @@ const Filter = (props: FilterType) => {
 							<Select
 								labelId="demo-simple-select-label"
 								id="demo-simple-select"
-								value={searchFilter?.search?.squaresRange?.start ?? 0}
+								value={searchFilter?.search?.engineRange?.start ?? 0}
 								label="Min"
 								onChange={(e: any) => propertySquareHandler(e, 'start')}
 								MenuProps={MenuProps}
 							>
-								{productEngineSize.map((square: number) => (
+								{engineSize.map((square: number) => (
 									<MenuItem
 										value={square}
-										disabled={(searchFilter?.search?.squaresRange?.end || 0) < square}
+										disabled={(searchFilter?.search?.engineRange?.end || 0) < square}
 										key={square}
 									>
 										{square}
@@ -810,15 +810,15 @@ const Filter = (props: FilterType) => {
 							<Select
 								labelId="demo-simple-select-label"
 								id="demo-simple-select"
-								value={searchFilter?.search?.squaresRange?.end ?? 500}
+								value={searchFilter?.search?.engineRange?.end ?? 1000}
 								label="Max"
 								onChange={(e: any) => propertySquareHandler(e, 'end')}
 								MenuProps={MenuProps}
 							>
-								{productEngineSize.map((square: number) => (
+								{engineSize.map((square: number) => (
 									<MenuItem
 										value={square}
-										disabled={(searchFilter?.search?.squaresRange?.start || 0) > square}
+										disabled={(searchFilter?.search?.engineRange?.start || 0) > square}
 										key={square}
 									>
 										{square}
