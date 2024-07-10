@@ -13,10 +13,10 @@ import { LIKE_TARGET_PROPERTY } from '../../apollo/user/mutation';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
 import { ProductsInquiry } from '../../libs/types/product/property.input';
 import { Product } from '../../libs/types/product/property';
-import { PropertyCard } from '../../libs/components/mypage/PropertyCard';
 import Filter from '../../libs/components/product/Filter';
 import { engineSize } from '../../libs/config';
 import { GET_PROPERTIES } from '../../apollo/user/query';
+import PropertyCard from '../../libs/components/product/PropertyCard';
 
 export const getStaticProps = async ({ locale }: any) => ({
   props: {
@@ -39,6 +39,7 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 
   /** APOLLO REQUESTS **/
   const [likeTargetProperty] = useMutation(LIKE_TARGET_PROPERTY);
+
   const {
     loading: getProductsLoading,
     data: getProductsData,
@@ -189,7 +190,7 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
                   </div>
                 ) : (
                   properties.map((property: Product) => {
-                    return <PropertyCard property={property} key={property?._id} />;
+                    return <PropertyCard property={property} likePropertyHandler={likePropertyHandler} key={property?._id} />;
                   })
                 )}
               </Stack>
