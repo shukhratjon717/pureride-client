@@ -607,7 +607,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 							<Stack className={'similar-properties-config'}>
 								<Stack className={'title-pagination-box'}>
 									<Stack className={'title-box'}>
-										<Typography className={'main-title'}>Destination Property</Typography>
+										<Typography className={'main-title'}>Destination Products</Typography>
 										<Typography className={'sub-title'}>Aliquam lacinia diam quis lacus euismod</Typography>
 									</Stack>
 									<Stack className={'pagination-box'}>

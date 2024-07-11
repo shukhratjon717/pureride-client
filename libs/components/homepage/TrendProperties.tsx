@@ -3,17 +3,17 @@ import { Stack, Box } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import WestIcon from '@mui/icons-material/West';
 import EastIcon from '@mui/icons-material/East';
-import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination } from 'swiper';
 import TrendPropertyCard from './TrendPropertyCard';
 import { ProductsInquiry } from '../../types/product/property.input';
 import { Product } from '../../types/product/property';
 import { GET_PROPERTIES } from '../../../apollo/user/query';
 import { T } from '../../types/common';
-import { useMutation, useQuery } from '@apollo/client';
 import { LIKE_TARGET_PROPERTY } from '../../../apollo/user/mutation';
 import { Message } from '../../enums/common.enum';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../sweetAlert';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { useMutation, useQuery } from '@apollo/client';
 
 interface TrendPropertiesProps {
 	initialInput: ProductsInquiry;

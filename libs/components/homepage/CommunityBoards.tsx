@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
-import { Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import CommunityCard from './CommunityCard';
 import { BoardArticle } from '../../types/board-article/board-article';
 import { GET_BOARD_ARTICLES } from '../../../apollo/user/query';
@@ -50,40 +50,46 @@ const CommunityBoards = () => {
 	});
 
 	if (device === 'mobile') {
-		return <div>COMMUNITY BOARDS (MOBILE)</div>;
+		return <div>Lastes News(MOBILE)</div>;
 	} else {
 		return (
 			<Stack className={'community-board'}>
 				<Stack className={'container'}>
 					<Stack>
-						<Typography variant={'h1'}>COMMUNITY BOARD HIGHLIGHTS</Typography>
+						<Typography variant={'h1'}>------Lastest News------</Typography>
 					</Stack>
 					<Stack className="community-main">
 						<Stack className={'community-left'}>
-							<Stack className={'content-top'}>
-								<Link href={'/community?articleCategory=NEWS'}>
-									<span>News</span>
-								</Link>
-								<img src="/img/icons/arrowBig.svg" alt="" />
-							</Stack>
 							<Stack className={'card-wrap'}>
-								{newsArticles.map((article, index) => {
-									return <CommunityCard vertical={true} article={article} index={index} key={article?._id} />;
-								})}
+								<Stack component={'div'} className={'com-container'}>
+									<Box component={'div'} className={'com-holder'}>
+										<img src="/img/events/corporate.jpg" className={'com-img'} alt="" />
+										<p className={'com-ttitle'}>CORPORATE</p>
+										<p className={'com-text'}>
+											The G7 Science and Technology Ministers visit the Ducati factory in Borgo Panigale
+										</p>
+									</Box>
+									<Box component={'div'} className={'com-holder'}>
+										<img src="/img/events/accessories.jpg" className={'com-img'} alt="" />
+										<p className={'com-ttitle'}>ACCESSORIES</p>
+										<p className={'com-text'}>
+											Range of original Ducati accessories for touring on asphalt or dirt. It's time to think about the
+											next trip
+										</p>
+									</Box>
+									<Box component={'div'} className={'com-holder'}>
+										<img src="/img/events/multistrada.jpg" className={'com-img'} alt="" />
+										<p className={'com-ttitle'}>MULTISTRADA V$ RS</p>
+										<p className={'com-text'}>
+											Ducati Multistrada V4 RS awarded as Best Motorcycle for 2024 according to Robb Report
+										</p>
+									</Box>
+								</Stack>
 							</Stack>
 						</Stack>
 						<Stack className={'community-right'}>
-							<Stack className={'content-top'}>
-								<Link href={'/community?articleCategory=FREE'}>
-									<span>Free</span>
-								</Link>
-								<img src="/img/icons/arrowBig.svg" alt="" />
-							</Stack>
-							<Stack className={'card-wrap vertical'}>
-								{freeArticles.map((article, index) => {
-									return <CommunityCard vertical={false} article={article} index={index} key={article?._id} />;
-								})}
-							</Stack>
+							<Stack className={'content-top'}></Stack>
+							<Stack className={'card-wrap vertical'}></Stack>
 						</Stack>
 					</Stack>
 				</Stack>

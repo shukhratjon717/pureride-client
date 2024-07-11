@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 import { Product } from '../../types/product/property';
+import { ProductFuelType } from '../../enums/property.enum';
 
 interface PopularPropertyCardProps {
 	product: Product;
@@ -20,6 +21,10 @@ const PopularPropertyCard = (props: PopularPropertyCardProps) => {
 	const user = useReactiveVar(userVar);
 
 	/** HANDLERS **/
+	const pushDetailHandler = async (propertyId: string) => {
+		console.log('propertyId:', propertyId);
+		await router.push({ pathname: '/product/detail', query: { id: propertyId } });
+	};
 
 	if (device === 'mobile') {
 		return (
@@ -28,6 +33,7 @@ const PopularPropertyCard = (props: PopularPropertyCardProps) => {
 					component={'div'}
 					className={'card-img'}
 					style={{ backgroundImage: `url(${REACT_APP_API_URL}/${product?.productImages[0]})` }}
+					onClick={() => pushDetailHandler(product._id)}
 				>
 					{product && product?.productRank && product?.productRank >= topPropertyRank ? (
 						<div className={'status'}>
@@ -41,7 +47,9 @@ const PopularPropertyCard = (props: PopularPropertyCardProps) => {
 					<div className={'price'}>${product.productPrice}</div>
 				</Box>
 				<Box component={'div'} className={'info'}>
-					<strong className={'title'}>{product.productTitle}</strong>
+					<strong className={'title'} onClick={() => pushDetailHandler(product._id)}>
+						{product.productTitle}
+					</strong>
 					<p className={'desc'}>{product.productAddress}</p>
 					<div className={'options'}>
 						<div>
@@ -77,6 +85,7 @@ const PopularPropertyCard = (props: PopularPropertyCardProps) => {
 					component={'div'}
 					className={'card-img'}
 					style={{ backgroundImage: `url(${REACT_APP_API_URL}/${product?.productImages[0]})` }}
+					onClick={() => pushDetailHandler(product._id)}
 				>
 					{product && product?.productRank && product?.productRank >= topPropertyRank ? (
 						<div className={'status'}>
@@ -90,20 +99,22 @@ const PopularPropertyCard = (props: PopularPropertyCardProps) => {
 					<div className={'price'}>${product.productPrice}</div>
 				</Box>
 				<Box component={'div'} className={'info'}>
-					<strong className={'title'}>{product.productTitle}</strong>
+					<strong className={'title'} onClick={() => pushDetailHandler(product._id)}>
+						{product.productTitle}
+					</strong>
 					<p className={'desc'}>{product.productAddress}</p>
 					<div className={'options'}>
 						<div>
 							{/* <img src="/img/icons/bed.svg" alt="" /> */}
-							<span>{product?.productModel} bed</span>
+							<span>{product?.productBrand}</span>
 						</div>
 						<div>
 							{/* <img src="/img/icons/room.svg" alt="" /> */}
-							<span>{product?.productBrand} rooms</span>
+							<span>{product?.productFuelType}</span>
 						</div>
 						<div>
 							{/* <img src="/img/icons/expand.svg" alt="" /> */}
-							<span>{product?.productEngineSize} </span>
+							<span>{product?.productEngineSize}</span>
 						</div>
 					</div>
 					<Divider sx={{ mt: '15px', mb: '17px' }} />

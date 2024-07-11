@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Stack, Box } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
-import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination } from 'swiper';
 import WestIcon from '@mui/icons-material/West';
 import EastIcon from '@mui/icons-material/East';
@@ -11,6 +10,8 @@ import { useQuery } from '@apollo/client';
 import { T } from '../../types/common';
 import { Product } from '../../types/product/property';
 import { ProductsInquiry } from '../../types/product/property.input';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
 
 interface PopularPropertiesProps {
 	initialInput: ProductsInquiry;
@@ -82,7 +83,7 @@ const PopularProperties = (props: PopularPropertiesProps) => {
 					<Stack className={'card-box'}>
 						<Swiper
 							className={'popular-property-swiper'}
-							slidesPerView={'auto'}
+							slidesPerView={"auto"}
 							spaceBetween={25}
 							modules={[Autoplay, Navigation, Pagination]}
 							navigation={{

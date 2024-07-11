@@ -10,30 +10,25 @@ interface EventData {
 }
 const eventsData: EventData[] = [
 	{
-		eventTitle: 'Paradise City Theme Park',
-		city: 'Incheon',
+		eventTitle: '',
+		city: '',
 		description:
-			'Experience magic and wonder in Incheon with a visit to the night-themed indoor theme park Wonderbox at Paradise City!',
-		imageSrc: '/img/events/INCHEON.webp',
+			'Russell scored his first points for Williams with a brilliant performance at the Belgian Grand Prix, where he finished second due to the race being shortened by rain.',
+		imageSrc: '/img/events/george.jpg',
 	},
 	{
-		eventTitle: 'Taebaeksan Snow Festival',
-		city: 'Seoul',
-		description: 'If you have the opportunity to travel to South Korea, do not miss the Taebaeksan Snow Festival!',
-		imageSrc: '/img/events/SEOUL.webp',
-	},
-	{
-		eventTitle: 'Suseong Lake Event',
-		city: 'Daegu',
-		description: 'The Suseong Lake Festival is a culture and arts festival held alongside Suseongmot Lake!',
-		imageSrc: '/img/events/DAEGU.webp',
-	},
-	{
-		eventTitle: 'Sand Festival',
-		city: 'Busan',
+		eventTitle: '',
+		city: '',
+		imageSrc: '/img/events/pedro.jpeg',
 		description:
-			'Haeundae Sand Festival, the nation’s largest eco-friendly exhibition on sand, is held at Haeundae Beach!',
-		imageSrc: '/img/events/BUSAN.webp',
+			'Pedro Acosta burst onto the scene in his rookie season in Moto3, riding for Red Bull KTM Ajo. He won the championship with a series of impressive performances, including several race victories and podium finishes.',
+	},
+
+	{
+		eventTitle: '',
+		city: '',
+		description: 'Márquez won his first MotoGP World Championship in his rookie year with the Repsol Honda team.',
+		imageSrc: '/img/events/markuez.webp',
 	},
 ];
 
@@ -69,15 +64,15 @@ const Events = () => {
 	const device = useDeviceDetect();
 
 	if (device === 'mobile') {
-		return <div>EVENT CARD</div>;
+		return <div>Race Championships</div>;
 	} else {
 		return (
 			<Stack className={'events'}>
 				<Stack className={'container'}>
 					<Stack className={'info-box'}>
 						<Box component={'div'} className={'left'}>
-							<span className={'white'}>Events</span>
-							<p className={'white'}>Events waiting your attention!</p>
+							<span className={'white'}>Race Champions</span>
+							<p className={'white'}>Championships waiting your attention!</p>
 						</Box>
 					</Stack>
 					<Stack className={'card-wrapper'}>

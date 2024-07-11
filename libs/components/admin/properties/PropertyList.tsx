@@ -4,12 +4,12 @@ import { Box, Button, Menu, MenuItem, Pagination, Stack, Typography } from '@mui
 import { useRouter } from 'next/router';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
-import { ProductsInquiry } from '../../../types/product/property.input';
 import useDeviceDetect from '../../../hooks/useDeviceDetect';
-import { Products } from '../../../types/product/property';
 import { Direction } from '../../../enums/common.enum';
 import { PropertyCard } from '../../mypage/PropertyCard';
 import withLayoutBasic from '../../layout/LayoutBasic';
+import { ProductsInquiry } from '../../../types/product/property.input';
+import { Product, Products } from '../../../types/product/property';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -23,7 +23,7 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 	const [searchFilter, setSearchFilter] = useState<ProductsInquiry>(
 		router?.query?.input ? JSON.parse(router?.query?.input as string) : initialInput,
 	);
-	const [properties, setProperties] = useState<Products[]>([]);
+	const [properties, setProperties] = useState<Product[]>([]);
 	const [total, setTotal] = useState<number>(0);
 	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -138,7 +138,7 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 										<p>No Properties found!</p>
 									</div>
 								) : (
-									properties.map((property: Products) => {
+									properties.map((property: Product) => {
 										return <PropertyCard property={property} key={property?._id} />;
 									})
 								)}
