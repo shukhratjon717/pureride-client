@@ -38,7 +38,8 @@ interface PISearch {
 	options?: string[];
 	pricesRange?: Range;
 	periodsRange?: PeriodsRange;
-	engineRange: Range;
+	engineRange?: Range;
+	milageRange: Range;
 	text?: string;
 }
 

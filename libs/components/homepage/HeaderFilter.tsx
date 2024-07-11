@@ -330,7 +330,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 							<ExpandMoreIcon />
 						</Box>
 						<Box className={`box ${openRooms ? 'on' : ''}`} onClick={roomStateChangeHandler}>
-							<span>{searchFilter?.search?.yearList ? `${searchFilter?.search?.yearList[0]} rooms}` : t('Rooms')}</span>
+							<span>{searchFilter?.search?.yearList ? `${searchFilter?.search?.yearList[0]} cc` : t('Engine')}</span>
 							<ExpandMoreIcon />
 						</Box>
 					</Stack>
@@ -371,10 +371,10 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 					</div>
 
 					<div className={`filter-rooms ${openRooms ? 'on' : ''}`} ref={roomsRef}>
-						{[1, 2, 3, 4, 5].map((room: number) => {
+						{[150, 250, 400, 750, 1000].map((room: number) => {
 							return (
 								<span onClick={() => propertyRoomSelectHandler(room)} key={room}>
-									{room} room{room > 1 ? 's' : ''}
+									{room}{room > 1 ? 'cc' : ''}
 								</span>
 							);
 						})}
@@ -395,7 +395,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 								<CloseIcon />
 							</div>
 							<div className={'top'}>
-								<span>Find your home</span>
+								<span>Specify </span>
 								<div className={'search-input-box'}>
 									<img src="/img/icons/search.svg" alt="" />
 									<input
@@ -415,7 +415,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 							<div className={'middle'}>
 								<div className={'row-box'}>
 									<div className={'box'}>
-										<span>bedrooms</span>
+										<span>Engine </span>
 										<div className={'inside'}>
 											<div
 												className={`room ${!searchFilter?.search?.engineList ? 'active' : ''}`}
@@ -423,7 +423,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 											>
 												Any
 											</div>
-											{[1, 2, 3, 4, 5].map((bed: number) => (
+											{[150, 250, 400, 750, 1000].map((bed: number) => (
 												<div
 													className={`room ${searchFilter?.search?.engineList?.includes(bed) ? 'active' : ''}`}
 													onClick={() => propertyBedSelectHandler(bed)}
@@ -493,7 +493,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 										</div>
 									</div>
 									<div className={'box'}>
-										<span>square meter</span>
+										<span>Engine range</span>
 										<div className={'inside space-between align-center'}>
 											<FormControl sx={{ width: '122px' }}>
 												<Select
@@ -506,7 +506,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 													{engineSize.map((square: number) => (
 														<MenuItem
 															value={square}
-															disabled={(searchFilter?.search?.engineRange?.end || 0) < square}
+															disabled={(searchFilter?.search?.engineRange?.start || 0) < square}
 															key={square}
 														>
 															{square}
@@ -565,9 +565,9 @@ HeaderFilter.defaultProps = {
 		page: 1,
 		limit: 9,
 		search: {
-			squaresRange: {
+		 	milageRange: {
 				start: 0,
-				end: 500,
+				end: 50000,
 			},
 			pricesRange: {
 				start: 0,
