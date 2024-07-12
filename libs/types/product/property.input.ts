@@ -25,6 +25,7 @@ export interface ProductInput {
 	productImages: string[];
 	productDesc: string;
 	productBarter: boolean;
+	productRent: boolean;
 	memberId?: string;
 	constructedAt?: Date;
 }
