@@ -19,7 +19,7 @@ interface CommunityCardProps {
 }
 
 const CommunityCard = (props: CommunityCardProps) => {
-	const { boardArticle, size, likeArticleHandler = 'normal' } = props;
+	const { boardArticle, size = 'normal', likeArticleHandler } = props;
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const user = useReactiveVar(userVar);

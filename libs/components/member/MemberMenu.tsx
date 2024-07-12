@@ -75,7 +75,7 @@ const MemberMenu = (props: MemberMenuProps) => {
 									<Link
 										href={{
 											pathname: '/member',
-											query: { ...router.query, category: 'properties' },
+											query: { ...router.query, category: 'products' },
 										}}
 										scroll={false}
 										style={{ width: '100%' }}
@@ -90,7 +90,7 @@ const MemberMenu = (props: MemberMenuProps) => {
 												Properties
 											</Typography>
 											<Typography className="count-title" variant="subtitle1">
-												{member?.memberProperties}
+												{member?.memberProducts}
 											</Typography>
 										</div>
 									</Link>

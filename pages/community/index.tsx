@@ -87,7 +87,8 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 	const likeArticleHandler = async (e: any, user: any, id: string) => {
 		try {
 			e.stopPropagation();
-			if (!id) if (!user._id) throw new Error(Messages.error2);
+			if (!id) return;
+			if (!user._id) throw new Error(Messages.error2);
 
 			await likeTargetBoardArticle({
 				variables: {
