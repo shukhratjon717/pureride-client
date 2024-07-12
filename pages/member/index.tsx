@@ -122,7 +122,7 @@ const MemberPage: NextPage = () => {
 							</Stack>
 							<Stack className="main-config" mb={'76px'}>
 								<Stack className={'list-config'}>
-									{category === 'properties' && <MemberProperties />}
+									{category === 'products' && <MemberProperties />}
 									{category === 'followers' && (
 										<MemberFollowers
 											subscribeHandler={subscribeHandler}

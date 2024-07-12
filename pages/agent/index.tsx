@@ -9,12 +9,13 @@ import AgentCard from '../../libs/components/common/AgentCard';
 import { useRouter } from 'next/router';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { Member } from '../../libs/types/member/member';
-import { useMutation, useQuery } from '@apollo/client';
 import { LIKE_TARGET_MEMBER } from '../../apollo/user/mutation';
+import { useMutation, useQuery } from '@apollo/client';
 import { GET_AGENTS } from '../../apollo/user/query';
 import { T } from '../../libs/types/common';
-import { Messages } from '../../libs/config';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
+import { Message } from '../../libs/enums/common.enum';
+import { Messages } from '../../libs/config';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -52,6 +53,10 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 		onCompleted: (data: T) => {
 			setAgents(data?.getAgents?.list);
 			setTotal(data?.getAgents?.metaCounter[0]?.total);
+		},
+		onError: (error) => {
+			console.error('Query error:', error);
+			sweetMixinErrorAlert(error.message).then();
 		},
 	});
 

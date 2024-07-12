@@ -16,7 +16,7 @@ export const SIGN_UP = gql`
 			memberImage
 			memberAddress
 			memberDesc
-			memberProperties
+			memberProducts
 			memberArticles
 			memberFollowers
 			memberFollowings

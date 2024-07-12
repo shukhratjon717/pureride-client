@@ -1,6 +1,6 @@
 import { MemberAuthType, MemberStatus, MemberType } from '../../enums/member.enum';
-import { MeLiked, TotalCounter } from '../property/property';
 import { MeFollowed } from '../follow/follow';
+import { MeLiked, TotalCounter } from '../product/property';
 
 export interface Member {
 	_id: string;
@@ -26,7 +26,7 @@ export interface Member {
 	memberWarnings: number;
 	memberBlocks: number;
 	deletedAt?: Date;
-	createdAt: Date;
+	createdAt?: Date;
 	updatedAt: Date;
 	// Enable for authentications
 	meLiked?: MeLiked[];

@@ -609,44 +609,6 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 								</Stack>
 							</Stack>
 						</Stack>
-						{destinationProperties.length !== 0 && (
-							<Stack className={'similar-properties-config'}>
-								<Stack className={'title-pagination-box'}>
-									<Stack className={'title-box'}>
-										<Typography className={'main-title'}>Destination Products</Typography>
-										<Typography className={'sub-title'}>Aliquam lacinia diam quis lacus euismod</Typography>
-									</Stack>
-									<Stack className={'pagination-box'}>
-										<WestIcon className={'swiper-similar-prev'} />
-										<div className={'swiper-similar-pagination'}></div>
-										<EastIcon className={'swiper-similar-next'} />
-									</Stack>
-								</Stack>
-								<Stack className={'cards-box'}>
-									<Swiper
-										className={'similar-homes-swiper'}
-										slidesPerView={'auto'}
-										spaceBetween={35}
-										modules={[Autoplay, Navigation, Pagination]}
-										navigation={{
-											nextEl: '.swiper-similar-next',
-											prevEl: '.swiper-similar-prev',
-										}}
-										pagination={{
-											el: '.swiper-similar-pagination',
-										}}
-									>
-										{destinationProperties.map((property: Product) => {
-											return (
-												<SwiperSlide className={'similar-homes-slide'} key={property.productTitle}>
-													<PropertyBigCard property={property} key={property?._id} />
-												</SwiperSlide>
-											);
-										})}
-									</Swiper>
-								</Stack>
-							</Stack>
-						)}
 					</Stack>
 				</div>
 			</div>
