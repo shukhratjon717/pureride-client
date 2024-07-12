@@ -3,23 +3,43 @@ import { NextPage } from 'next';
 import { Pagination, Stack, Typography } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { PropertyCard } from '../mypage/PropertyCard';
-import { Property } from '../../types/property/property';
-import { PropertiesInquiry } from '../../types/property/property.input';
 import { T } from '../../types/common';
 import { useRouter } from 'next/router';
+import { ProductsInquiry } from '../../types/product/property.input';
+import { Product } from '../../types/product/property';
+import { GET_PROPERTIES } from '../../../apollo/user/query';
+import { useQuery } from '@apollo/client';
 
 const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const { memberId } = router.query;
-	const [searchFilter, setSearchFilter] = useState<PropertiesInquiry>({ ...initialInput });
-	const [agentProperties, setAgentProperties] = useState<Property[]>([]);
+	const [searchFilter, setSearchFilter] = useState<ProductsInquiry>({ ...initialInput });
+	const [agentProperties, setAgentProperties] = useState<Product[]>([]);
 	const [total, setTotal] = useState<number>(0);
 
 	/** APOLLO REQUESTS **/
-
+	const {
+		loading: getPropertiesLoading,
+		data: getPropertiesData,
+		error: getPropertiesError,
+		refetch: getPropertiesRefetch,
+	} = useQuery(GET_PROPERTIES, {
+		fetchPolicy: 'network-only',
+		variables: {
+			input: searchFilter,
+		},
+		skip: !searchFilter?.search?.memberId,
+		notifyOnNetworkStatusChange: true,
+		onCompleted: (data: any) => {
+			setAgentProperties(data?.getProperties?.list);
+			setTotal(data?.getProperties?.metaCounter[0]?.total ?? 0);
+		},
+	});
 	/** LIFECYCLES **/
-	useEffect(() => {}, [searchFilter]);
+	useEffect(() => {
+		getPropertiesRefetch().then();
+	}, [searchFilter]);
 
 	useEffect(() => {
 		if (memberId)
@@ -57,7 +77,7 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 								<p>No Property found!</p>
 							</div>
 						)}
-						{agentProperties?.map((property: Property) => {
+						{agentProperties?.map((property: Product) => {
 							return <PropertyCard property={property} memberPage={true} key={property?._id} />;
 						})}
 
