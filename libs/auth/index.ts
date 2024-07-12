@@ -20,14 +20,13 @@ export const logIn = async (nick: string, password: string): Promise<void> => {
 		const { jwtToken } = await requestJwtToken({ nick, password });
 
 		if (jwtToken) {
-			updateStorage({ jwtToken });
-			updateUserInfo(jwtToken);
-			window.location.reload();
+			updateStorage({ jwtToken }); // Token
+			updateUserInfo(jwtToken); // Reactive Variable
 		}
 	} catch (err) {
 		console.warn('login err', err);
 		logOut();
-		throw new Error('Login Err');
+		//throw new Error('Login Err');
 	}
 };
 
@@ -76,7 +75,7 @@ export const signUp = async (nick: string, password: string, phone: string, type
 	} catch (err) {
 		console.warn('login err', err);
 		logOut();
-		throw new Error('Login Err');
+		//throw new Error('Login Err');
 	}
 };
 
@@ -128,7 +127,7 @@ export const updateStorage = ({ jwtToken }: { jwtToken: any }) => {
 export const updateUserInfo = (jwtToken: any) => {
 	if (!jwtToken) return false;
 
-	const claims = decodeJWT<CustomJwtPayload>(jwtToken);
+	const claims = decodeJWT<CustomJwtPayload>(jwtToken); //JWT
 	userVar({
 		_id: claims._id ?? '',
 		memberType: claims.memberType ?? '',
@@ -157,6 +156,7 @@ export const updateUserInfo = (jwtToken: any) => {
 export const logOut = () => {
 	deleteStorage();
 	deleteUserInfo();
+	window.location.reload();
 };
 
 const deleteStorage = () => {
