@@ -144,7 +144,7 @@ const withLayoutBasic = (Component: any) => {
 							{/* <PopularProperties /> */}
 						</Stack>
 
-						{user?._id && <Chat />}
+						<Chat />
 
 						<Stack id={'footer'}>
 							<Footer />
