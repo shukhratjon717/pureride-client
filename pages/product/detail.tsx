@@ -108,11 +108,13 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 		error: getCommentsError,
 		refetch: getCommentsRefetch,
 	} = useQuery(GET_COMMENTS, {
-		fetchPolicy: 'cache-and-network',
-		variables: { input: initialComment },
+		fetchPolicy: 'network-only',
+		variables: {
+			input: initialComment,
+		},
 		skip: !commentInquiry.search.commentRefId,
 		notifyOnNetworkStatusChange: true,
-		onCompleted: (data) => {
+		onCompleted: (data: T) => {
 			if (data?.getComments?.list) setPropertyComments(data?.getComments?.list);
 			setCommentTotal(data?.getComments?.metaCounter[0]?.total ?? 0);
 		},
@@ -153,7 +155,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 			// execute likeTargetProperty Mutation
 			await likeTargerProperty({ variables: { input: id } });
 			// execute getPropertiesRefetch
-			await getPropertiesRefetch({ input: id });
+			await getCommentsRefetch({ input: id });
 			await getPropertiesRefetch({
 				input: {
 					page: 1,
@@ -189,13 +191,17 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 			await sweetErrorHandling(err);
 		}
 	};
-
 	if (getPropertyLoading) {
 		return (
 			<Stack sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: ' 1080px' }}>
 				<CircularProgress size={'4rem'} />
 			</Stack>
 		);
+	}
+
+	if (!propertyComments) {
+		console.log('commentError=>:', propertyComments);
+		throw new Error(Message.NO_DATA_FOUND);
 	}
 
 	if (device === 'mobile') {

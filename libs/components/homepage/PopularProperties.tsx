@@ -80,7 +80,7 @@ const PopularProperties = (props: PopularPropertiesProps) => {
 							<div className={'more-box'}></div>
 						</Box>
 					</Stack>
-					<Stack className={'card-box'}>
+					<Stack className={'card-box'} flexDirection={'column'}>
 						<Swiper
 							className={'popular-property-swiper'}
 							slidesPerView={"auto"}

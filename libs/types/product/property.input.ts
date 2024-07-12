@@ -39,7 +39,7 @@ interface PISearch {
 	pricesRange?: Range;
 	periodsRange?: PeriodsRange;
 	engineRange?: Range;
-	milageRange: Range;
+	milageRange?: Range;
 	text?: string;
 }
 

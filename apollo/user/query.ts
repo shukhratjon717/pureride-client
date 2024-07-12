@@ -54,7 +54,7 @@ query GetMember($input: String!) {
         memberImage
         memberAddress
         memberDesc
-        memberProducts
+        memberProperties
         memberArticles
         memberFollowers
         memberFollowings
@@ -71,6 +71,7 @@ query GetMember($input: String!) {
         accessToken
     }
 }
+
 
 `);
 

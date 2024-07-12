@@ -33,7 +33,7 @@ const withLayoutBasic = (Component: any) => {
 				case '/product':
 					title = 'Product Search';
 					desc = 'We are glad to see you again!';
-					bgImage = '/img/banner/properties.png';
+					bgImage = '/img/banner/products.webp';
 					break;
 				case '/agent':
 					title = 'Agents';
@@ -140,8 +140,8 @@ const withLayoutBasic = (Component: any) => {
 						</Stack>
 
 						<Stack id={'main'}>
-							<PopularProperties />
 							<Component {...props} />
+							{/* <PopularProperties /> */}
 						</Stack>
 
 						{user?._id && <Chat />}

@@ -17,7 +17,14 @@ import Filter from '../../libs/components/product/Filter';
 import { engineSize } from '../../libs/config';
 import { GET_PROPERTIES } from '../../apollo/user/query';
 import PropertyCard from '../../libs/components/product/PropertyCard';
+import PopularProperties from '../../libs/components/homepage/PopularProperties';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Navigation, Pagination as SwiperPagination } from 'swiper';
 
+// Import Swiper styles
+import 'swiper/swiper-bundle.min.css';
+
+// Function to get static props for internationalization
 export const getStaticProps = async ({ locale }: any) => ({
   props: {
     ...(await serverSideTranslations(locale, ['common'])),
@@ -142,6 +149,7 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
   } else {
     return (
       <div id="property-list-page" style={{ position: 'relative' }}>
+        <PopularProperties />
         <div className="container">
           <Box component={'div'} className={'right'}>
             <span>Sort by</span>
@@ -183,16 +191,33 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
             </Stack>
             <Stack className="main-config" mb={'76px'}>
               <Stack className={'list-config'}>
-                {properties?.length === 0 ? (
-                  <div className={'no-data'}>
-                    <img src="/img/icons/icoAlert.svg" alt="" />
-                    <p>No Properties found!</p>
-                  </div>
-                ) : (
-                  properties.map((property: Product) => {
-                    return <PropertyCard property={property} likePropertyHandler={likePropertyHandler} key={property?._id} />;
-                  })
-                )}
+                <Swiper
+                  className={'top-property-swiper'}
+                  slidesPerView={'auto'}
+                  spaceBetween={15}
+                  modules={[Autoplay, Navigation, SwiperPagination]}
+                  navigation={{
+                    nextEl: '.swiper-top-next',
+                    prevEl: '.swiper-top-prev',
+                  }}
+                  pagination={{
+                    el: '.swiper-top-pagination',
+                    clickable: true,
+                  }}
+                >
+                  {properties?.length === 0 ? (
+                    <div className={'no-data'}>
+                      <img src="/img/icons/icoAlert.svg" alt="" />
+                      <p>No Properties found!</p>
+                    </div>
+                  ) : (
+                    properties.map((property: Product) => (
+                      <SwiperSlide className={"top-properties-slide"} key={property?._id}>
+                        <PropertyCard property={property} likePropertyHandler={likePropertyHandler} />
+                      </SwiperSlide>
+                    ))
+                  )}
+                </Swiper>
               </Stack>
               <Stack className="pagination-config">
                 {properties.length !== 0 && (
