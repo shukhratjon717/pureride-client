@@ -1,194 +1,238 @@
-import React, { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
-import { NextPage } from 'next';
-import { Box, Button, Menu, MenuItem, Pagination, Stack, Typography } from '@mui/material';
-import { useRouter } from 'next/router';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
-import useDeviceDetect from '../../../hooks/useDeviceDetect';
-import { Direction } from '../../../enums/common.enum';
-import { PropertyCard } from '../../mypage/PropertyCard';
-import withLayoutBasic from '../../layout/LayoutBasic';
-import { ProductsInquiry } from '../../../types/product/property.input';
-import { Product, Products } from '../../../types/product/property';
+import React from 'react';
+import Link from 'next/link';
+import {
+	TableCell,
+	TableHead,
+	TableBody,
+	TableRow,
+	Table,
+	TableContainer,
+	Button,
+	Menu,
+	Fade,
+	MenuItem,
+} from '@mui/material';
+import Avatar from '@mui/material/Avatar';
+import { Stack } from '@mui/material';
+import { REACT_APP_API_URL } from '../../../config';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Typography from '@mui/material/Typography';
+import { Product } from '../../../types/product/property';
+import { ProductStatus } from '../../../enums/property.enum';
 
-export const getStaticProps = async ({ locale }: any) => ({
-	props: {
-		...(await serverSideTranslations(locale, ['common'])),
+interface Data {
+	id: string;
+	title: string;
+	price: string;
+	agent: string;
+	location: string;
+	type: string;
+	status: string;
+}
+
+type Order = 'asc' | 'desc';
+
+interface HeadCell {
+	disablePadding: boolean;
+	id: keyof Data;
+	label: string;
+	numeric: boolean;
+}
+
+const headCells: readonly HeadCell[] = [
+	{
+		id: 'id',
+		numeric: true,
+		disablePadding: false,
+		label: 'MB ID',
 	},
-});
+	{
+		id: 'title',
+		numeric: true,
+		disablePadding: false,
+		label: 'TITLE',
+	},
+	{
+		id: 'price',
+		numeric: false,
+		disablePadding: false,
+		label: 'PRICE',
+	},
+	{
+		id: 'agent',
+		numeric: false,
+		disablePadding: false,
+		label: 'AGENT',
+	},
+	{
+		id: 'location',
+		numeric: false,
+		disablePadding: false,
+		label: 'LOCATION',
+	},
+	{
+		id: 'type',
+		numeric: false,
+		disablePadding: false,
+		label: 'TYPE',
+	},
+	{
+		id: 'status',
+		numeric: false,
+		disablePadding: false,
+		label: 'STATUS',
+	},
+];
 
-const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
-	const device = useDeviceDetect();
-	const router = useRouter();
-	const [searchFilter, setSearchFilter] = useState<ProductsInquiry>(
-		router?.query?.input ? JSON.parse(router?.query?.input as string) : initialInput,
+interface EnhancedTableProps {
+	numSelected: number;
+	onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void;
+	onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
+	order: Order;
+	orderBy: string;
+	rowCount: number;
+}
+
+function EnhancedTableHead(props: EnhancedTableProps) {
+	const { onSelectAllClick } = props;
+
+	return (
+		<TableHead>
+			<TableRow>
+				{headCells.map((headCell) => (
+					<TableCell
+						key={headCell.id}
+						align={headCell.numeric ? 'left' : 'center'}
+						padding={headCell.disablePadding ? 'none' : 'normal'}
+					>
+						{headCell.label}
+					</TableCell>
+				))}
+			</TableRow>
+		</TableHead>
 	);
-	const [properties, setProperties] = useState<Product[]>([]);
-	const [total, setTotal] = useState<number>(0);
-	const [currentPage, setCurrentPage] = useState<number>(1);
-	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-	const [sortingOpen, setSortingOpen] = useState(false);
-	const [filterSortName, setFilterSortName] = useState('New');
+}
 
-	/** APOLLO REQUESTS **/
+interface PropertyPanelListType {
+	properties: Product[];
+	anchorEl: any;
+	menuIconClickHandler: any;
+	menuIconCloseHandler: any;
+	updatePropertyHandler: any;
+	removePropertyHandler: any;
+}
 
-	/** LIFECYCLES **/
-	useEffect(() => {
-		if (router.query.input) {
-			const inputObj = JSON.parse(router?.query?.input as string);
-			setSearchFilter(inputObj);
-		}
+export const PropertyPanelList = (props: PropertyPanelListType) => {
+	const {
+		properties,
+		anchorEl,
+		menuIconClickHandler,
+		menuIconCloseHandler,
+		updatePropertyHandler,
+		removePropertyHandler,
+	} = props;
 
-		setCurrentPage(searchFilter.page === undefined ? 1 : searchFilter.page);
-	}, [router]);
+	return (
+		<Stack>
+			<TableContainer>
+				<Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size={'medium'}>
+					{/*@ts-ignore*/}
+					<EnhancedTableHead />
+					<TableBody>
+						{properties.length === 0 && (
+							<TableRow>
+								<TableCell align="center" colSpan={8}>
+									<span className={'no-data'}>data not found!</span>
+								</TableCell>
+							</TableRow>
+						)}
 
-	useEffect(() => {}, [searchFilter]);
+						{properties.length !== 0 &&
+							properties.map((property: Product, index: number) => {
+								const propertyImage = `${REACT_APP_API_URL}/${property?.productImages[0]}`;
 
-	/** HANDLERS **/
-	const handlePaginationChange = async (event: ChangeEvent<unknown>, value: number) => {
-		searchFilter.page = value;
-		await router.push(
-			`/property?input=${JSON.stringify(searchFilter)}`,
-			`/property?input=${JSON.stringify(searchFilter)}`,
-			{
-				scroll: false,
-			},
-		);
-		setCurrentPage(value);
-	};
+								return (
+									<TableRow hover key={property?._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+										<TableCell align="left">{property._id}</TableCell>
+										<TableCell align="left" className={'name'}>
+											{property.productStatus === ProductStatus.ACTIVE ? (
+												<Stack direction={'row'}>
+													<Link href={`/property/detail?id=${property?._id}`}>
+														<div>
+															<Avatar alt="Remy Sharp" src={propertyImage} sx={{ ml: '2px', mr: '10px' }} />
+														</div>
+													</Link>
+													<Link href={`/property/detail?id=${property?._id}`}>
+														<div>{property.productTitle}</div>
+													</Link>
+												</Stack>
+											) : (
+												<Stack direction={'row'}>
+													<div>
+														<Avatar alt="Remy Sharp" src={propertyImage} sx={{ ml: '2px', mr: '10px' }} />
+													</div>
+													<div style={{ marginTop: '10px' }}>{property.productTitle}</div>
+												</Stack>
+											)}
+										</TableCell>
+										<TableCell align="center">{property.productPrice}</TableCell>
+										<TableCell align="center">{property.memberData?.memberNick}</TableCell>
+										<TableCell align="center">{property.productLocation}</TableCell>
+										<TableCell align="center">{property.productType}</TableCell>
+										<TableCell align="center">
+											{property.productStatus === ProductStatus.DELETE && (
+												<Button
+													variant="outlined"
+													sx={{ p: '3px', border: 'none', ':hover': { border: '1px solid #000000' } }}
+													onClick={() => removePropertyHandler(property._id)}
+												>
+													<DeleteIcon fontSize="small" />
+												</Button>
+											)}
 
-	const sortingClickHandler = (e: MouseEvent<HTMLElement>) => {
-		setAnchorEl(e.currentTarget);
-		setSortingOpen(true);
-	};
+											{property.productStatus === ProductStatus.SOLD && (
+												<Button className={'badge warning'}>{property.productStatus}</Button>
+											)}
 
-	const sortingCloseHandler = () => {
-		setSortingOpen(false);
-		setAnchorEl(null);
-	};
+											{property.productStatus === ProductStatus.ACTIVE && (
+												<>
+													<Button onClick={(e: any) => menuIconClickHandler(e, index)} className={'badge success'}>
+														{property.productStatus}
+													</Button>
 
-	const sortingHandler = (e: React.MouseEvent<HTMLLIElement>) => {
-		switch (e.currentTarget.id) {
-			case 'new':
-				setSearchFilter({ ...searchFilter, sort: 'createdAt', direction: Direction.ASC });
-				setFilterSortName('New');
-				break;
-			case 'lowest':
-				setSearchFilter({ ...searchFilter, sort: 'productPrice', direction: Direction.ASC });
-				setFilterSortName('Lowest Price');
-				break;
-			case 'highest':
-				setSearchFilter({ ...searchFilter, sort: 'productPrice', direction: Direction.DESC });
-				setFilterSortName('Highest Price');
-		}
-		setSortingOpen(false);
-		setAnchorEl(null);
-	};
-
-	if (device === 'mobile') {
-		return <h1>PROPERTIES MOBILE</h1>;
-	} else {
-		return (
-			<div id="property-list-page" style={{ position: 'relative' }}>
-				<div className="container">
-					<Box component={'div'} className={'right'}>
-						<span>Sort by</span>
-						<div>
-							<Button onClick={sortingClickHandler} endIcon={<KeyboardArrowDownRoundedIcon />}>
-								{filterSortName}
-							</Button>
-							<Menu anchorEl={anchorEl} open={sortingOpen} onClose={sortingCloseHandler} sx={{ paddingTop: '5px' }}>
-								<MenuItem
-									onClick={sortingHandler}
-									id={'new'}
-									disableRipple
-									sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
-								>
-									New
-								</MenuItem>
-								<MenuItem
-									onClick={sortingHandler}
-									id={'lowest'}
-									disableRipple
-									sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
-								>
-									Lowest Price
-								</MenuItem>
-								<MenuItem
-									onClick={sortingHandler}
-									id={'highest'}
-									disableRipple
-									sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
-								>
-									Highest Price
-								</MenuItem>
-							</Menu>
-						</div>
-					</Box>
-					<Stack className={'property-page'}>
-						<Stack className={'filter-config'}>
-							{/* @ts-ignore */}
-							<Filter searchFilter={searchFilter} setSearchFilter={setSearchFilter} initialInput={initialInput} />
-						</Stack>
-						<Stack className="main-config" mb={'76px'}>
-							<Stack className={'list-config'}>
-								{properties?.length === 0 ? (
-									<div className={'no-data'}>
-										<img src="/img/icons/icoAlert.svg" alt="" />
-										<p>No Properties found!</p>
-									</div>
-								) : (
-									properties.map((property: Product) => {
-										return <PropertyCard property={property} key={property?._id} />;
-									})
-								)}
-							</Stack>
-							<Stack className="pagination-config">
-								{properties.length !== 0 && (
-									<Stack className="pagination-box">
-										<Pagination
-											page={currentPage}
-											count={Math.ceil(total / searchFilter.limit)}
-											onChange={handlePaginationChange}
-											shape="circular"
-											color="primary"
-										/>
-									</Stack>
-								)}
-
-								{properties.length !== 0 && (
-									<Stack className="total-result">
-										<Typography>
-											Total {total} propert{total > 1 ? 'ies' : 'y'} available
-										</Typography>
-									</Stack>
-								)}
-							</Stack>
-						</Stack>
-					</Stack>
-				</div>
-			</div>
-		);
-	}
+													<Menu
+														className={'menu-modal'}
+														MenuListProps={{
+															'aria-labelledby': 'fade-button',
+														}}
+														anchorEl={anchorEl[index]}
+														open={Boolean(anchorEl[index])}
+														onClose={menuIconCloseHandler}
+														TransitionComponent={Fade}
+														sx={{ p: 1 }}
+													>
+														{Object.values(ProductStatus)
+															.filter((ele) => ele !== property.productStatus)
+															.map((status: string) => (
+																<MenuItem
+																	onClick={() => updatePropertyHandler({ _id: property._id, propertyStatus: status })}
+																	key={status}
+																>
+																	<Typography variant={'subtitle1'} component={'span'}>
+																		{status}
+																	</Typography>
+																</MenuItem>
+															))}
+													</Menu>
+												</>
+											)}
+										</TableCell>
+									</TableRow>
+								);
+							})}
+					</TableBody>
+				</Table>
+			</TableContainer>
+		</Stack>
+	);
 };
-
-PropertyList.defaultProps = {
-	initialInput: {
-		page: 1,
-		limit: 9,
-		sort: 'createdAt',
-		direction: 'DESC',
-		search: {
-			squaresRange: {
-				start: 0,
-				end: 500,
-			},
-			pricesRange: {
-				start: 0,
-				end: 2000000,
-			},
-		},
-	},
-};
-
-export default withLayoutBasic(PropertyList);
