@@ -26,241 +26,220 @@ import 'swiper/swiper-bundle.min.css';
 
 // Function to get static props for internationalization
 export const getStaticProps = async ({ locale }: any) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ['common'])),
-  },
+	props: {
+		...(await serverSideTranslations(locale, ['common'])),
+	},
 });
 
 const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
-  const device = useDeviceDetect();
-  const router = useRouter();
-  const [searchFilter, setSearchFilter] = useState<ProductsInquiry>(
-    router?.query?.input ? JSON.parse(router?.query?.input as string) : initialInput,
-  );
-  const [properties, setProperties] = useState<Product[]>([]);
-  const [total, setTotal] = useState<number>(0);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [sortingOpen, setSortingOpen] = useState(false);
-  const [filterSortName, setFilterSortName] = useState('New');
+	const device = useDeviceDetect();
+	const router = useRouter();
+	const [searchFilter, setSearchFilter] = useState<ProductsInquiry>(
+		router?.query?.input ? JSON.parse(router?.query?.input as string) : initialInput,
+	);
+	const [properties, setProperties] = useState<Product[]>([]);
+	const [total, setTotal] = useState<number>(0);
+	const [currentPage, setCurrentPage] = useState<number>(1);
+	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+	const [sortingOpen, setSortingOpen] = useState(false);
+	const [filterSortName, setFilterSortName] = useState('New');
 
-  /** APOLLO REQUESTS **/
-  const [likeTargetProperty] = useMutation(LIKE_TARGET_PROPERTY);
+	/** APOLLO REQUESTS **/
+	const [likeTargetProperty] = useMutation(LIKE_TARGET_PROPERTY);
 
-  const {
-    loading: getProductsLoading,
-    data: getProductsData,
-    error: getProductsError,
-    refetch: getProductsRefetch,
-  } = useQuery(GET_PROPERTIES, {
-    fetchPolicy: 'network-only',
-    variables: { input: searchFilter },
-    notifyOnNetworkStatusChange: true,
-    onCompleted: (data: T) => {
-      if (data?.getProducts) {
-        setProperties(data.getProducts.list);
-        setTotal(data.getProducts.metaCounter[0]?.total || 0);
-        console.log('products==>:', data.getProducts.list);
-      } else {
-        console.warn('No products data received');
-      }
-    },
-    onError: (error) => {
-      console.error('Error fetching products:', error);
-      sweetMixinErrorAlert(`Error fetching products: ${error.message}`).then();
-    },
-  });
+	const {
+		loading: getProductsLoading,
+		data: getProductsData,
+		error: getProductsError,
+		refetch: getProductsRefetch,
+	} = useQuery(GET_PROPERTIES, {
+		fetchPolicy: 'network-only',
+		variables: { input: searchFilter },
+		notifyOnNetworkStatusChange: true,
+		onCompleted: (data: T) => {
+			if (data?.getProducts) {
+				setProperties(data.getProducts.list);
+				setTotal(data.getProducts.metaCounter[0]?.total || 0);
+				console.log('products==>:', data.getProducts.list);
+			} else {
+				console.warn('No products data received');
+			}
+		},
+		onError: (error) => {
+			console.error('Error fetching products:', error);
+			sweetMixinErrorAlert(`Error fetching products: ${error.message}`).then();
+		},
+	});
 
-  /** LIFECYCLES **/
-  useEffect(() => {
-    if (router.query.input) {
-      const inputObj = JSON.parse(router?.query?.input as string);
-      setSearchFilter(inputObj);
-    }
+	/** LIFECYCLES **/
+	useEffect(() => {
+		if (router.query.input) {
+			const inputObj = JSON.parse(router?.query?.input as string);
+			setSearchFilter(inputObj);
+		}
 
-    setCurrentPage(searchFilter.page === undefined ? 1 : searchFilter.page);
-  }, [router]);
+		setCurrentPage(searchFilter.page === undefined ? 1 : searchFilter.page);
+	}, [router]);
 
-  useEffect(() => {
-    console.log('SearchFilter', searchFilter);
-    getProductsRefetch({ input: searchFilter }).then();
-  }, [searchFilter]);
+	useEffect(() => {
+		console.log('SearchFilter', searchFilter);
+		getProductsRefetch({ input: searchFilter }).then();
+	}, [searchFilter]);
 
-  /** HANDLERS **/
-  const handlePaginationChange = async (event: ChangeEvent<unknown>, value: number) => {
-    searchFilter.page = value;
-    await router.push(
-      `/product?input=${JSON.stringify(searchFilter)}`,
-      `/product?input=${JSON.stringify(searchFilter)}`,
-      {
-        scroll: false,
-      },
-    );
-    setCurrentPage(value);
-  };
+	/** HANDLERS **/
+	const handlePaginationChange = async (event: ChangeEvent<unknown>, value: number) => {
+		searchFilter.page = value;
+		await router.push(
+			`/product?input=${JSON.stringify(searchFilter)}`,
+			`/product?input=${JSON.stringify(searchFilter)}`,
+			{
+				scroll: false,
+			},
+		);
+		setCurrentPage(value);
+	};
 
-  const sortingClickHandler = (e: MouseEvent<HTMLElement>) => {
-    setAnchorEl(e.currentTarget);
-    setSortingOpen(true);
-  };
+	const sortingClickHandler = (e: MouseEvent<HTMLElement>) => {
+		setAnchorEl(e.currentTarget);
+		setSortingOpen(true);
+	};
 
-  const sortingCloseHandler = () => {
-    setSortingOpen(false);
-    setAnchorEl(null);
-  };
+	const sortingCloseHandler = () => {
+		setSortingOpen(false);
+		setAnchorEl(null);
+	};
 
-  const likePropertyHandler = async (user: T, id: string) => {
-    try {
-      if (!id) return;
-      if (!user._id) throw new Error(Message.NOT_AUTHENTICATED);
-      // execute likeTargetProperty Mutation
-      await likeTargetProperty({ variables: { input: id } });
-      // execute getProductsRefetch
-      await getProductsRefetch({ input: initialInput });
+	const likePropertyHandler = async (user: T, id: string) => {
+		try {
+			if (!id) return;
+			if (!user._id) throw new Error(Message.NOT_AUTHENTICATED);
+			// execute likeTargetProperty Mutation
+			await likeTargetProperty({ variables: { input: id } });
+			// execute getProductsRefetch
+			await getProductsRefetch({ input: initialInput });
 
-      await sweetTopSmallSuccessAlert('success', 800);
-    } catch (err: any) {
-      console.log('ERROR, likeTargetProperty', err.message);
-      sweetMixinErrorAlert(err.message).then();
-    }
-  };
+			await sweetTopSmallSuccessAlert('success', 800);
+		} catch (err: any) {
+			console.log('ERROR, likeTargetProperty', err.message);
+			sweetMixinErrorAlert(err.message).then();
+		}
+	};
 
-  const sortingHandler = (e: React.MouseEvent<HTMLLIElement>) => {
-    switch (e.currentTarget.id) {
-      case 'new':
-        setSearchFilter({ ...searchFilter, sort: 'createdAt', direction: Direction.ASC });
-        setFilterSortName('New');
-        break;
-      case 'lowest':
-        setSearchFilter({ ...searchFilter, sort: 'productPrice', direction: Direction.ASC });
-        setFilterSortName('Lowest Price');
-        break;
-      case 'highest':
-        setSearchFilter({ ...searchFilter, sort: 'productPrice', direction: Direction.DESC });
-        setFilterSortName('Highest Price');
-        break;
-    }
-    setSortingOpen(false);
-    setAnchorEl(null);
-  };
+	const sortingHandler = (e: React.MouseEvent<HTMLLIElement>) => {
+		switch (e.currentTarget.id) {
+			case 'new':
+				setSearchFilter({ ...searchFilter, sort: 'createdAt', direction: Direction.ASC });
+				setFilterSortName('New');
+				break;
+			case 'lowest':
+				setSearchFilter({ ...searchFilter, sort: 'productPrice', direction: Direction.ASC });
+				setFilterSortName('Lowest Price');
+				break;
+			case 'highest':
+				setSearchFilter({ ...searchFilter, sort: 'productPrice', direction: Direction.DESC });
+				setFilterSortName('Highest Price');
+				break;
+		}
+		setSortingOpen(false);
+		setAnchorEl(null);
+	};
 
-  if (device === 'mobile') {
-    return <h1>PRODUCTS MOBILE</h1>;
-  } else {
-    return (
-      <div id="property-list-page" style={{ position: 'relative' }}>
-        <PopularProperties />
-        <div className="container">
-          <Box component={'div'} className={'right'}>
-            <span>Sort by</span>
-            <div>
-              <Button onClick={sortingClickHandler} endIcon={<KeyboardArrowDownRoundedIcon />}>
-                {filterSortName}
-              </Button>
-              <Menu anchorEl={anchorEl} open={sortingOpen} onClose={sortingCloseHandler} sx={{ paddingTop: '5px' }}>
-                <MenuItem
-                  onClick={sortingHandler}
-                  id={'new'}
-                  disableRipple
-                  sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
-                >
-                  New
-                </MenuItem>
-                <MenuItem
-                  onClick={sortingHandler}
-                  id={'lowest'}
-                  disableRipple
-                  sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
-                >
-                  Lowest Price
-                </MenuItem>
-                <MenuItem
-                  onClick={sortingHandler}
-                  id={'highest'}
-                  disableRipple
-                  sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
-                >
-                  Highest Price
-                </MenuItem>
-              </Menu>
-            </div>
-          </Box>
-          <Stack className={'property-page'}>
-            <Stack className={'filter-config'}>
-              <Filter searchFilter={searchFilter} setSearchFilter={setSearchFilter} initialInput={initialInput} />
-            </Stack>
-            <Stack className="main-config" mb={'76px'}>
-              <Stack className={'list-config'}>
-                <Swiper
-                  className={'top-property-swiper'}
-                  slidesPerView={'auto'}
-                  spaceBetween={15}
-                  modules={[Autoplay, Navigation, SwiperPagination]}
-                  navigation={{
-                    nextEl: '.swiper-top-next',
-                    prevEl: '.swiper-top-prev',
-                  }}
-                  pagination={{
-                    el: '.swiper-top-pagination',
-                    clickable: true,
-                  }}
-                >
-                  {properties?.length === 0 ? (
-                    <div className={'no-data'}>
-                      <img src="/img/icons/icoAlert.svg" alt="" />
-                      <p>No Properties found!</p>
-                    </div>
-                  ) : (
-                    properties.map((property: Product) => (
-                      <SwiperSlide className={"top-properties-slide"} key={property?._id}>
-                        <PropertyCard property={property} likePropertyHandler={likePropertyHandler} />
-                      </SwiperSlide>
-                    ))
-                  )}
-                </Swiper>
-              </Stack>
-              <Stack className="pagination-config">
-                {properties.length !== 0 && (
-                  <Stack className="pagination-box">
-                    <Pagination
-                      page={currentPage}
-                      count={Math.ceil(total / searchFilter.limit)}
-                      onChange={handlePaginationChange}
-                      shape="circular"
-                      color="primary"
-                    />
-                  </Stack>
-                )}
+	if (device === 'mobile') {
+		return <h1>PRODUCTS MOBILE</h1>;
+	} else {
+		return (
+			<div id="property-list-page" style={{ position: 'relative' }}>
+				<div className='filter-holder'>
+				</div>
+				<PopularProperties />
 
-                {properties.length !== 0 && (
-                  <Stack className="total-result">
-                    <Typography>
-                      Total {total} propert{total > 1 ? 'ies' : 'y'} available
-                    </Typography>
-                  </Stack>
-                )}
-              </Stack>
-            </Stack>
-          </Stack>
-        </div>
-      </div>
-    );
-  }
+				<div className="container">
+					<Box component={'div'} className={'right'}>
+						<span>Sort by</span>
+						<div>
+							<Button onClick={sortingClickHandler} endIcon={<KeyboardArrowDownRoundedIcon />}>
+								{filterSortName}
+							</Button>
+							<Menu anchorEl={anchorEl} open={sortingOpen} onClose={sortingCloseHandler} sx={{ paddingTop: '5px' }}>
+								<MenuItem
+									onClick={sortingHandler}
+									id={'new'}
+									disableRipple
+									sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
+								>
+									New
+								</MenuItem>
+								<MenuItem
+									onClick={sortingHandler}
+									id={'lowest'}
+									disableRipple
+									sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
+								>
+									Lowest Price
+								</MenuItem>
+								<MenuItem
+									onClick={sortingHandler}
+									id={'highest'}
+									disableRipple
+									sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
+								>
+									Highest Price
+								</MenuItem>
+							</Menu>
+						</div>
+					</Box>
+					{/* ========== */}
+					<Stack className={'property-page'}>
+						<Stack className={'filter-config'}>
+							{/* <Filter searchFilter={searchFilter} setSearchFilter={setSearchFilter} initialInput={initialInput} /> */}
+						</Stack>
+						<Stack component={"div"} className={"product-container"}>
+
+						</Stack>
+						<Stack className="main-config" mb={'76px'}>
+							{/* <PopularProperties /> */}
+							<Stack className="pagination-config">
+								{properties.length !== 0 && (
+									<Stack className="pagination-box">
+										<Pagination
+											page={currentPage}
+											count={Math.ceil(total / searchFilter.limit)}
+											onChange={handlePaginationChange}
+											shape="circular"
+											color="primary"
+										/>
+									</Stack>
+								)}
+
+								{properties.length !== 0 && (
+									<Stack className="total-result">
+										<Typography>
+											Total {total} product{total > 1 ? 'ies' : 'y'} available
+										</Typography>
+									</Stack>
+								)}
+							</Stack>
+						</Stack>
+					</Stack>
+				</div>
+			</div>
+		);
+	}
 };
 
 PropertyList.defaultProps = {
-  initialInput: {
-    page: 1,
-    limit: 9,
-    sort: 'createdAt',
-    direction: 'DESC',
-    search: {
-      pricesRange: {
-        start: 0,
-        end: 2000000,
-      },
-    },
-  },
+	initialInput: {
+		page: 1,
+		limit: 9,
+		sort: 'createdAt',
+		direction: 'DESC',
+		search: {
+			pricesRange: {
+				start: 0,
+				end: 50000,
+			},
+		},
+	},
 };
 
 export default withLayoutBasic(PropertyList);

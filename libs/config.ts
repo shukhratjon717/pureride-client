@@ -6,7 +6,7 @@ const thisYear = new Date().getFullYear();
 
 export const propertyYears: any = [];
 
-for (let i = 1970; i <= thisYear; i++) {
+for (let i = 2014; i <= thisYear; i++) {
 	propertyYears.push(String(i));
 }
 

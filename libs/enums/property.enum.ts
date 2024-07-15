@@ -1,7 +1,7 @@
 export enum ProductType {
 	SPORTBIKE = 'SPORTBIKE',
 	SKUTER = 'SKUTER',
-	QUADRICICLE = 'QUADRICYCLE',
+	QUADRICYCLE = 'QUADRICYCLE',
 }
 
 export enum ProductStatus {
@@ -27,7 +27,7 @@ export enum ProductEngineSize {
 	LIGHTWEIGHT2 = '250cc',
 	ENTRYLEVEL = '400cc',
 	INTERMEDIATE = '750cc',
-	HEAVY = '100cc',
+	HEAVY = '1000cc',
 }
 
 export enum ProductFuelType {

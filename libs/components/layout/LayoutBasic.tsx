@@ -13,8 +13,7 @@ import { useTranslation } from 'next-i18next';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-import TrendProperties from '../homepage/TrendProperties';
-import PopularProperties from '../homepage/PopularProperties';
+import HeaderFilter from '../homepage/HeaderFilter';
 
 const withLayoutBasic = (Component: any) => {
 	return (props: any) => {
@@ -104,6 +103,7 @@ const withLayoutBasic = (Component: any) => {
 						</Stack>
 
 						<Stack id={'main'}>
+							
 							<Component {...props} />
 						</Stack>
 
@@ -140,8 +140,10 @@ const withLayoutBasic = (Component: any) => {
 						</Stack>
 
 						<Stack id={'main'}>
+						<div className="filter-holder">
+								<HeaderFilter />
+							</div>
 							<Component {...props} />
-							{/* <PopularProperties /> */}
 						</Stack>
 
 						<Chat />

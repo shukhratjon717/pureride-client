@@ -34,13 +34,12 @@ interface PISearch {
 	memberId?: string;
 	locationList?: ProductLocation[];
 	typeList?: ProductType[];
-	yearList? : Number[];   //roomList
-	engineList? : Number[];  //bedList
+	yearList?: Number[]; //roomList
+	engineList?: Number[]; //bedList
 	options?: string[];
 	pricesRange?: Range;
 	periodsRange?: PeriodsRange;
-	engineRange?: Range;
-	milageRange?: Range;
+	enginesRange?: EnginesRange;
 	text?: string;
 }
 
@@ -85,4 +84,9 @@ interface Range {
 interface PeriodsRange {
 	start: Date | number;
 	end: Date | number;
+}
+
+interface EnginesRange {
+	start: number;
+	end: number;
 }

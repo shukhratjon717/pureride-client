@@ -53,7 +53,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 	const [openRooms, setOpenRooms] = useState(false);
 	const [propertyLocation, setPropertyLocation] = useState<ProductLocation[]>(Object.values(ProductLocation));
 	const [propertyType, setPropertyType] = useState<ProductType[]>(Object.values(ProductType));
-	const [yearCheck, setYearCheck] = useState({ start: 1970, end: thisYear });
+	const [yearCheck, setYearCheck] = useState({ start: 2014, end: thisYear });
 	const [optionCheck, setOptionCheck] = useState('all');
 
 	/** LIFECYCLES **/
@@ -123,7 +123,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 				});
 				typeStateChangeHandler();
 			} catch (err: any) {
-				console.log('ERROR, propertyLocationSelectHandler:', err);
+				console.log('ERROR, productLocationSelectHandler:', err);
 			}
 		},
 		[searchFilter],
@@ -141,7 +141,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 				});
 				roomStateChangeHandler();
 			} catch (err: any) {
-				console.log('ERROR, propertyTypeSelectHandler:', err);
+				console.log('ERROR, productTypeSelectHandler:', err);
 			}
 		},
 		[searchFilter],
@@ -236,7 +236,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 					search: {
 						...searchFilter.search,
 						// @ts-ignore
-						squaresRange: { ...searchFilter.search.squaresRange, start: parseInt(value) },
+						enginesRange: { ...searchFilter.search.enginesRange, start: parseInt(value) },
 					},
 				});
 			} else {
@@ -245,7 +245,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 					search: {
 						...searchFilter.search,
 						// @ts-ignore
-						squaresRange: { ...searchFilter.search.squaresRange, end: parseInt(value) },
+						enginesRange: { ...searchFilter.search.enginesRange, end: parseInt(value) },
 					},
 				});
 			}
@@ -280,7 +280,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 	const resetFilterHandler = () => {
 		setSearchFilter(initialInput);
 		setOptionCheck('all');
-		setYearCheck({ start: 1970, end: thisYear });
+		setYearCheck({ start: 2014, end: thisYear });
 	};
 
 	const pushSearchHandler = async () => {
@@ -301,13 +301,9 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 				delete searchFilter.search.options;
 			}
 
-			if (searchFilter?.search?.engineList?.length == 0) {
-				delete searchFilter.search.engineList;
-			}
-
 			await router.push(
-				`/property?input=${JSON.stringify(searchFilter)}`,
-				`/property?input=${JSON.stringify(searchFilter)}`,
+				`/product?input=${JSON.stringify(searchFilter)}`,
+				`/product?input=${JSON.stringify(searchFilter)}`,
 			);
 		} catch (err: any) {
 			console.log('ERROR, pushSearchHandler:', err);
@@ -325,11 +321,11 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 							<span>{searchFilter?.search?.locationList ? searchFilter?.search?.locationList[0] : t('Location')} </span>
 							<ExpandMoreIcon />
 						</Box>
-						<Box className={`box ${openType ? 'on' : ''}`} onClick={typeStateChangeHandler}>
-							<span> {searchFilter?.search?.typeList ? searchFilter?.search?.typeList[0] : t('Property type')} </span>
+						<Box component={'div'} className={`box ${openType ? 'on' : ''}`} onClick={typeStateChangeHandler}>
+							<span> {searchFilter?.search?.typeList ? searchFilter?.search?.typeList[0] : t('Product type')} </span>
 							<ExpandMoreIcon />
 						</Box>
-						<Box className={`box ${openRooms ? 'on' : ''}`} onClick={roomStateChangeHandler}>
+						<Box component={'div'} className={`box ${openRooms ? 'on' : ''}`} onClick={roomStateChangeHandler}>
 							<span>{searchFilter?.search?.yearList ? `${searchFilter?.search?.yearList[0]} cc` : t('Engine')}</span>
 							<ExpandMoreIcon />
 						</Box>
@@ -374,7 +370,8 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 						{[150, 250, 400, 750, 1000].map((room: number) => {
 							return (
 								<span onClick={() => propertyRoomSelectHandler(room)} key={room}>
-									{room}{room > 1 ? 'cc' : ''}
+									{room}
+									{room > 1 ? 'cc' : ''}
 								</span>
 							);
 						})}
@@ -497,7 +494,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 										<div className={'inside space-between align-center'}>
 											<FormControl sx={{ width: '122px' }}>
 												<Select
-													value={searchFilter?.search?.engineRange?.start}
+													value={searchFilter?.search?.enginesRange?.start}
 													onChange={(e: any) => propertySquareHandler(e, 'start')}
 													displayEmpty
 													inputProps={{ 'aria-label': 'Without label' }}
@@ -506,7 +503,10 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 													{engineSize.map((square: number) => (
 														<MenuItem
 															value={square}
-															disabled={(searchFilter?.search?.engineRange?.start || 0) < square}
+															disabled={
+																typeof searchFilter?.search?.enginesRange?.start === 'number' &&
+																(searchFilter?.search?.enginesRange?.start || 0) > square
+															}
 															key={square}
 														>
 															{square}
@@ -517,7 +517,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 											<div className={'minus-line'}></div>
 											<FormControl sx={{ width: '122px' }}>
 												<Select
-													value={searchFilter?.search?.engineRange?.end}
+													value={searchFilter?.search?.enginesRange?.end}
 													onChange={(e: any) => propertySquareHandler(e, 'end')}
 													displayEmpty
 													inputProps={{ 'aria-label': 'Without label' }}
@@ -526,7 +526,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 													{engineSize.map((square: number) => (
 														<MenuItem
 															value={square}
-															disabled={(searchFilter?.search?.engineRange?.start || 0) > square}
+															disabled={(searchFilter?.search?.enginesRange?.end || 0) < square}
 															key={square}
 														>
 															{square}
@@ -565,10 +565,6 @@ HeaderFilter.defaultProps = {
 		page: 1,
 		limit: 9,
 		search: {
-		 	milageRange: {
-				start: 0,
-				end: 50000,
-			},
 			pricesRange: {
 				start: 0,
 				end: 2000000,

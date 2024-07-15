@@ -114,7 +114,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 }
 
 interface PropertyPanelListType {
-	properties: Product[];
+	products: Product[];
 	anchorEl: any;
 	menuIconClickHandler: any;
 	menuIconCloseHandler: any;
@@ -124,7 +124,7 @@ interface PropertyPanelListType {
 
 export const PropertyPanelList = (props: PropertyPanelListType) => {
 	const {
-		properties,
+		products,
 		anchorEl,
 		menuIconClickHandler,
 		menuIconCloseHandler,
@@ -139,7 +139,7 @@ export const PropertyPanelList = (props: PropertyPanelListType) => {
 					{/*@ts-ignore*/}
 					<EnhancedTableHead />
 					<TableBody>
-						{properties.length === 0 && (
+						{products.length === 0 && (
 							<TableRow>
 								<TableCell align="center" colSpan={8}>
 									<span className={'no-data'}>data not found!</span>
@@ -147,8 +147,8 @@ export const PropertyPanelList = (props: PropertyPanelListType) => {
 							</TableRow>
 						)}
 
-						{properties.length !== 0 &&
-							properties.map((property: Product, index: number) => {
+						{products.length !== 0 &&
+							products.map((property: Product, index: number) => {
 								const propertyImage = `${REACT_APP_API_URL}/${property?.productImages[0]}`;
 
 								return (
@@ -215,7 +215,7 @@ export const PropertyPanelList = (props: PropertyPanelListType) => {
 															.filter((ele) => ele !== property.productStatus)
 															.map((status: string) => (
 																<MenuItem
-																	onClick={() => updatePropertyHandler({ _id: property._id, propertyStatus: status })}
+																	onClick={() => updatePropertyHandler({ _id: property._id, productStatus: status })}
 																	key={status}
 																>
 																	<Typography variant={'subtitle1'} component={'span'}>
