@@ -293,12 +293,15 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 				delete searchFilter.search.typeList;
 			}
 
-			if (searchFilter?.search?.engineList?.length == 0) {
+			if (searchFilter?.search?.yearList?.length == 0) {
 				delete searchFilter.search.yearList;
 			}
 
 			if (searchFilter?.search?.options?.length == 0) {
 				delete searchFilter.search.options;
+			}
+			if (searchFilter?.search?.engineList?.length == 0) {
+				delete searchFilter.search.engineList;
 			}
 
 			await router.push(
@@ -367,7 +370,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 					</div>
 
 					<div className={`filter-rooms ${openRooms ? 'on' : ''}`} ref={roomsRef}>
-						{[150, 250, 400, 750, 1000].map((room: number) => {
+						{[50, 150, 250, 400, 750, 1000].map((room: number) => {
 							return (
 								<span onClick={() => propertyRoomSelectHandler(room)} key={room}>
 									{room}

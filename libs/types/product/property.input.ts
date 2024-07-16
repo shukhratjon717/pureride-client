@@ -39,7 +39,7 @@ interface PISearch {
 	options?: string[];
 	pricesRange?: Range;
 	periodsRange?: PeriodsRange;
-	enginesRange?: EnginesRange;
+	enginesRange?: Range;
 	text?: string;
 }
 
@@ -84,9 +84,4 @@ interface Range {
 interface PeriodsRange {
 	start: Date | number;
 	end: Date | number;
-}
-
-interface EnginesRange {
-	start: number;
-	end: number;
 }

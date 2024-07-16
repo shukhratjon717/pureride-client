@@ -13,16 +13,15 @@ import { LIKE_TARGET_PROPERTY } from '../../apollo/user/mutation';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
 import { ProductsInquiry } from '../../libs/types/product/property.input';
 import { Product } from '../../libs/types/product/property';
-import Filter from '../../libs/components/product/Filter';
-import { engineSize } from '../../libs/config';
 import { GET_PROPERTIES } from '../../apollo/user/query';
-import PropertyCard from '../../libs/components/product/PropertyCard';
 import PopularProperties from '../../libs/components/homepage/PopularProperties';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Navigation, Pagination as SwiperPagination } from 'swiper';
 
 // Import Swiper styles
 import 'swiper/swiper-bundle.min.css';
+import LightweightProducts from '../../libs/components/product/sportbike/Sportbike';
+import SkuterCard from '../../libs/components/product/skuter/SkuterCard';
+import Skuter from '../../libs/components/product/skuter/Skuter';
+import Quadricycle from '../../libs/components/product/quadricycle/Quadricycle';
 
 // Function to get static props for internationalization
 export const getStaticProps = async ({ locale }: any) => ({
@@ -149,8 +148,7 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 	} else {
 		return (
 			<div id="property-list-page" style={{ position: 'relative' }}>
-				<div className='filter-holder'>
-				</div>
+				<div className="filter-holder"></div>
 				<PopularProperties />
 
 				<div className="container">
@@ -190,14 +188,10 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 					</Box>
 					{/* ========== */}
 					<Stack className={'property-page'}>
-						<Stack className={'filter-config'}>
-							{/* <Filter searchFilter={searchFilter} setSearchFilter={setSearchFilter} initialInput={initialInput} /> */}
-						</Stack>
-						<Stack component={"div"} className={"product-container"}>
-
-						</Stack>
 						<Stack className="main-config" mb={'76px'}>
-							{/* <PopularProperties /> */}
+							<LightweightProducts />
+							<Quadricycle />
+							<Skuter />
 							<Stack className="pagination-config">
 								{properties.length !== 0 && (
 									<Stack className="pagination-box">

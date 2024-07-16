@@ -1,30 +1,30 @@
 import React from 'react';
 import { Stack, Box, Divider, Typography } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
-import useDeviceDetect from '../../hooks/useDeviceDetect';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import { REACT_APP_API_URL, topPropertyRank } from '../../config';
-import { useRouter } from 'next/router';
-import { useReactiveVar } from '@apollo/client';
-import { userVar } from '../../../apollo/store';
-import { Product } from '../../types/product/property';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import { useRouter } from 'next/router';
+import { Product } from '../../../types/product/property';
+import useDeviceDetect from '../../../hooks/useDeviceDetect';
+import { useReactiveVar } from '@apollo/client';
+import { REACT_APP_API_URL, topPropertyRank } from '../../../config';
+import { userVar } from '../../../../apollo/store';
 
-interface PopularPropertyCardProps {
+interface LightweightProductsCardProps {
 	product: Product;
 	likePropertyHandler: any;
 }
 
-const PopularPropertyCard = (props: PopularPropertyCardProps) => {
+const LightweightProductsCard = (props: LightweightProductsCardProps) => {
 	const { product, likePropertyHandler } = props;
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
 
 	/** HANDLERS **/
-	const pushDetailHandler = async (propertyId: string) => {
-		console.log('propertyId:', propertyId);
-		await router.push({ pathname: '/product/detail', query: { id: propertyId } });
+	const pushDetailHandler = async (productId: string) => {
+		console.log('propertyId:', productId);
+		await router.push({ pathname: '/product/detail', query: { id: productId } });
 	};
 
 	if (device === 'mobile') {
@@ -55,15 +55,15 @@ const PopularPropertyCard = (props: PopularPropertyCardProps) => {
 					<div className={'options'}>
 						<div>
 							{/* <img src="/img/icons/bed.svg" alt="" /> */}
-							<span>{product?.productModel} bed</span>
+							<span>{product?.productModel} Model</span>
 						</div>
 						<div>
 							{/* <img src="/img/icons/room.svg" alt="" /> */}
-							<span>{product?.productBrand} rooms</span>
+							<span>{product?.productBrand} Brand</span>
 						</div>
 						<div>
 							{/* <img src="/img/icons/expand.svg" alt="" /> */}
-							<span>{product?.productEngineSize} </span>
+							<span>{product?.productEngineSize} Engine </span>
 						</div>
 					</div>
 					<Divider sx={{ mt: '15px', mb: '17px' }} />
@@ -107,11 +107,11 @@ const PopularPropertyCard = (props: PopularPropertyCardProps) => {
 					<div className={'options'}>
 						<div>
 							{/* <img src="/img/icons/bed.svg" alt="" /> */}
-							<span>{product?.productBrand}</span>
+							<span>{product?.productModel}</span>
 						</div>
 						<div>
 							{/* <img src="/img/icons/room.svg" alt="" /> */}
-							<span>{product?.productFuelType}</span>
+							<span>{product?.productBrand}</span>
 						</div>
 						<div>
 							{/* <img src="/img/icons/expand.svg" alt="" /> */}
@@ -120,7 +120,9 @@ const PopularPropertyCard = (props: PopularPropertyCardProps) => {
 					</div>
 					<Divider sx={{ mt: '15px', mb: '17px' }} />
 					<div className={'bott'}>
-						<p> {product.productFuelType}</p>
+						<p>
+							<p> {product.productFuelType}</p>
+						</p>
 						<div className="view-like-box">
 							<IconButton color={'default'}>
 								<RemoveRedEyeIcon />
@@ -142,4 +144,4 @@ const PopularPropertyCard = (props: PopularPropertyCardProps) => {
 	}
 };
 
-export default PopularPropertyCard;
+export default LightweightProductsCard;

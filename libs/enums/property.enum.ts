@@ -23,11 +23,12 @@ export enum ProductLocation {
 }
 
 export enum ProductEngineSize {
-	LIGHTWEIGHT1 = '150cc',
-	LIGHTWEIGHT2 = '250cc',
-	ENTRYLEVEL = '400cc',
-	INTERMEDIATE = '750cc',
-	HEAVY = '1000cc',
+	BASE = "BASE",
+	LIGHTWEIGHT = 'LIGHTWEIGHT',
+	ENTRYLEVEL = 'ENTRYLEVEL',
+	INTERMEDIATE = 'INTERMEDIATE',
+	ADVANCED="ADVANCED",
+	HEAVY = 'HEAVY',
 }
 
 export enum ProductFuelType {

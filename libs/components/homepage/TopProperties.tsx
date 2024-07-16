@@ -29,7 +29,7 @@ const TopProperties = (props: TopPropertiesProps) => {
 	const {
 		loading: getProductsLoading,
 		data: getProductsData,
-		error: getProductssError,
+		error: getProductsError,
 		refetch: getProductsRefetch,
 	} = useQuery(GET_PROPERTIES, {
 		fetchPolicy: 'cache-and-network',

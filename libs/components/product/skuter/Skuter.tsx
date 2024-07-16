@@ -1,31 +1,30 @@
 import React, { useState } from 'react';
 import { Stack, Box } from '@mui/material';
-import useDeviceDetect from '../../hooks/useDeviceDetect';
+import useDeviceDetect from '../../../hooks/useDeviceDetect';
 import { Autoplay, Navigation, Pagination } from 'swiper';
 import WestIcon from '@mui/icons-material/West';
 import EastIcon from '@mui/icons-material/East';
-import PopularPropertyCard from './PopularPropertyCard';
-import { GET_PROPERTIES } from '../../../apollo/user/query';
+import { GET_PROPERTIES } from '../../../../apollo/user/query';
 import { useMutation, useQuery } from '@apollo/client';
-import { T } from '../../types/common';
-import { Product } from '../../types/product/property';
-import { ProductsInquiry } from '../../types/product/property.input';
+import { T } from '../../../types/common';
+import { Product } from '../../../types/product/property';
+import { ProductsInquiry } from '../../../types/product/property.input';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { LIKE_TARGET_PROPERTY } from '../../../apollo/user/mutation';
-import { Message } from '../../enums/common.enum';
-import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../sweetAlert';
+import { Message } from '../../../enums/common.enum';
+import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../../sweetAlert';
+import { LIKE_TARGET_PROPERTY } from '../../../../apollo/user/mutation';
+import SkuterCard from './SkuterCard';
 
-interface PopularPropertiesProps {
+interface SkuterProps {
 	initialInput: ProductsInquiry;
 }
 
-const PopularProperties = (props: PopularPropertiesProps) => {
+const Skuter = (props: SkuterProps) => {
 	const { initialInput } = props;
 	const device = useDeviceDetect();
-	const [popularProducts, setPopularProperties] = useState<Product[]>([]);
+	const [lightweightProducts, setLightweightProperties] = useState<Product[]>([]);
 
 	/** APOLLO REQUESTS **/
-
 	const [likeTargerProperty] = useMutation(LIKE_TARGET_PROPERTY);
 	const {
 		loading: getProductsLoading,
@@ -37,7 +36,7 @@ const PopularProperties = (props: PopularPropertiesProps) => {
 		variables: { input: initialInput },
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: T) => {
-			setPopularProperties(data?.getProducts?.list);
+			setLightweightProperties(data?.getProducts?.list);
 		},
 	});
 	/** HANDLERS **/
@@ -58,15 +57,15 @@ const PopularProperties = (props: PopularPropertiesProps) => {
 		}
 	};
 
-	if (!popularProducts) return null;
-	console.log('popularProducts::', popularProducts);
+	if (!lightweightProducts) return null;
+	console.log('lightweightProducts::', lightweightProducts);
 
 	if (device === 'mobile') {
 		return (
 			<Stack className={'popular-properties'}>
 				<Stack className={'container'}>
 					<Stack className={'info-box'}>
-						<span> Products Range </span>
+						<span>Skuter Range </span>
 					</Stack>
 					<Stack className={'card-box'}>
 						<Swiper
@@ -76,10 +75,10 @@ const PopularProperties = (props: PopularPropertiesProps) => {
 							spaceBetween={50}
 							modules={[Autoplay]}
 						>
-							{popularProducts.map((property: Product) => {
+							{lightweightProducts.map((property: Product) => {
 								return (
 									<SwiperSlide key={property._id} className="popular-property-slide">
-										<PopularPropertyCard product={property} likePropertyHandler={likePropertyHandler} />
+										<SkuterCard product={property} likePropertyHandler={likePropertyHandler} />
 									</SwiperSlide>
 								);
 							})}
@@ -94,7 +93,7 @@ const PopularProperties = (props: PopularPropertiesProps) => {
 				<Stack className={'container'}>
 					<Stack className={'info-box'}>
 						<Box component={'div'} className={'left'}>
-							<span> Products Range</span>
+							<span> Skuter Range</span>
 						</Box>
 						<Box component={'div'} className={'right'}>
 							<div className={'more-box'}></div>
@@ -114,10 +113,10 @@ const PopularProperties = (props: PopularPropertiesProps) => {
 								el: '.swiper-popular-pagination',
 							}}
 						>
-							{popularProducts.map((property: Product) => {
+							{lightweightProducts.map((property: Product) => {
 								return (
 									<SwiperSlide key={property._id} className={'popular-property-slide'}>
-										<PopularPropertyCard product={property} likePropertyHandler={likePropertyHandler} />
+										<SkuterCard product={property} likePropertyHandler={likePropertyHandler} />
 									</SwiperSlide>
 								);
 							})}
@@ -134,14 +133,17 @@ const PopularProperties = (props: PopularPropertiesProps) => {
 	}
 };
 
-PopularProperties.defaultProps = {
+Skuter.defaultProps = {
 	initialInput: {
 		page: 1,
 		limit: 7,
 		sort: 'productViews',
 		direction: 'DESC',
-		search: {},
+		search: {
+			typeList: ['SKUTER'],
+		},
 	},
 };
 
-export default PopularProperties;
+export default Skuter;
+
