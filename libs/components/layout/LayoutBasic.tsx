@@ -141,7 +141,7 @@ const withLayoutBasic = (Component: any) => {
 
 						<Stack id={'main'}>
 						<div className="filter-holder">
-								<HeaderFilter />
+								{/* <HeaderFilter /> */}
 							</div>
 							<Component {...props} />
 						</Stack>

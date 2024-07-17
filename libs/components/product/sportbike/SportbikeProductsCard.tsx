@@ -54,15 +54,12 @@ const LightweightProductsCard = (props: LightweightProductsCardProps) => {
 					<p className={'desc'}>{product.productAddress}</p>
 					<div className={'options'}>
 						<div>
-							{/* <img src="/img/icons/bed.svg" alt="" /> */}
 							<span>{product?.productModel} Model</span>
 						</div>
 						<div>
-							{/* <img src="/img/icons/room.svg" alt="" /> */}
 							<span>{product?.productBrand} Brand</span>
 						</div>
 						<div>
-							{/* <img src="/img/icons/expand.svg" alt="" /> */}
 							<span>{product?.productEngineSize} Engine </span>
 						</div>
 					</div>
@@ -120,8 +117,9 @@ const LightweightProductsCard = (props: LightweightProductsCardProps) => {
 					</div>
 					<Divider sx={{ mt: '15px', mb: '17px' }} />
 					<div className={'bott'}>
-						<p>
+						<p className={"def"}>
 							<p> {product.productFuelType}</p>
+							<p> {product.productLocation}</p>
 						</p>
 						<div className="view-like-box">
 							<IconButton color={'default'}>

@@ -120,8 +120,9 @@ const SkuterCard = (props: SkuterCardProps) => {
 					</div>
 					<Divider sx={{ mt: '15px', mb: '17px' }} />
 					<div className={'bott'}>
-						<p>
+					<p className={"def"}>
 							<p> {product.productFuelType}</p>
+							<p> {product.productLocation}</p>
 						</p>
 						<div className="view-like-box">
 							<IconButton color={'default'}>

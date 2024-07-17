@@ -22,6 +22,7 @@ import LightweightProducts from '../../libs/components/product/sportbike/Sportbi
 import SkuterCard from '../../libs/components/product/skuter/SkuterCard';
 import Skuter from '../../libs/components/product/skuter/Skuter';
 import Quadricycle from '../../libs/components/product/quadricycle/Quadricycle';
+import HeaderFilter from '../../libs/components/homepage/HeaderFilter';
 
 // Function to get static props for internationalization
 export const getStaticProps = async ({ locale }: any) => ({
@@ -149,6 +150,7 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 		return (
 			<div id="property-list-page" style={{ position: 'relative' }}>
 				<div className="filter-holder"></div>
+
 				<PopularProperties />
 
 				<div className="container">
@@ -187,31 +189,35 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 						</div>
 					</Box>
 					{/* ========== */}
-					<Stack className={'property-page'}>
-						<Stack className="main-config" mb={'76px'}>
-							<LightweightProducts />
-							<Quadricycle />
-							<Skuter />
-							<Stack className="pagination-config">
-								{properties.length !== 0 && (
-									<Stack className="pagination-box">
-										<Pagination
-											page={currentPage}
-											count={Math.ceil(total / searchFilter.limit)}
-											onChange={handlePaginationChange}
-											shape="circular"
-											color="primary"
-										/>
-									</Stack>
-								)}
+					<Stack>
+						<HeaderFilter />
 
-								{properties.length !== 0 && (
-									<Stack className="total-result">
-										<Typography>
-											Total {total} product{total > 1 ? 'ies' : 'y'} available
-										</Typography>
-									</Stack>
-								)}
+						<Stack className={'property-page'}>
+							<Stack className="main-config" mb={'76px'}>
+								<LightweightProducts />
+								<Quadricycle />
+								<Skuter />
+								<Stack className="pagination-config">
+									{properties.length !== 0 && (
+										<Stack className="pagination-box">
+											<Pagination
+												page={currentPage}
+												count={Math.ceil(total / searchFilter.limit)}
+												onChange={handlePaginationChange}
+												shape="circular"
+												color="primary"
+											/>
+										</Stack>
+									)}
+
+									{properties.length !== 0 && (
+										<Stack className="total-result">
+											<Typography>
+												Total {total} product{total > 1 ? 'ies' : 'y'} available
+											</Typography>
+										</Stack>
+									)}
+								</Stack>
 							</Stack>
 						</Stack>
 					</Stack>

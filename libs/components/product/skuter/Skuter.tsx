@@ -122,10 +122,17 @@ const Skuter = (props: SkuterProps) => {
 							})}
 						</Swiper>
 					</Stack>
+
 					<Stack className={'pagination-box'}>
 						<WestIcon className={'swiper-popular-prev'} />
 						<div className={'swiper-popular-pagination'}></div>
 						<EastIcon className={'swiper-popular-next'} />
+					</Stack>
+					<Stack className={'engine-type'}>
+						<span>Base type: 50cc - 150cc </span><span>|</span>
+						<span>Lightweight type: 150cc - 450cc </span><span>|</span>
+						<span>Advanced type: 450cc - 750cc </span><span>|</span>
+						<span>Heavy type: 750cc - 1000cc</span>
 					</Stack>
 				</Stack>
 			</Stack>
@@ -146,4 +153,3 @@ Skuter.defaultProps = {
 };
 
 export default Skuter;
-

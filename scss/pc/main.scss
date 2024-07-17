@@ -428,7 +428,7 @@ body::-webkit-scrollbar {
 			margin-top: 80px;
 			padding: 10px 10px;
 			width: 98%;
-			height: 470px;
+			height: 550px;
 			display: flex;
 			flex-direction: row;
 			justify-content: center;
@@ -439,16 +439,34 @@ body::-webkit-scrollbar {
 				width: 100%;
 				flex-direction: column;
 				align-items: center;
+				margin-bottom: 20px;
+
 				.info-box {
 					.left {
-						margin-bottom: 0px;
+						margin-bottom: 20px;
+						margin-top: 10px;
 						span {
-							color: gray;
-							font-size: 20px;
+							color: black;
+							font-size: 25px;
+							margin: 15px;
 						}
 					}
 				}
+				.engine-type {
+					width: 1200px;
+					height: 300px;
+					display: flex;
+					flex-direction: row;
+					justify-content: space-between;
+					gap: 15px;
+					margin: 10px;
+					color: rgb(0, 0, 0);
+					div {
+						font-size: 15px;
+					}
+				}
 				.card-box {
+					border-top: 1px solid red;
 					margin-top: 10px;
 					margin-bottom: 400px;
 					width: 100%;
@@ -458,6 +476,7 @@ body::-webkit-scrollbar {
 					justify-content: space-between;
 					.popular-property-swiper {
 						position: absolute;
+						margin-top: 10px;
 						width: 100%;
 						height: 390px;
 						display: flex;
@@ -530,6 +549,7 @@ body::-webkit-scrollbar {
 							border-top: none;
 							background: #fff;
 							box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
+
 							.title {
 								overflow: hidden;
 								color: #181a20;
@@ -557,9 +577,11 @@ body::-webkit-scrollbar {
 							}
 							.options {
 								margin-top: 15px;
+								height: 30px;
 								display: flex;
 								flex-direction: row;
 								justify-content: space-between;
+								align-items: center;
 								div {
 									display: flex;
 									flex-direction: row;
@@ -583,6 +605,12 @@ body::-webkit-scrollbar {
 								flex-direction: row;
 								justify-content: space-between;
 								align-items: center;
+								.def {
+									display: flex;
+									flex-direction: row;
+									gap: 10px;
+									align-items: center;
+								}
 								p {
 									color: #181a20;
 									font-family: $font;
@@ -712,6 +740,8 @@ body::-webkit-scrollbar {
 				padding: 16px 29px;
 				width: 1094px;
 				height: 96px;
+				justify-content: center;
+				margin-left: 100px;
 				display: flex;
 				flex-direction: row;
 				justify-content: space-between;
