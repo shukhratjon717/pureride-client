@@ -21,6 +21,7 @@ import { CommentInput, CommentsInquiry } from '../../libs/types/comment/comment.
 import { CREATE_COMMENT, LIKE_TARGET_PROPERTY } from '../../apollo/user/mutation';
 import { GET_COMMENTS, GET_MEMBER, GET_PROPERTIES } from '../../apollo/user/query';
 import { T } from '../../libs/types/common';
+import TopAgents from '../../libs/components/homepage/TopAgents';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -149,7 +150,8 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 	};
 
 	const createCommentHandler = async () => {
-		if (!user._id) throw new Error(Messages.error3);
+		try {
+			if (!user._id) throw new Error(Messages.error3);
 			if (user._id === agentId) throw new Error('Cannot write a reivew for yourself');
 			await createComment({
 				variables: {
@@ -160,6 +162,9 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 			setInsertCommentData({ ...insertCommentData, commentContent: '' });
 
 			await getCommentsRefetch({ input: commentInquiry });
+		} catch (err: any) {
+			sweetErrorHandling(err).then();
+		}
 	};
 
 	const likePropertyHandler = async (user: any, id: string) => {
@@ -204,7 +209,11 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 							{agentProperties.map((property: Product) => {
 								return (
 									<div className={'wrap-main'} key={property?._id}>
-										<PropertyBigCard property={property} key={property?._id} />
+										<PropertyBigCard
+											property={property}
+											key={property?._id}
+											likePropertyHandler={likePropertyHandler}
+										/>
 									</div>
 								);
 							})}
@@ -222,13 +231,13 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 										/>
 									</Stack>
 									<span>
-										Total {propertyTotal} propert{propertyTotal > 1 ? 'ies' : 'y'} available
+										Total {propertyTotal} product{propertyTotal > 1 ? 's' : ''} available
 									</span>
 								</>
 							) : (
 								<div className={'no-data'}>
 									<img src="/img/icons/icoAlert.svg" alt="" />
-									<p>No properties found!</p>
+									<p>No products found!</p>
 								</div>
 							)}
 						</Stack>

@@ -13,7 +13,7 @@ import { Product } from '../../types/product/property';
 
 interface PropertyBigCardProps {
 	property: Product;
-	likePropertyHandler?: any;
+	likePropertyHandler: any;
 }
 
 const PropertyBigCard = (props: PropertyBigCardProps) => {
@@ -28,7 +28,7 @@ const PropertyBigCard = (props: PropertyBigCardProps) => {
 	};
 
 	if (device === 'mobile') {
-		return <div>APARTMEND BIG CARD</div>;
+		return <div>Bike BIG CARD</div>;
 	} else {
 		return (
 			<Stack className="property-big-card-box" onClick={() => goPropertyDetatilPage(property?._id)}>
@@ -51,16 +51,13 @@ const PropertyBigCard = (props: PropertyBigCardProps) => {
 					<p className={'desc'}>{property?.productAddress}</p>
 					<div className={'options'}>
 						<div>
-							<img src="/img/icons/bed.svg" alt="" />
-							<span>{property?.productYear} bed</span>
+							<span>Year {property?.productYear} </span>
 						</div>
 						<div>
-							<img src="/img/icons/room.svg" alt="" />
-							<span>{property?.productModel} rooms</span>
+							<span>Model {property?.productModel} </span>
 						</div>
 						<div>
-							<img src="/img/icons/expand.svg" alt="" />
-							<span>{property?.productEngineSize} m2</span>
+							<span>Engine {property?.productEngineSize} </span>
 						</div>
 					</div>
 					<Divider sx={{ mt: '15px', mb: '17px' }} />
@@ -76,7 +73,7 @@ const PropertyBigCard = (props: PropertyBigCardProps) => {
 							<Typography className="view-cnt">{property?.productViews}</Typography>
 							<IconButton
 								color={'default'}
-								onClick={(e) => {
+								onClick={(e: any) => {
 									e.stopPropagation();
 									likePropertyHandler(user, property._id);
 								}}

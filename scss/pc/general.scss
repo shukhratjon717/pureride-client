@@ -163,37 +163,66 @@
 	margin-bottom: 34px;
 	display: flex;
 	flex-direction: column;
+	border: 2px solid #ddd; /* Changed border color for a softer look */
+	border-radius: 12px; /* Added border radius for rounded corners */
+	overflow: hidden; /* Ensure child elements respect border radius */
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added shadow for depth */
+	transition: transform 0.3s, box-shadow 0.3s; /* Smooth hover effects */
+
+	&:hover {
+		transform: translateY(-5px); /* Lift card slightly on hover */
+		box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+	}
+
 	.agent-img {
 		border-radius: 12px;
 		width: 233px;
-		height: 273px;
-		background-size: 100% 100%;
-		background-repeat: no-repeat;
+		height: 200px;
+		background-size: cover; /* Improved background size for better fit */
+		background-position: center; /* Center the background image */
 		cursor: pointer;
+		position: relative;
+		overflow: hidden; /* Ensure hover effect respects border radius */
+		transition: transform 0.3s; /* Smooth image zoom effect on hover */
+
+		&:hover {
+			transform: scale(1.05); /* Slight zoom on hover */
+		}
+
 		div {
 			position: absolute;
 			padding: 12px;
 			top: 12px;
 			left: 12px;
+			justify-content: center;
 			border-radius: 6px;
-			background: #eb6753;
+			background: #de776b;
 			color: #fff;
 			font-family: $font;
 			font-size: 12px;
 			font-style: normal;
 			font-weight: 600;
 			line-height: normal;
+			opacity: 0; /* Initially hidden */
+			transition: opacity 0.3s; /* Smooth fade-in effect */
+		}
+
+		&:hover div {
+			opacity: 1; /* Show div on hover */
 		}
 	}
+
 	.agent-desc {
 		margin-top: 23px;
 		display: flex;
-		flex-direction: row;
+		flex-direction: column;
 		justify-content: space-between;
 		align-items: center;
+
 		.agent-info {
 			display: flex;
 			flex-direction: column;
+			align-items: center;
 			strong {
 				color: #181a20;
 				font-family: $font;
@@ -204,7 +233,7 @@
 				cursor: pointer;
 			}
 			span {
-				color: #181a20;
+				color: #555; /* Softer color for better readability */
 				font-family: $font;
 				font-size: 15px;
 				font-style: normal;
@@ -212,21 +241,50 @@
 				line-height: 28px;
 			}
 		}
+
 		.buttons {
 			width: auto;
 			display: flex;
 			flex-direction: row;
 			justify-content: center;
 			align-items: center;
+
 			svg {
 				width: 24px;
 				height: 24px;
 				cursor: pointer;
+				margin-right: 5px; /* Added spacing between buttons */
+				transition: transform 0.3s; /* Smooth hover effect */
+				&:hover {
+					transform: scale(1.1); /* Slight enlarge on hover */
+				}
 			}
+
 			.view-cnt {
 				font-size: 13px;
+				color: #888; /* Softer color for view count */
 			}
 		}
+
+		.male-spa-icon {
+			display: none; /* Initially hidden */
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			width: 24px;
+			height: 24px;
+			cursor: pointer;
+			transition: opacity 0.3s ease-in-out;
+
+			&.visible {
+				display: block; /* Show on hover */
+				opacity: 1;
+			}
+		}
+	}
+
+	.top-agent-card:hover .male-spa-icon {
+		display: block;
 	}
 }
 .community-general-card-config {

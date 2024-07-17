@@ -11,6 +11,7 @@ import { AgentsInquiry } from '../../types/member/member.input';
 import { GET_AGENTS, GET_PROPERTIES } from '../../../apollo/user/query';
 import { useQuery } from '@apollo/client';
 import { T } from '../../types/common';
+import AgentCard from './TopAgentCard';
 
 interface TopAgentsProps {
 	initialInput: AgentsInquiry;
@@ -56,7 +57,7 @@ const TopAgents = (props: TopAgentsProps) => {
 							{topAgents.map((agent: Member) => {
 								return (
 									<SwiperSlide className={'top-agents-slide'} key={agent?._id}>
-										<TopAgentCard agent={agent} key={agent?.memberNick} />
+										<AgentCard agent={agent} key={agent?.memberNick} />
 									</SwiperSlide>
 								);
 							})}
@@ -74,12 +75,7 @@ const TopAgents = (props: TopAgentsProps) => {
 							<span>Top Agents</span>
 							<p>Our Top Agents always ready to serve you</p>
 						</Box>
-						<Box component={'div'} className={'right'}>
-							<div className={'more-box'}>
-								<span>See All Agents</span>
-								<img src="/img/icons/rightup.svg" alt="" />
-							</div>
-						</Box>
+						
 					</Stack>
 					<Stack className={'wrapper'}>
 						<Box component={'div'} className={'switch-btn swiper-agents-prev'}>
@@ -99,7 +95,7 @@ const TopAgents = (props: TopAgentsProps) => {
 								{topAgents.map((agent: Member) => {
 									return (
 										<SwiperSlide className={'top-agents-slide'} key={agent?._id}>
-											<TopAgentCard agent={agent} key={agent?.memberNick} />
+											<AgentCard agent={agent} key={agent?.memberNick} />
 										</SwiperSlide>
 									);
 								})}

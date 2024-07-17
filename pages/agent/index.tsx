@@ -14,8 +14,8 @@ import { useMutation, useQuery } from '@apollo/client';
 import { GET_AGENTS } from '../../apollo/user/query';
 import { T } from '../../libs/types/common';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
-import { Message } from '../../libs/enums/common.enum';
 import { Messages } from '../../libs/config';
+import TopAgents from '../../libs/components/homepage/TopAgents';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -137,6 +137,7 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 		return (
 			<Stack className={'agent-list-page'}>
 				<Stack className={'container'}>
+					<TopAgents />
 					<Stack className={'filter'}>
 						<Box component={'div'} className={'left'}>
 							<input

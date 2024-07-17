@@ -103,15 +103,12 @@ const LightweightProductsCard = (props: LightweightProductsCardProps) => {
 					<p className={'desc'}>{product.productAddress}</p>
 					<div className={'options'}>
 						<div>
-							{/* <img src="/img/icons/bed.svg" alt="" /> */}
 							<span>{product?.productModel}</span>
 						</div>
 						<div>
-							{/* <img src="/img/icons/room.svg" alt="" /> */}
 							<span>{product?.productBrand}</span>
 						</div>
 						<div>
-							{/* <img src="/img/icons/expand.svg" alt="" /> */}
 							<span>{product?.productEngineSize}</span>
 						</div>
 					</div>

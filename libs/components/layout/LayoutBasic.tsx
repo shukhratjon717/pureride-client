@@ -36,27 +36,27 @@ const withLayoutBasic = (Component: any) => {
 					break;
 				case '/agent':
 					title = 'Agents';
-					desc = 'Home / For Rent';
-					bgImage = '/img/banner/agents.webp';
+					desc = 'Home / For Sale';
+					bgImage = '/img/banner/aagents.jpg';
 					break;
 				case '/agent/detail':
 					title = 'Agent Page';
-					desc = 'Home / For Rent';
+					desc = 'Home / For Sale';
 					bgImage = '/img/banner/header2.svg';
 					break;
 				case '/mypage':
 					title = 'my page';
-					desc = 'Home / For Rent';
+					desc = 'Home / For Sale';
 					bgImage = '/img/banner/header1.svg';
 					break;
 				case '/community':
 					title = 'Community';
-					desc = 'Home / For Rent';
+					desc = 'Home / For Sale';
 					bgImage = '/img/banner/header2.svg';
 					break;
 				case '/community/detail':
 					title = 'Community Detail';
-					desc = 'Home / For Rent';
+					desc = 'Home / For Sale';
 					bgImage = '/img/banner/header2.svg';
 					break;
 				case '/cs':
@@ -72,7 +72,7 @@ const withLayoutBasic = (Component: any) => {
 					break;
 				case '/member':
 					title = 'Member Page';
-					desc = 'Home / For Rent';
+					desc = 'Home / For Sale';
 					bgImage = '/img/banner/header1.svg';
 					break;
 				default:
@@ -103,7 +103,6 @@ const withLayoutBasic = (Component: any) => {
 						</Stack>
 
 						<Stack id={'main'}>
-							
 							<Component {...props} />
 						</Stack>
 
@@ -140,9 +139,7 @@ const withLayoutBasic = (Component: any) => {
 						</Stack>
 
 						<Stack id={'main'}>
-						<div className="filter-holder">
-								{/* <HeaderFilter /> */}
-							</div>
+							<div className="filter-holder">{/* <HeaderFilter /> */}</div>
 							<Component {...props} />
 						</Stack>
 

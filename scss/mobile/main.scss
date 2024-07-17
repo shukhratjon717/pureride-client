@@ -314,7 +314,7 @@
 	}
 
 	.popular-properties {
-    margin-bottom: 100px;
+		margin-bottom: 100px;
 		padding: 10px 10px;
 		width: 100%;
 		height: auto;
@@ -322,20 +322,20 @@
 		flex-direction: row;
 		background: #f6f6f6;
 		.container {
-      margin-bottom: 100px;
+			margin-bottom: 100px;
 			width: 100%;
 			flex-direction: column;
 			align-items: center;
 			.card-box {
 				margin-top: 25px;
-        margin-bottom: 100px;
+				margin-bottom: 100px;
 				width: 100%;
 				height: auto;
 				display: flex;
 				flex-direction: row;
 				justify-content: space-between;
 				.popular-property-swiper {
-          position: absolute;
+					position: absolute;
 					width: 100%;
 					height: 390px;
 					display: flex;
@@ -517,7 +517,7 @@
 
 	.video-frame {
 		margin: 20px 0;
-    margin-top: 100px;
+		margin-top: 100px;
 		width: 100%;
 		height: 300px;
 		background: black;
@@ -709,10 +709,24 @@
 						display: flex;
 						.top-agent-card {
 							width: 100%;
-							height: 280px;
+							height: 400px;
 							display: flex;
 							flex-direction: column;
 							align-items: center;
+							justify-content: center;
+							text-align: center;
+							background-color: #f9f9f9;
+							border: 1px solid #e0e0e0;
+							border-radius: 10px;
+							padding: 20px;
+							box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+							transition: box-shadow 0.3s ease-in-out;
+							border: 1px solid red;
+
+							&:hover {
+								box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+							}
+
 							img {
 								width: 209px;
 								height: 209px;
@@ -720,24 +734,24 @@
 								cursor: pointer;
 								object-fit: cover;
 							}
+
 							strong {
-								margin-top: 10px;
+								margin-top: 20px;
 								color: #181a20;
+								font-family: $font; /* Replace with your font variable */
+								font-size: 28px;
 								text-align: center;
-								font-family: $font;
-								font-size: 24px;
-								font-style: normal;
 								font-weight: 600;
 								line-height: normal;
 								text-transform: capitalize;
 								cursor: pointer;
 							}
+
 							span {
 								color: #181a20;
+								font-family: $font; /* Replace with your font variable */
+								font-size: 18px;
 								text-align: center;
-								font-family: $font;
-								font-size: 15px;
-								font-style: normal;
 								font-weight: 400;
 								line-height: 28px;
 							}
