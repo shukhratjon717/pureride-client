@@ -16,7 +16,7 @@ interface TopPropertyCardProps {
 }
 
 const TopPropertyCard = (props: TopPropertyCardProps) => {
-	const { property , likePropertyHandler} = props;
+	const { property, likePropertyHandler } = props;
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
@@ -90,16 +90,13 @@ const TopPropertyCard = (props: TopPropertyCardProps) => {
 					<p className={'desc'}>{property?.productAddress}</p>
 					<div className={'options'}>
 						<div>
-							<img src="/img/icons/bed.svg" alt="" />
-							<span>{property?.productEngineSize} bed</span>
+							<span> Engine {property?.productEngineSize} </span>
 						</div>
 						<div>
-							<img src="/img/icons/room.svg" alt="" />
-							<span>{property?.productModel} rooms</span>
+							<span> Model {property?.productModel}</span>
 						</div>
 						<div>
-							<img src="/img/icons/expand.svg" alt="" />
-							<span>{property?.productFuelType} m2</span>
+							<span>Fuel {property?.productFuelType} </span>
 						</div>
 					</div>
 					<Divider sx={{ mt: '15px', mb: '17px' }} />
