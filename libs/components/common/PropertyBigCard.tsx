@@ -31,7 +31,7 @@ const PropertyBigCard = (props: PropertyBigCardProps) => {
 		return <div>Bike BIG CARD</div>;
 	} else {
 		return (
-			<Stack className="property-big-card-box" onClick={() => goPropertyDetatilPage(property?._id)}>
+			<Stack className="property-big-card-box">
 				<Box
 					component={'div'}
 					className={'card-img'}
@@ -43,29 +43,32 @@ const PropertyBigCard = (props: PropertyBigCardProps) => {
 							<span>top</span>
 						</div>
 					)}
-
-					<div className={'price'}>${formatterStr(property?.productPrice)}</div>
 				</Box>
 				<Box component={'div'} className={'info'}>
 					<strong className={'title'}>{property?.productTitle}</strong>
 					<p className={'desc'}>{property?.productAddress}</p>
 					<div className={'options'}>
 						<div>
-							<span>Year {property?.productYear} </span>
+							<span>
+								Year <div></div>
+								{property?.productYear}{' '}
+							</span>
 						</div>
 						<div>
-							<span>Model {property?.productModel} </span>
+							<span>
+								Model <div></div> {property?.productModel}{' '}
+							</span>
 						</div>
 						<div>
-							<span>Engine {property?.productEngineSize} </span>
+							<span>
+								Engine <div></div> {property?.productEngineSize}{' '}
+							</span>
 						</div>
 					</div>
 					<Divider sx={{ mt: '15px', mb: '17px' }} />
 					<div className={'bott'}>
-						<div>
-							{property?.productRent ? <p>Rent</p> : <span>Rent</span>}
-							{property?.productBarter ? <p>Barter</p> : <span>Barter</span>}
-						</div>
+						<div className={'price'}>${formatterStr(property?.productPrice)}</div>
+
 						<div className="buttons-box">
 							<IconButton color={'default'}>
 								<RemoveRedEyeIcon />
@@ -79,7 +82,7 @@ const PropertyBigCard = (props: PropertyBigCardProps) => {
 								}}
 							>
 								{property?.meLiked && property?.meLiked[0]?.myFavorite ? (
-									<FavoriteIcon style={{ color: 'red' }} />
+									<FavoriteIcon style={{ color: 'secondary' }} />
 								) : (
 									<FavoriteIcon />
 								)}

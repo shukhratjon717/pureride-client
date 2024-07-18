@@ -4,9 +4,9 @@ import { Stack, Box, Typography } from '@mui/material';
 import Link from 'next/link';
 import { REACT_APP_API_URL } from '../../config';
 import IconButton from '@mui/material/IconButton';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import VisibilityTwoToneIcon from '@mui/icons-material/VisibilityTwoTone';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 
@@ -62,14 +62,14 @@ const AgentCard = (props: AgentCardProps) => {
 					</Box>
 					<Box component={'div'} className={'buttons'}>
 						<IconButton color={'default'}>
-							<RemoveRedEyeIcon />
+							<VisibilityTwoToneIcon />
 						</IconButton>
 						<Typography className="view-cnt">{agent?.memberViews}</Typography>
 						<IconButton color={'default'} onClick={() => likeMemberHandler(user, agent?._id)}>
 							{agent?.meLiked && agent?.meLiked[0]?.myFavorite ? (
-								<FavoriteIcon color={'primary'} />
+								<ThumbUpIcon sx={{ color: 'blue' }} />
 							) : (
-								<FavoriteBorderIcon />
+								<ThumbUpOffAltIcon />
 							)}
 						</IconButton>
 						<Typography className="view-cnt">{agent?.memberLikes}</Typography>

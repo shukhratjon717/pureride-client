@@ -6,9 +6,11 @@ import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { REACT_APP_API_URL, topPropertyRank } from '../../config';
 import { useRouter } from 'next/router';
 import { useReactiveVar } from '@apollo/client';
+import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import { userVar } from '../../../apollo/store';
 import { Product } from '../../types/product/property';
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import VisibilityTwoToneIcon from '@mui/icons-material/VisibilityTwoTone';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 
 interface PopularPropertyCardProps {
 	product: Product;
@@ -25,6 +27,10 @@ const PopularPropertyCard = (props: PopularPropertyCardProps) => {
 	const pushDetailHandler = async (propertyId: string) => {
 		console.log('propertyId:', propertyId);
 		await router.push({ pathname: '/product/detail', query: { id: propertyId } });
+	};
+
+	const handleLikeButtonClick = () => {
+		likePropertyHandler(user, product?._id);
 	};
 
 	if (device === 'mobile') {
@@ -54,16 +60,13 @@ const PopularPropertyCard = (props: PopularPropertyCardProps) => {
 					<p className={'desc'}>{product.productAddress}</p>
 					<div className={'options'}>
 						<div>
-							{/* <img src="/img/icons/bed.svg" alt="" /> */}
-							<span>{product?.productModel} bed</span>
+							<span>{product?.productModel} Model</span>
 						</div>
 						<div>
-							{/* <img src="/img/icons/room.svg" alt="" /> */}
-							<span>{product?.productBrand} rooms</span>
+							<span>{product?.productBrand} Brand</span>
 						</div>
 						<div>
-							{/* <img src="/img/icons/expand.svg" alt="" /> */}
-							<span>{product?.productEngineSize} </span>
+							<span>{product?.productEngineSize}Engine </span>
 						</div>
 					</div>
 					<Divider sx={{ mt: '15px', mb: '17px' }} />
@@ -106,31 +109,28 @@ const PopularPropertyCard = (props: PopularPropertyCardProps) => {
 					<p className={'desc'}>{product.productAddress}</p>
 					<div className={'options'}>
 						<div>
-							{/* <img src="/img/icons/bed.svg" alt="" /> */}
 							<span>{product?.productBrand}</span>
 						</div>
 						<div>
-							{/* <img src="/img/icons/room.svg" alt="" /> */}
 							<span>{product?.productFuelType}</span>
 						</div>
 						<div>
-							{/* <img src="/img/icons/expand.svg" alt="" /> */}
 							<span>{product?.productEngineSize}</span>
 						</div>
 					</div>
 					<Divider sx={{ mt: '15px', mb: '17px' }} />
 					<div className={'bott'}>
-						<p> {product.productFuelType}</p>
+						<p>{product.productFuelType}</p>
 						<div className="view-like-box">
 							<IconButton color={'default'}>
-								<RemoveRedEyeIcon />
+								<VisibilityTwoToneIcon />
 							</IconButton>
 							<Typography className="view-cnt">{product?.productViews}</Typography>
-							<IconButton color={'default'} onClick={() => likePropertyHandler(user, product?._id)}>
+							<IconButton color={'default'} onClick={handleLikeButtonClick}>
 								{product?.meLiked && product?.meLiked[0]?.myFavorite ? (
-									<FavoriteIcon style={{ color: 'red' }} />
+									<ThumbUpIcon sx={{ color: 'blue' }} />
 								) : (
-									<FavoriteIcon />
+									<ThumbUpOffAltIcon />
 								)}
 							</IconButton>
 							<Typography className="view-cnt">{product?.productLikes}</Typography>

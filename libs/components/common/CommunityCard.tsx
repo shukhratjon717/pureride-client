@@ -9,7 +9,9 @@ import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 import IconButton from '@mui/material/IconButton';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
+import VisibilityTwoToneIcon from '@mui/icons-material/VisibilityTwoTone';
+
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 interface CommunityCardProps {
@@ -51,7 +53,7 @@ const CommunityCard = (props: CommunityCardProps) => {
 			<Stack
 				sx={{ width: size === 'small' ? '285px' : '317px' }}
 				className="community-general-card-config"
-				onClick={(e) => chooseArticleHandler(e, boardArticle)}
+				onClick={(e: any) => chooseArticleHandler(e, boardArticle)}
 			>
 				<Stack className="image-box">
 					<img src={imagePath} alt="" className="card-img" />
@@ -60,7 +62,7 @@ const CommunityCard = (props: CommunityCardProps) => {
 					<Stack>
 						<Typography
 							className="desc"
-							onClick={(e) => {
+							onClick={(e: any) => {
 								e.stopPropagation();
 								goMemberPage(boardArticle?.memberData?._id as string);
 							}}
@@ -71,14 +73,14 @@ const CommunityCard = (props: CommunityCardProps) => {
 					</Stack>
 					<Stack className={'buttons'}>
 						<IconButton color={'default'}>
-							<RemoveRedEyeIcon />
+							<VisibilityTwoToneIcon />
 						</IconButton>
 						<Typography className="view-cnt">{boardArticle?.articleViews}</Typography>
 						<IconButton color={'default'} onClick={(e: any) => likeArticleHandler(e, user, boardArticle?._id)}>
 							{boardArticle?.meLiked && boardArticle?.meLiked[0]?.myFavorite ? (
-								<FavoriteIcon color={'primary'} />
+								<ThumbUpAltIcon color={'secondary'} />
 							) : (
-								<FavoriteBorderIcon />
+								<ThumbUpAltIcon />
 							)}
 						</IconButton>
 						<Typography className="view-cnt">{boardArticle?.articleLikes}</Typography>

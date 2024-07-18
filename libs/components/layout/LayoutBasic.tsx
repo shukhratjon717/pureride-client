@@ -47,12 +47,12 @@ const withLayoutBasic = (Component: any) => {
 				case '/mypage':
 					title = 'my page';
 					desc = 'Home / For Sale';
-					bgImage = '/img/banner/header1.svg';
+					bgImage = '/img/banner/mypage.avif';
 					break;
 				case '/community':
 					title = 'Community';
 					desc = 'Home / For Sale';
-					bgImage = '/img/banner/header2.svg';
+					bgImage = '/img/banner/comunity.jpg';
 					break;
 				case '/community/detail':
 					title = 'Community Detail';
