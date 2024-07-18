@@ -106,8 +106,8 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 			insertPropertyData.productBarter === '' || // @ts-ignore
 			insertPropertyData.productRent === '' ||
 			insertPropertyData.productYear === 0 ||
-			insertPropertyData.productMilage === 0 ||// @ts-ignore
-			insertPropertyData.productEngineSize === '' || 
+			insertPropertyData.productMilage === 0 || // @ts-ignore
+			insertPropertyData.productEngineSize === '' ||
 			insertPropertyData.productDesc === '' ||
 			insertPropertyData.productImages.length === 0
 		) {
@@ -131,7 +131,7 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 		return (
 			<div id="add-property-page">
 				<Stack className="main-title-box">
-					<Typography className="main-title">Add New Property</Typography>
+					<Typography className="main-title">Add New Product</Typography>
 					<Typography className="sub-title">We are glad to see you again!</Typography>
 				</Stack>
 
@@ -277,8 +277,8 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 									<Typography className="title">Year</Typography>
 									<select
 										className={'select-description'}
-										value={insertPropertyData.productYear || 'select'}
-										defaultValue={insertPropertyData.productYear || 'select'}
+										value={insertPropertyData.productYear?.toString() || 'select'}
+										defaultValue={insertPropertyData.productYear?.toString() || 'select'}
 										onChange={({ target: { value } }) =>
 											setInsertPropertyData({ ...insertPropertyData, productYear: parseInt(value) })
 										}
@@ -286,33 +286,32 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 										<option disabled={true} selected={true} value={'select'}>
 											Select
 										</option>
-										{[1, 2, 3, 4, 5].map((room: number) => (
-											<option value={`${room}`}>{room}</option>
-										))}
+										{[...Array(11)].map((_, i) => {
+											const year = 2014 + i;
+											return (
+												<option key={year} value={year}>
+													{year}
+												</option>
+											);
+										})}
 									</select>
 									<div className={'divider'}></div>
 									<img src={'/img/icons/Vector.svg'} className={'arrow-down'} />
 								</Stack>
+
 								<Stack className="price-year-after-price">
-									<Typography className="title">Milage</Typography>
-									<select
+									<Typography className="title">Mileage</Typography>
+									<input
+										type="number"
 										className={'select-description'}
-										value={insertPropertyData.productMilage || 'select'}
-										defaultValue={insertPropertyData.productMilage || 'select'}
+										value={insertPropertyData.productMilage || ''}
+										placeholder="Enter mileage"
 										onChange={({ target: { value } }) =>
 											setInsertPropertyData({ ...insertPropertyData, productMilage: parseInt(value) })
 										}
-									>
-										<option disabled={true} selected={true} value={'select'}>
-											Select
-										</option>
-										{[1, 2, 3, 4, 5].map((bed: number) => (
-											<option value={`${bed}`}>{bed}</option>
-										))}
-									</select>
-									<div className={'divider'}></div>
-									<img src={'/img/icons/Vector.svg'} className={'arrow-down'} />
+									/>
 								</Stack>
+
 								<Stack className="price-year-after-price">
 									<Typography className="title">Engine</Typography>
 									<select
@@ -352,7 +351,7 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 							</Stack>
 						</Stack>
 
-						<Typography className="upload-title">Upload photos of your property</Typography>
+						<Typography className="upload-title">Upload photos of your product</Typography>
 						<Stack className="images-box">
 							<Stack className="upload-box">
 								<svg xmlns="http://www.w3.org/2000/svg" width="121" height="120" viewBox="0 0 121 120" fill="none">

@@ -154,7 +154,7 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 				<PopularProperties />
 
 				<div className="container">
-					<Box component={'div'} className={'right'}>
+					{/* <Box component={'div'} className={'right'}>
 						<span>Sort by</span>
 						<div>
 							<Button onClick={sortingClickHandler} endIcon={<KeyboardArrowDownRoundedIcon />}>
@@ -187,7 +187,7 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 								</MenuItem>
 							</Menu>
 						</div>
-					</Box>
+					</Box> */}
 					{/* ========== */}
 					<Stack>
 						<HeaderFilter />
