@@ -90,7 +90,7 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 	if (!agentProperties) return null;
 
 	if (device === 'mobile') {
-		return <div>NESTAR PROPERTIES MOBILE</div>;
+		return <div>PureRide PROPERTIES MOBILE</div>;
 	} else {
 		return (
 			<div id="my-property-page">
