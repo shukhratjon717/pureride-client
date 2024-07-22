@@ -10,7 +10,7 @@ for (let i = 2014; i <= thisYear; i++) {
 	propertyYears.push(String(i));
 }
 
-export const engineSize = [50, 150, 250, 400, 750, 1000];
+export const engineSize = ['BASE', 'LIGHTWEIGHT', 'ENTRYLEVEL', 'INTERMEDIATE', 'ADVANCED', 'HEAVY'];
 
 export const Messages = {
 	error1: 'Something went wrong!',

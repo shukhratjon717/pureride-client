@@ -14,8 +14,8 @@ export interface ProductInput {
 	productAddress: string;
 	productTitle: string;
 	productPrice: number;
-	productEngineSize: ProductEngineSize;
-	productFuelType: ProductFuelType;
+	productEngineSize?: ProductEngineSize;
+	productFuelType?: ProductFuelType;
 	productModel: string;
 	productBrand: string;
 	productYear: number;
@@ -24,8 +24,9 @@ export interface ProductInput {
 	productRank: number;
 	productImages: string[];
 	productDesc: string;
-	productBarter: boolean;
-	productRent: boolean;
+	productColor: string;
+	productBarter?: boolean;
+	productRent?: boolean;
 	memberId?: string;
 	constructedAt?: Date;
 }

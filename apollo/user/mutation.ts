@@ -1,8 +1,8 @@
-import { gql } from '@apollo/client';
-
 /**************************
  *         MEMBER         *
  *************************/
+
+import { gql } from '@apollo/client';
 
 export const SIGN_UP = gql`
 	mutation Signup($input: MemberInput!) {
@@ -147,6 +147,7 @@ export const CREATE_PROPERTY = gql`
 			productEngineSize
 			productFuelType
 			productModel
+			productColor
 			productBrand
 			productYear
 			productMilage

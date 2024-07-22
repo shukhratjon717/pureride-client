@@ -33,5 +33,5 @@ export enum ProductEngineSize {
 
 export enum ProductFuelType {
 	GASOLINE = 'GASOLINE',
-	ELECTICITY = 'ELECTICITY',
+	ELECTRICITY = 'ELECTRICITY',
 }

@@ -26,20 +26,21 @@ export interface Product {
 	productTitle: string;
 	productPrice: number;
 	productEngineSize: ProductEngineSize;
-	productFuelType: ProductFuelType;
+	productFuelType?: ProductFuelType;
 	engineSize: number,
-	productModel: string;
-	productBrand: string;
-	productYear: number;
-	productMilage: number;
+	productModel?: string;
+	productColor?: string;
+	productBrand?: string;
+	productYear?: number;
+	productMilage?: number;
 	productViews: number;
 	productLikes: string;
 	productComments: string;
 	productRank: number;
 	productImages: string[];
 	productDesc: string;
-	productBarter: boolean;
-	productRent: boolean;
+	productBarter?: boolean;
+	productRent?: boolean;
 	memberId: string;
 	soldAt?: Date;
 	deletedAt?: Date;
