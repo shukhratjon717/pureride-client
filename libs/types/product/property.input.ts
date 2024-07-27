@@ -56,7 +56,7 @@ interface APISearch {
 	productStatus?: ProductStatus;
 }
 
-export interface AgentPropertiesInquiry {
+export interface AgentProductsInquiry {
 	page: number;
 	limit: number;
 	sort?: string;

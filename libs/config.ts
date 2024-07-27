@@ -12,6 +12,8 @@ for (let i = 2014; i <= thisYear; i++) {
 
 export const engineSize = ['BASE', 'LIGHTWEIGHT', 'ENTRYLEVEL', 'INTERMEDIATE', 'ADVANCED', 'HEAVY'];
 
+export const availableNotices = ['createdAt', 'updatedAt', 'noticeLikes', 'noticeViews'];
+
 export const Messages = {
 	error1: 'Something went wrong!',
 	error2: 'Please login first!',

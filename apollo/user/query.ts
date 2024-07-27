@@ -1,11 +1,8 @@
-
 /**************************
  *         MEMBER         *
  *************************/
 
-import { gql } from "@apollo/client";
-
-
+import { gql } from '@apollo/client';
 
 export const GET_AGENTS = gql`
 	query GetAgents($input: AgentsInquiry!) {
@@ -375,6 +372,10 @@ export const GET_BOARD_ARTICLES = gql`
 `;
 
 /**************************
+ *         Notice         *
+ *************************/
+
+/**************************
  *         COMMENT        *
  *************************/
 
@@ -526,6 +527,29 @@ export const GET_MEMBER_FOLLOWINGS = gql`
 			}
 			metaCounter {
 				total
+			}
+		}
+	}
+`;
+
+/**************************
+ *         NOTICE         *
+ *************************/
+
+export const GET_ALL_NOTICES_BY_ADMIN = gql`
+	query GetAllNoticesByAdmin($input: AllNoticesInquiry!) {
+		getAllNoticesByAdmin(ipnut: $input) {
+			list {
+				_id
+				noticeCategory
+				noticeStatus
+				noticeTitle
+				noticeContent
+				noticeImage
+				noticeLikes
+				memberId
+				createdAt
+				updatedAt
 			}
 		}
 	}

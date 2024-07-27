@@ -1,202 +1,142 @@
-import React from 'react';
+import React, { SyntheticEvent, useState } from 'react';
+import MuiAccordion, { AccordionProps } from '@mui/material/Accordion';
+import { AccordionDetails, Box, Stack, Typography } from '@mui/material';
+import MuiAccordionSummary, { AccordionSummaryProps } from '@mui/material/AccordionSummary';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
-import {
-	TableCell,
-	TableHead,
-	TableBody,
-	TableRow,
-	Table,
-	TableContainer,
-	Button,
-	Menu,
-	Fade,
-	MenuItem,
-} from '@mui/material';
-import Avatar from '@mui/material/Avatar';
-import Typography from '@mui/material/Typography';
-import { Stack } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
+import useDeviceDetect from '../../../hooks/useDeviceDetect';
 
-interface Data {
-	category: string;
-	title: string;
-	writer: string;
-	date: string;
-	status: string;
-	id?: string;
-}
-
-function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
-	if (b[orderBy] < a[orderBy]) {
-		return -1;
-	}
-	if (b[orderBy] > a[orderBy]) {
-		return 1;
-	}
-	return 0;
-}
-
-type Order = 'asc' | 'desc';
-
-interface HeadCell {
-	disablePadding: boolean;
-	id: keyof Data;
-	label: string;
-	numeric: boolean;
-}
-
-const headCells: readonly HeadCell[] = [
-	{
-		id: 'category',
-		numeric: true,
-		disablePadding: false,
-		label: 'CATEGORY',
+const Accordion = styled((props: AccordionProps) => <MuiAccordion disableGutters elevation={0} square {...props} />)(
+	({ theme }) => ({
+		border: `1px solid ${theme.palette.divider}`,
+		'&:not(:last-child)': {
+			borderBottom: 0,
+		},
+		'&:before': {
+			display: 'none',
+		},
+	}),
+);
+const AccordionSummary = styled((props: AccordionSummaryProps) => (
+	<MuiAccordionSummary expandIcon={<KeyboardArrowDownRoundedIcon sx={{ fontSize: '1.4rem' }} />} {...props} />
+))(({ theme }) => ({
+	backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, .05)' : '#fff',
+	'& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
+		transform: 'rotate(180deg)',
 	},
-	{
-		id: 'title',
-		numeric: true,
-		disablePadding: false,
-		label: 'TITLE',
+	'& .MuiAccordionSummary-content': {
+		marginLeft: theme.spacing(1),
 	},
+}));
 
-	{
-		id: 'writer',
-		numeric: true,
-		disablePadding: false,
-		label: 'WRITER',
-	},
-	{
-		id: 'date',
-		numeric: true,
-		disablePadding: false,
-		label: 'DATE',
-	},
-	{
-		id: 'status',
-		numeric: false,
-		disablePadding: false,
-		label: 'STATUS',
-	},
-];
-
-interface EnhancedTableProps {
-	numSelected: number;
-	onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void;
-	onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
-	order: Order;
-	orderBy: string;
-	rowCount: number;
-}
-
-function EnhancedTableHead(props: EnhancedTableProps) {
-	const { onSelectAllClick } = props;
-
-	return (
-		<TableHead>
-			<TableRow>
-				{headCells.map((headCell) => (
-					<TableCell
-						key={headCell.id}
-						align={headCell.numeric ? 'left' : 'center'}
-						padding={headCell.disablePadding ? 'none' : 'normal'}
-					>
-						{headCell.label}
-					</TableCell>
-				))}
-			</TableRow>
-		</TableHead>
-	);
-}
-
-interface FaqArticlesPanelListType {
-	dense?: boolean;
-	membersData?: any;
-	searchMembers?: any;
-	anchorEl?: any;
-	handleMenuIconClick?: any;
-	handleMenuIconClose?: any;
-	generateMentorTypeHandle?: any;
-}
-
-export const FaqArticlesPanelList = (props: FaqArticlesPanelListType) => {
-	const {
-		dense,
-		membersData,
-		searchMembers,
-		anchorEl,
-		handleMenuIconClick,
-		handleMenuIconClose,
-		generateMentorTypeHandle,
-	} = props;
+const Faq = () => {
+	const device = useDeviceDetect();
 	const router = useRouter();
+	const [category, setCategory] = useState<string>('property');
+	const [expanded, setExpanded] = useState<string | false>('panel1');
 
 	/** APOLLO REQUESTS **/
 	/** LIFECYCLES **/
+	
 	/** HANDLERS **/
+	const changeCategoryHandler = (category: string) => {
+		setCategory(category);
+	};
 
-	return (
-		<Stack>
-			<TableContainer>
-				<Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size={dense ? 'small' : 'medium'}>
-					{/*@ts-ignore*/}
-					<EnhancedTableHead />
-					<TableBody>
-						{[1, 2, 3, 4, 5].map((ele: any, index: number) => {
-							const member_image = '/img/profile/defaultUser.svg';
+	const handleChange = (panel: string) => (event: SyntheticEvent, newExpanded: boolean) => {
+		setExpanded(newExpanded ? panel : false);
+	};
 
-							let status_class_name = '';
 
-							return (
-								<TableRow hover key={'member._id'} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-									<TableCell align="left">mb id</TableCell>
-									<TableCell align="left">member.mb_full_name</TableCell>
-									<TableCell align="left" className={'name'}>
-										<Stack direction={'row'}>
-											<Link href={`/_admin/users/detail?mb_id=$'{member._id'}`}>
-												<div>
-													<Avatar alt="Remy Sharp" src={member_image} sx={{ ml: '2px', mr: '10px' }} />
-												</div>
-											</Link>
-											<Link href={`/_admin/users/detail?mb_id=${'member._id'}`}>
-												<div>member.mb_nick</div>
-											</Link>
-										</Stack>
-									</TableCell>
-									<TableCell align="left">member.mb_phone</TableCell>
-									<TableCell align="center">
-										<Button onClick={(e: any) => handleMenuIconClick(e, index)} className={'badge success'}>
-											member.mb_type
-										</Button>
 
-										<Menu
-											className={'menu-modal'}
-											MenuListProps={{
-												'aria-labelledby': 'fade-button',
-											}}
-											anchorEl={anchorEl[index]}
-											open={Boolean(anchorEl[index])}
-											onClose={handleMenuIconClose}
-											TransitionComponent={Fade}
-											sx={{ p: 1 }}
-										>
-											<MenuItem onClick={(e) => generateMentorTypeHandle('member._id', 'mentor', 'originate')}>
-												<Typography variant={'subtitle1'} component={'span'}>
-													MENTOR
-												</Typography>
-											</MenuItem>
-											<MenuItem onClick={(e) => generateMentorTypeHandle('member._id', 'user', 'remove')}>
-												<Typography variant={'subtitle1'} component={'span'}>
-													USER
-												</Typography>
-											</MenuItem>
-										</Menu>
-									</TableCell>
-								</TableRow>
-							);
-						})}
-					</TableBody>
-				</Table>
-			</TableContainer>
-		</Stack>
-	);
+	if (device === 'mobile') {
+		return <div>FAQ MOBILE</div>;
+	} else {
+		return (
+			<Stack className={'faq-content'}>
+				<Box className={'categories'} component={'div'}>
+					<div
+						className={category === 'property' ? 'active' : ''}
+						onClick={() => {
+							changeCategoryHandler('property');
+						}}
+					>
+						Product
+					</div>
+					<div
+						className={category === 'payment' ? 'active' : ''}
+						onClick={() => {
+							changeCategoryHandler('payment');
+						}}
+					>
+						Payment
+					</div>
+					<div
+						className={category === 'buyers' ? 'active' : ''}
+						onClick={() => {
+							changeCategoryHandler('buyers');
+						}}
+					>
+						Foy Buyers
+					</div>
+					<div
+						className={category === 'agents' ? 'active' : ''}
+						onClick={() => {
+							changeCategoryHandler('agents');
+						}}
+					>
+						For Agents
+					</div>
+					<div
+						className={category === 'membership' ? 'active' : ''}
+						onClick={() => {
+							changeCategoryHandler('membership');
+						}}
+					>
+						Membership
+					</div>
+					<div
+						className={category === 'community' ? 'active' : ''}
+						onClick={() => {
+							changeCategoryHandler('community');
+						}}
+					>
+						Community
+					</div>
+					<div
+						className={category === 'other' ? 'active' : ''}
+						onClick={() => {
+							changeCategoryHandler('other');
+						}}
+					>
+						Other
+					</div>
+				</Box>
+				<Box className={'wrap'} component={'div'}>
+					{[category] &&
+						[category].map((ele: any) => (
+							<Accordion expanded={expanded === ele?.id} onChange={handleChange(ele?.id)} key={ele?.subject}>
+								<AccordionSummary id="panel1d-header" className="question" aria-controls="panel1d-content">
+									<Typography className="badge" variant={'h4'}>
+										Q
+									</Typography>
+									<Typography> {ele?.subject}</Typography>
+								</AccordionSummary>
+								<AccordionDetails>
+									<Stack className={'answer flex-box'}>
+										<Typography className="badge" variant={'h4'} color={'primary'}>
+											A
+										</Typography>
+										<Typography> {ele?.content}</Typography>
+									</Stack>
+								</AccordionDetails>
+							</Accordion>
+						))}
+				</Box>
+			</Stack>
+		);
+	}
 };
+
+export default Faq;

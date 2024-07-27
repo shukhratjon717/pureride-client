@@ -1,0 +1,12 @@
+
+export enum FaqCategory {
+	PRODUCT = 'PRODUCT',
+	PAYMENT = 'PAYMENT',
+	BUYERS = 'BUYERS',
+	AGENTS = 'AGENTS',
+	MEMBERSHIP = 'MEMBERSHIP',
+	COMMUNITY = 'COMMUNITY',
+	OTHER = 'OTHER',
+}
+
+

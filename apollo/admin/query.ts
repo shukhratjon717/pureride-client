@@ -176,3 +176,26 @@ export const GET_COMMENTS = gql`
 		}
 	}
 `;
+
+/**************************
+ *         NOTICE         *
+ *************************/
+
+export const GET_ALL_NOTICES_BY_ADMIN = gql`
+	query GetAllNoticesByAdmin($input: AllNoticesInquiry!) {
+		getAllNoticesByAdmin(ipnut: $input) {
+			list {
+				_id
+				noticeCategory
+				noticeStatus
+				noticeTitle
+				noticeContent
+				noticeImage
+				noticeLikes
+				memberId
+				createdAt
+				updatedAt
+			}
+		}
+	}
+`;
