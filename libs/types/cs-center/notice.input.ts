@@ -3,11 +3,11 @@ import { FaqCategory } from '../../enums/faqCategory.enum';
 import {  NoticeCategory, NoticeStatus } from '../../enums/notice.enum';
 
 export interface NoticeInput {
-	noticeCategory: NoticeCategory;
-	faqCategory: FaqCategory;
-	noticeTitle: string;
-	noticeContent: string;
-	noticeImage: string;
+	noticeCategory?: NoticeCategory;
+	faqCategory?: FaqCategory;
+	noticeTitle?: string;
+	noticeContent?: string;
+	noticeImage?: string;
 	memberId?: string;
 }
 
@@ -25,8 +25,8 @@ export interface NoticesInquiry {
 }
 
 interface ANISearch {
-	noticeStatus?: NoticeStatus;
-	noticeCategory?: NoticeCategory;
+	// noticeStatus?: NoticeStatus;
+	// noticeCategory?: NoticeCategory;
 	faqCategory?: FaqCategory;
 }
 

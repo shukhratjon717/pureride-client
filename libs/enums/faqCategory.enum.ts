@@ -1,5 +1,4 @@
-
-export enum FaqCategory {
+export enum FaqType {
 	PRODUCT = 'PRODUCT',
 	PAYMENT = 'PAYMENT',
 	BUYERS = 'BUYERS',
@@ -9,4 +8,8 @@ export enum FaqCategory {
 	OTHER = 'OTHER',
 }
 
-
+export enum FaqStatus {
+	HOLD = 'HOLD',
+	ACTIVE = 'ACTIVE',
+	DELETE = 'DELETE',
+}

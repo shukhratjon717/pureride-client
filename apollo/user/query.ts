@@ -533,23 +533,99 @@ export const GET_MEMBER_FOLLOWINGS = gql`
 `;
 
 /**************************
- *         NOTICE         *
+ *      NOTIFICATION      *
  *************************/
 
-export const GET_ALL_NOTICES_BY_ADMIN = gql`
-	query GetAllNoticesByAdmin($input: AllNoticesInquiry!) {
-		getAllNoticesByAdmin(ipnut: $input) {
+export const GET_NOTIFICATIONS = gql`
+	query GetNotifications($input: NotificationsInquiry!) {
+		getNotifications(input: $input) {
 			list {
 				_id
-				noticeCategory
-				noticeStatus
-				noticeTitle
-				noticeContent
-				noticeImage
-				noticeLikes
+				notificationType
+				notificationStatus
+				notificationGroup
+				notificationTitle
+				notificationDesc
+				authorId
+				receiverId
+				propertyId
+				articleId
+			}
+			metaCounter {
+				total
+			}
+		}
+	}
+`;
+
+export const GET_NOTIFICATION = gql`
+	query GetNofication($input: String!) {
+		getNofication(notificationId: $input) {
+			_id
+			notificationType
+			notificationStatus
+			notificationGroup
+			notificationTitle
+			notificationDesc
+			authorId
+			receiverId
+			propertyId
+			articleId
+			memberData {
+				_id
+				memberType
+				memberStatus
+				memberAuthType
+				memberPhone
+				memberNick
+				memberFullName
+				memberImage
+				memberAddress
+				memberDesc
+				memberProducts
+				memberArticles
+				memberFollowers
+				memberFollowings
+				memberPoints
+				memberLikes
+				memberViews
+				memberComments
+				memberRank
+				memberWarnings
+				memberBlocks
+				deletedAt
+				createdAt
+				updatedAt
+				accessToken
+			}
+		}
+	}
+`;
+
+/**************************
+ *         FAQ            *
+ *************************/
+
+export const GET_ALL_FAQS = gql`
+	query GetAllFaqsByAdmin($input: AllFaqsInquiry!) {
+		getAllFaqsByAdmin(ipnut: $input) {
+			list {
+				_id
+				faqCategory
+				faqStatus
+				faqQuestion
+				faqAnswer
+				faqTitle
+				faqContent
+				faqImage
+				faqLikes
+				faqViews
 				memberId
 				createdAt
 				updatedAt
+			}
+			metaCounter {
+				total
 			}
 		}
 	}

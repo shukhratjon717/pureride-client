@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useState, useEffect } from 'react';
+import React, { SyntheticEvent, useEffect, useState } from 'react';
 import MuiAccordion, { AccordionProps } from '@mui/material/Accordion';
 import { AccordionDetails, Box, Stack, Typography } from '@mui/material';
 import MuiAccordionSummary, { AccordionSummaryProps } from '@mui/material/AccordionSummary';
@@ -6,25 +6,10 @@ import { useRouter } from 'next/router';
 import { styled } from '@mui/material/styles';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
-import { Notice } from '../../types/cs-center/notice';
 import { useQuery } from '@apollo/client';
 import { T } from '../../types/common';
-import { NoticesInquiry } from '../../types/cs-center/notice.input';
-import { GET_ALL_NOTICES_BY_ADMIN } from '../../../apollo/user/query';
-import { FaqCategory } from '../../enums/faqCategory.enum';
-import { NoticeCategory, NoticeStatus } from '../../enums/notice.enum';
-
-interface FaqInput {
-	_id: string;
-	faqCategory: string;
-	faqStatus: string;
-	faqTitle: string;
-	faqContent: string;
-	faqViews: number;
-	memberId: string;
-	createdAt: string;
-	updatedAt: string;
-}
+import { NextPage } from 'next';
+import { GET_ALL_FAQS } from '../../../apollo/user/query';
 
 const Accordion = styled((props: AccordionProps) => <MuiAccordion disableGutters elevation={0} square {...props} />)(
 	({ theme }) => ({
@@ -50,53 +35,73 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
 	},
 }));
 
-interface FaqsProps {
-	initialInput: NoticesInquiry;
+interface FaqsListProps {
+	initialInput?: {
+		page?: number;
+		limit?: number;
+		faqType?: string;
+	};
 }
 
-const Faq = (props: FaqsProps) => {
-	const { initialInput } = props;
+const FaqsList: NextPage<FaqsListProps> = ({ initialInput, ...props }) => {
 	const device = useDeviceDetect();
 	const router = useRouter();
-	const [category, setCategory] = useState<FaqCategory>();
+	const [type, setType] = useState<string>('PRODUCT');
 	const [expanded, setExpanded] = useState<string | false>('panel1');
-	const [faq, setFaq] = useState<Notice[]>([]);
-	const [filteredFaqs, setFilteredFaqs] = useState<Notice[]>([]);
+	const [currentPage, setCurrentPage] = useState<number>(1);
+
+	const [searchFilter, setSearchFilter] = useState<any>(
+		router?.query?.input ? JSON.parse(router?.query?.input as string) : initialInput,
+	);
+
+	const [faqs, setFaqs] = useState<any[]>([]);
+	const [total, setTotal] = useState<number>(0);
 
 	/** APOLLO REQUESTS **/
 	const {
-		loading: getFaqLoading,
-		data: getFaqData,
-		error: getFaqError,
-		refetch: getFaqRefetch,
-	} = useQuery(GET_ALL_NOTICES_BY_ADMIN, {
-		fetchPolicy: 'network-only',
-		variables: { input: initialInput },
+		loading: getFaqsLoading,
+		data: getFaqsData,
+		refetch: getFaqsRefetch,
+		error: getFaqsError,
+	} = useQuery(GET_ALL_FAQS, {
+		fetchPolicy: 'network-only', // by default cache-first
+		variables: { input: { ...initialInput, faqType: type.toUpperCase() } },
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: T) => {
-			console.log('Data received:', data);
-			setFaq(data?.getAllNoticesByAdmin?.list);
-		},
-		onError: (error) => {
-			console.error('Error fetching data:', error);
+			setFaqs(data?.getFaqs?.list || []);
+			setTotal(data?.getFaqs?.metaCounter[0]?.total || 0);
 		},
 	});
 
+	if (getFaqsError) {
+		router.push('_error');
+	}
+
+	/** LIFECYCLES **/
 	useEffect(() => {
-		if (getFaqData) {
-			console.log('FAQ data:', getFaqData);
-			setFaq(getFaqData.getAllNoticesByAdmin.list);
+		if (router.query.input) {
+			const inputObj = JSON.parse(router?.query?.input as string);
+			setSearchFilter(inputObj);
 		}
-	}, [getFaqData]);
+
+		setCurrentPage(searchFilter.page === undefined ? 1 : searchFilter.page);
+	}, [router, searchFilter]);
+
+	useEffect(() => {
+		getFaqsRefetch(initialInput); // Refetch the data when `type` changes
+	}, [type]);
 
 	/** HANDLERS **/
-	const changeCategoryHandler = (category: FaqCategory) => {
-		setCategory(category);
+	const changeCategoryHandler = (type: string) => {
+		// @ts-ignore
+		setType(type);
+		setSearchFilter({ ...searchFilter, faqType: type.toUpperCase() });
 	};
 
 	const handleChange = (panel: string) => (event: SyntheticEvent, newExpanded: boolean) => {
 		setExpanded(newExpanded ? panel : false);
 	};
+	console.log(initialInput, 'INITIAL INPUT');
 
 	if (device === 'mobile') {
 		return <div>FAQ MOBILE</div>;
@@ -105,103 +110,93 @@ const Faq = (props: FaqsProps) => {
 			<Stack className={'faq-content'}>
 				<Box className={'categories'} component={'div'}>
 					<div
-						className={category === FaqCategory.PRODUCT ? 'active' : ''}
+						className={type === 'PRODUCT' ? 'active' : ''}
 						onClick={() => {
-							changeCategoryHandler(FaqCategory.PRODUCT);
+							changeCategoryHandler('PRODUCT');
 						}}
 					>
-						Product
+						Motorcycle
 					</div>
 					<div
-						className={category === FaqCategory.PAYMENT ? 'active' : ''}
+						className={type === 'PAYMENT' ? 'active' : ''}
 						onClick={() => {
-							changeCategoryHandler(FaqCategory.PAYMENT);
+							changeCategoryHandler('PAYMENT');
 						}}
 					>
 						Payment
 					</div>
 					<div
-						className={category === FaqCategory.BUYERS ? 'active' : ''}
+						className={type === 'BUYERS' ? 'active' : ''}
 						onClick={() => {
-							changeCategoryHandler(FaqCategory.BUYERS);
+							changeCategoryHandler('BUYERS');
 						}}
 					>
-						For Buyers
+						Foy Buyers
 					</div>
 					<div
-						className={category === FaqCategory.AGENTS ? 'active' : ''}
+						className={type === 'MAKLERS' ? 'active' : ''}
 						onClick={() => {
-							changeCategoryHandler(FaqCategory.AGENTS);
+							changeCategoryHandler('MAKLERS');
 						}}
 					>
-						For Agents
+						Maklers
 					</div>
 					<div
-						className={category === FaqCategory.MEMBERSHIP ? 'active' : ''}
+						className={type === 'MEMBERSHIP' ? 'active' : ''}
 						onClick={() => {
-							changeCategoryHandler(FaqCategory.MEMBERSHIP);
+							changeCategoryHandler('MEMBERSHIP');
 						}}
 					>
 						Membership
 					</div>
 					<div
-						className={category === FaqCategory.COMMUNITY ? 'active' : ''}
+						className={type === 'COMMUNITY' ? 'active' : ''}
 						onClick={() => {
-							changeCategoryHandler(FaqCategory.COMMUNITY);
+							changeCategoryHandler('COMMUNITY');
 						}}
 					>
 						Community
 					</div>
 					<div
-						className={category === FaqCategory.OTHER ? 'active' : ''}
+						className={type === 'OTHER' ? 'active' : ''}
 						onClick={() => {
-							changeCategoryHandler(FaqCategory.OTHER);
+							changeCategoryHandler('OTHER');
 						}}
 					>
 						Other
 					</div>
 				</Box>
 				<Box className={'wrap'} component={'div'}>
-					{faq &&
-						faq.map((ele: Notice) => (
-							<Accordion expanded={expanded === ele?._id} onChange={handleChange(ele?._id)} key={ele?._id}>
-								<AccordionSummary
-									id={`panel${ele?._id}-header`}
-									className="question"
-									aria-controls={`panel${ele?._id}-content`}
-								>
-									<Typography className="badge" variant={'h4'}>
-										Q
+					{faqs.map((ele: any) => (
+						<Accordion expanded={expanded === ele?._id} onChange={handleChange(ele?._id)} key={ele?._id}>
+							<AccordionSummary id="panel1d-header" className="question" aria-controls="panel1d-content">
+								<Typography className="badge" variant={'h4'}>
+									Q
+								</Typography>
+								<Typography> {ele?.faqQuestion}</Typography>
+							</AccordionSummary>
+							<AccordionDetails>
+								<Stack className={'answer flex-box'}>
+									<Typography className="badge" variant={'h4'} color={'primary'}>
+										A
 									</Typography>
-									<Typography> {ele?.noticeTitle}</Typography>
-								</AccordionSummary>
-								<AccordionDetails>
-									<Stack className={'answer flex-box'}>
-										<Typography className="badge" variant={'h4'} color={'primary'}>
-											A
-										</Typography>
-										<Typography> {ele?.noticeContent}</Typography>
-									</Stack>
-								</AccordionDetails>
-							</Accordion>
-						))}
+									<Typography> {ele?.faqAnswer}</Typography>
+								</Stack>
+							</AccordionDetails>
+						</Accordion>
+					))}
 				</Box>
 			</Stack>
 		);
 	}
 };
 
-Faq.defaultProps = {
+FaqsList.defaultProps = {
 	initialInput: {
 		page: 1,
-		limit: 7,
-		sort: 'createdAt',
-		direction: 'DESC',
-		search: {
-			noticeCategory: NoticeCategory.FAQ,
-			noticeStatus: NoticeStatus.ACTIVE,
-		},
+		limit: 9,
+		faqType: 'PRODUCT',
 	},
 };
 
-export default Faq;
+export default FaqsList;
