@@ -665,3 +665,50 @@ export const GET_FAQ = gql`
 		}
 	}
 `;
+
+export const GET_NOTICES = gql`
+	query GetAllNoticesByAdmin($input: NoticesInquiry!) {
+		getAllNoticesByAdmin(ipnut: $input) {
+			list {
+				_id
+				noticeType
+				noticeContent
+				noticeStatus
+				noticeLikes
+				noticeViews
+				createdAt
+				updatedAt
+				memberData {
+					_id
+					memberType
+					memberStatus
+					memberAuthType
+					memberPhone
+					memberNick
+					memberFullName
+					memberImage
+					memberAddress
+					memberDesc
+					memberProducts
+					memberArticles
+					memberFollowers
+					memberFollowings
+					memberPoints
+					memberLikes
+					memberViews
+					memberComments
+					memberRank
+					memberWarnings
+					memberBlocks
+					deletedAt
+					createdAt
+					updatedAt
+					accessToken
+				}
+			}
+			metaCounter {
+				total
+			}
+		}
+	}
+`;

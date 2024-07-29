@@ -21,7 +21,6 @@ import { CommentInput, CommentsInquiry } from '../../libs/types/comment/comment.
 import { CREATE_COMMENT, LIKE_TARGET_PROPERTY } from '../../apollo/user/mutation';
 import { GET_COMMENTS, GET_MEMBER, GET_PROPERTIES } from '../../apollo/user/query';
 import { T } from '../../libs/types/common';
-import TopAgents from '../../libs/components/homepage/TopAgents';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -177,6 +176,8 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 					input: id,
 				},
 			});
+			console.log('id:', id);
+
 			await getPropertiesRefetch({ input: searchFilter });
 			await sweetTopSmallSuccessAlert('success', 800);
 		} catch (err: any) {

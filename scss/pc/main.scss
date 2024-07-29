@@ -48,8 +48,8 @@ body::-webkit-scrollbar {
 		.navbar {
 			.top-info {
 				position: absolute;
-				width: 100%;
-				height: 70px;
+				width: 90%;
+				height: 100px;
 				display: flex;
 				flex-direction: row;
 				justify-content: center;
@@ -68,6 +68,7 @@ body::-webkit-scrollbar {
 			.navbar-main {
 				position: fixed;
 				padding: 22px 0px;
+				// margin-top: 50px;
 				width: 100%;
 				height: 150px;
 				display: flex;
@@ -434,6 +435,7 @@ body::-webkit-scrollbar {
 			flex-direction: row;
 			justify-content: center;
 			border-radius: 10px;
+			border: 1px solid red;
 			background: white;
 			.container {
 				margin-bottom: 100px;
@@ -492,13 +494,17 @@ body::-webkit-scrollbar {
 					.popular-card-box {
 						position: relative;
 						width: 100%;
-						height: 425px;
+						height: auto;
 						display: flex;
 						flex-direction: column;
+
 						.card-img {
 							position: relative;
-							width: 100%;
+							width: 99.3%;
 							height: 203px;
+							border-left: 1px solid gainsboro;
+							border-top: 1px solid gainsboro;
+							border-right: 1px solid gainsboro;
 							background-size: cover;
 							border-radius: 12px 12px 0px 0px;
 							cursor: pointer;
@@ -534,6 +540,7 @@ body::-webkit-scrollbar {
 								border-radius: 6px;
 								background: #fff;
 								color: #181a20;
+								
 								font-family: $font;
 								font-size: 15px;
 								font-style: normal;
@@ -671,19 +678,21 @@ body::-webkit-scrollbar {
 	.header-main {
 		width: 100%;
 		height: 860px;
+		margin-top: -100px;
 		background-image: url('/img/banner/header1.webp');
 		background-size: cover;
 		display: flex;
 		align-items: center;
 		.intro {
 			width: 1300px;
+			// border: 1px solid red;
 			height: auto;
 			display: flex;
 			flex-direction: row;
 			justify-content: space-evenly;
 			justify-content: center;
-			margin-left: 5%;
-			margin-top: 20%;
+			// margin-left: 5%;
+			margin-top: 40%;
 			.intro-left {
 				width: 100%;
 				height: auto;

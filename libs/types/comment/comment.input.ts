@@ -8,7 +8,7 @@ export interface CommentInput {
 	memberId?: string;
 }
 
-interface CISearch {
+export interface CISearch {
 	commentRefId: string;
 }
 

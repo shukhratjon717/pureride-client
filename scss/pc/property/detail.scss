@@ -205,6 +205,8 @@
 						.option {
 							width: auto;
 							height: auto;
+
+							border-radius: 10px;
 							flex-direction: row;
 							gap: 17px;
 							.svg-box {
@@ -222,6 +224,7 @@
 							.option-includes {
 								width: auto;
 								height: auto;
+
 								.title {
 									color: #181a20;
 									font-family: $font;
@@ -250,14 +253,21 @@
 						border: 1px solid #c4c4c4;
 						.top {
 							width: 100%;
+							height: 0px;
 							height: auto;
 							gap: 30px;
+							justify-content: center;
+							align-items: center;
 							.title {
+								width: 30%;
 								color: #181a20;
 								font-family: $font;
 								font-size: 17px;
 								font-style: normal;
 								font-weight: 600;
+								justify-content: center;
+								align-items: center;
+								text-align: center;
 								line-height: normal;
 							}
 							.desc {
@@ -281,6 +291,9 @@
 								font-style: normal;
 								font-weight: 600;
 								line-height: normal;
+								border-bottom: 1px solid red;
+								align-items: center;
+								justify-content: center;
 							}
 							.info-box {
 								width: 100%;
@@ -632,7 +645,7 @@
 							}
 						}
 						.sub-title {
-							color: #181a20;
+							color:red;
 							font-family: $font;
 							font-size: 14px;
 							font-style: normal;
@@ -640,11 +653,11 @@
 							line-height: normal;
 						}
 						input {
+							border: 1px solid rgb(246, 125, 5);
 							width: 100%;
 							height: 55px;
 							padding: 15px;
 							border-radius: 8px;
-							border: 1px solid #ddd;
 							background: #fff;
 							outline: none;
 							&::placeholder {
@@ -660,11 +673,11 @@
 							}
 						}
 						textarea {
+							border: 1px solid rgb(246, 125, 5);
 							width: 100%;
 							height: 120px;
 							padding: 20px;
 							border-radius: 8px;
-							border: 1px solid #ddd;
 							font-family: $font;
 							font-size: 14px;
 							font-style: normal;

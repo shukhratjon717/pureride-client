@@ -49,7 +49,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 	const [propertyComments, setPropertyComments] = useState<Comment[]>([]);
 	const [commentTotal, setCommentTotal] = useState<number>(0);
 	const [insertCommentData, setInsertCommentData] = useState<CommentInput>({
-		commentGroup: CommentGroup.PROPERTY,
+		commentGroup: CommentGroup.PRODUCT,
 		commentContent: '',
 		commentRefId: '',
 	});
@@ -69,8 +69,8 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 		skip: !propertyId,
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: T) => {
-			if (data?.getProperty) setProperty(data.getProperty);
-			if (data?.getProperty) setSlideImage(data.getProperty?.propertyImages[0]);
+			if (data?.getProduct) setProperty(data.getProduct);
+			if (data?.getProduct) setSlideImage(data.getProduct?.productImages[0]);
 		},
 	});
 	const {
@@ -94,7 +94,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 		skip: !propertyId && !property,
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: T) => {
-			if (!data.getProperties?.list) setDestinationProperties(data?.getProperties?.list);
+			if (!data.getProducts?.list) setDestinationProperties(data?.getProducts?.list);
 		},
 	});
 
@@ -151,7 +151,6 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 			// execute likeTargetProperty Mutation
 			await likeTargerProperty({ variables: { input: id } });
 			// execute getPropertiesRefetch
-			await getCommentsRefetch({ input: id });
 			await getPropertiesRefetch({
 				input: {
 					page: 1,
@@ -161,6 +160,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 					search: {
 						locationList: [property?.productLocation],
 					},
+					// await getCommentsRefetch({ input: id 
 				},
 			});
 
@@ -324,8 +324,8 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 											</svg>
 										</Stack>
 										<Stack className={'option-includes'}>
-											<Typography className={'title'}>Bedroom</Typography>
-											<Typography className={'option-data'}>{property?.productYear}</Typography>
+											<Typography className={'title'}>Name</Typography>
+											<Typography className={'option-data'}>{property?.productTitle}</Typography>
 										</Stack>
 									</Stack>
 									<Stack className={'option'}>
@@ -333,7 +333,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 											<img src={'/img/icons/room.svg'} />
 										</Stack>
 										<Stack className={'option-includes'}>
-											<Typography className={'title'}>Room</Typography>
+											<Typography className={'title'}>Model</Typography>
 											<Typography className={'option-data'}>{property?.productModel}</Typography>
 										</Stack>
 									</Stack>
@@ -380,7 +380,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 										</Stack>
 										<Stack className={'option-includes'}>
 											<Typography className={'title'}>Size</Typography>
-											<Typography className={'option-data'}>{property?.productEngineSize} m2</Typography>
+											<Typography className={'option-data'}>{property?.productEngineSize} </Typography>
 										</Stack>
 									</Stack>
 									<Stack className={'option'}>
@@ -394,18 +394,18 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 											</svg>
 										</Stack>
 										<Stack className={'option-includes'}>
-											<Typography className={'title'}>Property Type</Typography>
+											<Typography className={'title'}>Product Type</Typography>
 											<Typography className={'option-data'}>{property?.productType}</Typography>
 										</Stack>
 									</Stack>
 								</Stack>
 								<Stack className={'prop-desc-config'}>
 									<Stack className={'top'}>
-										<Typography className={'title'}>Property Description</Typography>
+										<Typography className={'title'}>Product Description</Typography>
 										<Typography className={'desc'}>{property?.productDesc ?? 'No Description!'}</Typography>
 									</Stack>
 									<Stack className={'bottom'}>
-										<Typography className={'title'}>Property Details</Typography>
+										<Typography className={'title'}>Product Details</Typography>
 										<Stack className={'info-box'}>
 											<Stack className={'left'}>
 												<Box component={'div'} className={'info'}>
@@ -413,16 +413,30 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 													<Typography className={'data'}>${formatterStr(property?.productPrice)}</Typography>
 												</Box>
 												<Box component={'div'} className={'info'}>
-													<Typography className={'title'}>Property Size</Typography>
+													<Typography className={'title'}>Engine Size</Typography>
 													<Typography className={'data'}>{property?.productEngineSize} m2</Typography>
 												</Box>
 												<Box component={'div'} className={'info'}>
-													<Typography className={'title'}>Rooms</Typography>
+													<Typography className={'title'}>Model</Typography>
 													<Typography className={'data'}>{property?.productModel}</Typography>
 												</Box>
 												<Box component={'div'} className={'info'}>
-													<Typography className={'title'}>Bedrooms</Typography>
+													<Typography className={'title'}>Year</Typography>
 													<Typography className={'data'}>{property?.productYear}</Typography>
+												</Box>
+											</Stack>
+											<Stack className={'left'}>
+												<Box component={'div'} className={'info'}>
+													<Typography className={'title'}>Mileage</Typography>
+													<Typography className={'data'}>{property?.productMilage} </Typography>
+												</Box>
+												<Box component={'div'} className={'info'}>
+													<Typography className={'title'}>Color</Typography>
+													<Typography className={'data'}>{property?.productColor}</Typography>
+												</Box>
+												<Box component={'div'} className={'info'}>
+													<Typography className={'title'}>Fuel Type</Typography>
+													<Typography className={'data'}>{property?.productFuelType}</Typography>
 												</Box>
 											</Stack>
 											<Stack className={'right'}>
@@ -431,11 +445,11 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 													<Typography className={'data'}>{moment(property?.createdAt).format('YYYY')}</Typography>
 												</Box>
 												<Box component={'div'} className={'info'}>
-													<Typography className={'title'}>Property Type</Typography>
+													<Typography className={'title'}>Product Type</Typography>
 													<Typography className={'data'}>{property?.productType}</Typography>
 												</Box>
 												<Box component={'div'} className={'info'}>
-													<Typography className={'title'}>Property Options</Typography>
+													<Typography className={'title'}>Product Options</Typography>
 													<Typography className={'data'}>
 														For {property?.productBarter && 'Barter'} {property?.productRent && 'Rent'}
 													</Typography>
@@ -444,26 +458,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 										</Stack>
 									</Stack>
 								</Stack>
-								<Stack className={'floor-plans-config'}>
-									<Typography className={'title'}>Floor Plans</Typography>
-									<Stack className={'image-box'}>
-										<img src={'/img/property/floorPlan.png'} alt={'image'} />
-									</Stack>
-								</Stack>
-								<Stack className={'address-config'}>
-									<Typography className={'title'}>Address</Typography>
-									<Stack className={'map-box'}>
-										<iframe
-											src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d25867.098915951767!2d128.68632810247993!3d35.86402299180927!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x35660bba427bf179%3A0x1fc02da732b9072f!2sGeumhogangbyeon-ro%2C%20Dong-gu%2C%20Daegu!5e0!3m2!1suz!2skr!4v1695537640704!5m2!1suz!2skr"
-											width="100%"
-											height="100%"
-											style={{ border: 0 }}
-											allowFullScreen={true}
-											loading="lazy"
-											referrerPolicy="no-referrer-when-downgrade"
-										></iframe>
-									</Stack>
-								</Stack>
+
 								{commentTotal !== 0 && (
 									<Stack className={'reviews-config'}>
 										<Stack className={'filter-box'}>

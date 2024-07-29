@@ -499,7 +499,7 @@ const Filter = (props: FilterType) => {
 								onChange={(e: any) => propertySquareHandler(e, 'start')}
 								MenuProps={MenuProps}
 							>
-								{engineSize.map((square: number) => (
+								{/* {engineSize.map((square: number) => (
 									<MenuItem
 										value={square}
 										disabled={(searchFilter?.search?.enginesRange?.end || 0) < square}
@@ -507,7 +507,7 @@ const Filter = (props: FilterType) => {
 									>
 										{square}
 									</MenuItem>
-								))}
+								))} */}
 							</Select>
 						</FormControl>
 						<div className="central-divider"></div>
@@ -521,7 +521,7 @@ const Filter = (props: FilterType) => {
 								onChange={(e: any) => propertySquareHandler(e, 'end')}
 								MenuProps={MenuProps}
 							>
-								{engineSize.map((square: number) => (
+								{/* {engineSize.map((square: number) => (
 									<MenuItem
 										value={square}
 										disabled={(searchFilter?.search?.enginesRange?.start || 0) > square}
@@ -529,7 +529,7 @@ const Filter = (props: FilterType) => {
 									>
 										{square}
 									</MenuItem>
-								))}
+								))} */}
 							</Select>
 						</FormControl>
 					</Stack>

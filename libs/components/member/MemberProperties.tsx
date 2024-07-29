@@ -32,18 +32,22 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 		skip: !searchFilter?.search?.memberId,
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: any) => {
-			setAgentProperties(data?.getProperties?.list);
+			setAgentProperties(data?.getProperties?.list || []);
 			setTotal(data?.getProperties?.metaCounter[0]?.total ?? 0);
 		},
 	});
+
 	/** LIFECYCLES **/
 	useEffect(() => {
-		getPropertiesRefetch().then();
+		if (searchFilter?.search?.memberId) {
+			getPropertiesRefetch().then();
+		}
 	}, [searchFilter]);
 
 	useEffect(() => {
-		if (memberId)
+		if (memberId) {
 			setSearchFilter({ ...initialInput, search: { ...initialInput.search, memberId: memberId as string } });
+		}
 	}, [memberId]);
 
 	/** HANDLERS **/
@@ -63,7 +67,7 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 				</Stack>
 				<Stack className="properties-list-box">
 					<Stack className="list-box">
-						{agentProperties?.length > 0 && (
+						{agentProperties && agentProperties.length > 0 && (
 							<Stack className="listing-title-box">
 								<Typography className="title-text">Listing title</Typography>
 								<Typography className="title-text">Date Published</Typography>
@@ -71,17 +75,18 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 								<Typography className="title-text">View</Typography>
 							</Stack>
 						)}
-						{agentProperties?.length === 0 && (
+						{agentProperties && agentProperties.length === 0 && (
 							<div className={'no-data'}>
 								<img src="/img/icons/icoAlert.svg" alt="" />
 								<p>No Product found!</p>
 							</div>
 						)}
-						{agentProperties?.map((property: Product) => {
-							return <PropertyCard property={property} memberPage={true} key={property?._id} />;
-						})}
+						{agentProperties &&
+							agentProperties.map((property: Product) => {
+								return <PropertyCard property={property} memberPage={true} key={property?._id} />;
+							})}
 
-						{agentProperties.length !== 0 && (
+						{agentProperties && agentProperties.length !== 0 && (
 							<Stack className="pagination-config">
 								<Stack className="pagination-box">
 									<Pagination

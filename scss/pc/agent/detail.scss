@@ -1,13 +1,13 @@
 #pc-wrap {
 	.agent-detail-page {
 		position: relative;
-		padding: 100px 0 50px;
+		padding: 80px 0 40px;  // Reduced padding for a more compact look
 		width: 100%;
 		height: auto;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		background-color: #f5f5f5;
+		background-color: #eaeaea;  // Light grey background for a modern touch
 
 		.container {
 			display: flex;
@@ -22,51 +22,53 @@
 				flex-direction: row;
 				align-items: center;
 				background: #ffffff;
-				border-radius: 10px;
-				box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-				padding: 20px;
-				margin-bottom: 20px;
+				border-radius: 12px;  // Slightly larger border radius
+				box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);  // Slightly more prominent shadow
+				padding: 25px;
+				margin-bottom: 30px;
 
 				img {
-					margin-right: 20px;
-					width: 150px;
-					height: 150px;
-					border-radius: 10px;
+					margin-right: 25px;  // Increased margin for better spacing
+					width: 180px;  // Larger image
+					height: 180px;
+					border-radius: 12px;
 					cursor: pointer;
 					object-fit: cover;
+					border: 3px solid #ddd;  // Border around image
 				}
 
 				.info {
 					display: flex;
 					flex-direction: column;
+
 					strong {
-						color: #333;
+						color: #222;  // Darker color for better readability
 						font-family: $font;
-						font-size: 24px;
+						font-size: 28px;  // Larger font size
 						font-weight: 700;
-						line-height: normal;
+						line-height: 1.2;
 						text-transform: capitalize;
 						cursor: pointer;
 					}
 
 					div {
-						margin-top: 10px;
+						margin-top: 15px;  // Increased spacing
 						display: flex;
 						flex-direction: row;
 						align-items: center;
 
 						img {
-							margin-right: 10px;
-							width: 20px;
-							height: 20px;
+							margin-right: 15px;  // Increased margin
+							width: 24px;  // Larger icon
+							height: 24px;
 						}
 
 						span {
-							color: #555;
+							color: #444;  // Slightly lighter text color
 							font-family: $font;
-							font-size: 18px;
+							font-size: 20px;  // Larger font size
 							font-weight: 400;
-							line-height: 28px;
+							line-height: 1.5;
 						}
 					}
 				}
@@ -74,54 +76,60 @@
 
 			.agent-home-list {
 				width: 100%;
-				margin-top: 20px;
-				padding: 20px;
-				border-radius: 10px;
+				margin-top: 30px;
+				padding: 25px;
+				border-radius: 12px;
 				background: #ffffff;
-				box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+				box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 
 				.card-wrap {
 					display: flex;
 					flex-direction: row;
 					flex-wrap: wrap;
-					gap: 20px;
+					gap: 25px;  // Increased gap for better spacing
 
 					.agent-card {
-						background: #ffcccc;
-						width: 220px;
-						height: 300px;
-						border-radius: 10px;
-						padding: 15px;
-						box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+						background: #ffd8e0;  // Soft pink background
+						width: 240px;
+						height: 320px;  // Slightly larger card
+						border-radius: 12px;
+						padding: 20px;
+						box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 						display: flex;
 						flex-direction: column;
 						align-items: center;
 						justify-content: center;
-						color: #ffffff;
+						color: #333;
 						font-family: $font;
-						font-size: 14px;
+						font-size: 15px;  // Increased font size
 						font-weight: 400;
-						line-height: 20px;
+						line-height: 1.5;
 						box-sizing: border-box;
+						transition: transform 0.3s, box-shadow 0.3s;  // Added transition for hover effect
+
+						&:hover {
+							transform: translateY(-5px);  // Slight lift on hover
+							box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+						}
 
 						.agent-img {
 							width: 100%;
-							height: 150px;
+							height: 160px;  // Larger image area
 							background-size: cover;
-							border-radius: 10px;
-							margin-bottom: 10px;
+							border-radius: 12px;
+							margin-bottom: 15px;
 							position: relative;
 
 							div {
 								position: absolute;
-								top: 10px;
-								left: 10px;
-								padding: 5px 10px;
+								top: 15px;
+								left: 15px;
+								padding: 8px 15px;
 								border-radius: 5px;
 								background: #8e645d;
 								color: #ffffff;
 								font-family: $font;
-								font-size: 12px;
+								font-size: 14px;
 								font-weight: 600;
 							}
 						}
@@ -132,20 +140,20 @@
 							align-items: center;
 
 							strong {
-								color: #ffffff;
+								color: #222;
 								font-family: $font;
-								font-size: 16px;
+								font-size: 18px;  // Larger font size
 								font-weight: 600;
-								line-height: normal;
+								line-height: 1.2;
 								cursor: pointer;
 							}
 
 							span {
-								color: #ffffff;
+								color: #333;
 								font-family: $font;
-								font-size: 14px;
+								font-size: 16px;
 								font-weight: 400;
-								line-height: 20px;
+								line-height: 1.5;
 							}
 						}
 					}
@@ -155,26 +163,26 @@
 					display: flex;
 					flex-direction: row;
 					justify-content: center;
-					margin-top: 20px;
+					margin-top: 25px;  // Increased margin for better separation
 
 					span {
 						color: #333;
 						font-family: $font;
-						font-size: 14px;
+						font-size: 16px;  // Larger font size
 						font-weight: 400;
-						line-height: 26px;
-						margin: 0 5px;
+						line-height: 1.5;
+						margin: 0 8px;  // Increased margin
 					}
 				}
 			}
 
 			.review-box {
 				width: 100%;
-				margin-top: 50px;
-				padding: 30px;
-				border-radius: 10px;
+				margin-top: 60px;  // Increased margin for better spacing
+				padding: 35px;
+				border-radius: 12px;
 				background: #ffffff;
-				box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+				box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 
 				.main-intro {
 					display: flex;
@@ -182,49 +190,49 @@
 					align-items: center;
 
 					span {
-						color: #333;
+						color: #222;
 						font-family: $font;
-						font-size: 28px;
+						font-size: 32px;  // Larger font size
 						font-weight: 700;
-						line-height: normal;
+						line-height: 1.2;
 						text-transform: capitalize;
-						margin-bottom: 10px;
+						margin-bottom: 15px;
 					}
 
 					p {
-						color: #555;
+						color: #444;
 						font-family: $font;
-						font-size: 16px;
+						font-size: 18px;
 						font-weight: 400;
-						line-height: 26px;
+						line-height: 1.6;
 						text-align: center;
 					}
 				}
 
 				.review-wrap {
-					margin-top: 30px;
-					padding: 20px;
-					border-radius: 10px;
-					background: #f9f9f9;
-					box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+					margin-top: 35px;
+					padding: 25px;
+					border-radius: 12px;
+					background: #f5f5f5;  // Slightly darker background for contrast
+					box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 					display: flex;
 					flex-direction: column;
 
 					.title-box {
 						display: flex;
 						align-items: center;
-						margin-bottom: 15px;
+						margin-bottom: 20px;  // Increased margin
 
 						svg {
-							width: 15px;
-							height: 15px;
+							width: 18px;  // Larger icons
+							height: 18px;
 						}
 
 						span {
-							margin-left: 10px;
-							color: #333;
+							margin-left: 12px;
+							color: #222;
 							font-family: $font;
-							font-size: 18px;
+							font-size: 20px;  // Larger font size
 							font-weight: 600;
 						}
 					}
@@ -232,23 +240,23 @@
 					.review-card {
 						display: flex;
 						flex-direction: column;
-						padding: 10px;
+						padding: 15px;
 						border-bottom: 1px solid #e0e0e0;
 
 						.info {
 							display: flex;
 							justify-content: space-between;
-							margin-bottom: 10px;
+							margin-bottom: 15px;
 
 							.left {
 								display: flex;
 								align-items: center;
 
 								img {
-									width: 50px;
-									height: 50px;
+									width: 60px;  // Larger avatar
+									height: 60px;
 									border-radius: 50%;
-									margin-right: 10px;
+									margin-right: 12px;
 									object-fit: cover;
 								}
 
@@ -257,16 +265,16 @@
 									flex-direction: column;
 
 									strong {
-										color: #333;
+										color: #222;
 										font-family: $font;
-										font-size: 16px;
+										font-size: 18px;  // Larger font size
 										font-weight: 600;
 									}
 
 									span {
 										color: #777;
 										font-family: $font;
-										font-size: 14px;
+										font-size: 16px;  // Larger font size
 										font-weight: 400;
 									}
 								}
@@ -277,102 +285,103 @@
 								align-items: center;
 
 								svg {
-									color: #edf023;
-									margin-right: 5px;
+									color: #f8d52b;  // Brighter star color
+									margin-right: 8px;
 								}
 							}
 						}
 
 						p {
-							color: #555;
+							color: #444;
 							font-family: $font;
-							font-size: 14px;
+							font-size: 16px;  // Larger font size
 							font-weight: 400;
-							line-height: 22px;
+							line-height: 1.6;
 						}
 					}
 
 					.pagination-box {
-						margin-top: 20px;
+						margin-top: 25px;
 						display: flex;
 						justify-content: center;
 
 						span {
 							color: #333;
 							font-family: $font;
-							font-size: 14px;
+							font-size: 16px;
 							font-weight: 400;
 						}
 					}
 				}
 
 				.leave-review-config {
-					margin-top: 20px;
-					padding: 20px;
-					border-radius: 10px;
-					background: #f9f9f9;
-					box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+					margin-top: 25px;
+					padding: 25px;
+					border-radius: 12px;
+					background: #f5f5f5;
+					box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 
 					.main-title {
-						color: #333;
+						color: #222;
 						font-family: $font;
-						font-size: 18px;
+						font-size: 20px;  // Larger font size
 						font-weight: 600;
-						margin-bottom: 10px;
+						margin-bottom: 15px;
 					}
 
 					.review-title {
-						color: #555;
+						color: #444;
 						font-family: $font;
-						font-size: 16px;
+						font-size: 18px;
 						font-weight: 600;
-						margin-bottom: 10px;
+						margin-bottom: 15px;
 					}
 
 					textarea {
 						width: 100%;
-						height: 100px;
-						margin-top: 10px;
-						padding: 10px;
-						border-radius: 10px;
-						border: 1px solid #ddd;
-						color: #717171;
+						height: 120px;  // Larger textarea
+						margin-top: 12px;
+						padding: 12px;
+						border-radius: 8px;
+						border: 1px solid #ccc;
+						color: #555;
 						font-family: $font;
-						font-size: 14px;
+						font-size: 16px;  // Larger font size
 						font-weight: 400;
-						line-height: 22px;
+						line-height: 1.6;
 					}
 
 					.submit-btn {
 						width: 100%;
 						display: flex;
 						justify-content: flex-end;
-						margin-top: 20px;
+						margin-top: 25px;
 
 						button:disabled {
-							background: #dfdfdf;
+							background: #ddd;
 						}
 
 						.submit-review {
 							display: flex;
 							align-items: center;
 							justify-content: center;
-							width: 200px;
-							padding: 10px;
-							border-radius: 10px;
-							border: 1px solid #c4c4c4;
+							width: 220px;  // Wider button
+							padding: 12px;
+							border-radius: 8px;
+							border: 1px solid #ccc;
 							background: #ffffff;
 							cursor: pointer;
-							transition: background 0.3s;
+							transition: background 0.3s, transform 0.3s;  // Added transform effect
 
 							&:hover {
 								background: #f0f0f0;
+								transform: scale(1.02);  // Slight scale effect on hover
 							}
 
 							.title {
-								color: #333;
+								color: #222;
 								font-family: $font;
-								font-size: 16px;
+								font-size: 18px;  // Larger font size
 								font-weight: 600;
 							}
 						}

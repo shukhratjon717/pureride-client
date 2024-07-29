@@ -1,10 +1,9 @@
 import { Direction } from '../../enums/common.enum';
-import { FaqCategory } from '../../enums/faqCategory.enum';
-import {  NoticeCategory, NoticeStatus } from '../../enums/notice.enum';
+import { FaqType } from '../../enums/faqCategory.enum';
+import { NoticeCategory, NoticeStatus, NoticeType } from '../../enums/notice.enum';
 
 export interface NoticeInput {
-	noticeCategory?: NoticeCategory;
-	faqCategory?: FaqCategory;
+	noticeType?: NoticeType;
 	noticeTitle?: string;
 	noticeContent?: string;
 	noticeImage?: string;
@@ -27,7 +26,7 @@ export interface NoticesInquiry {
 interface ANISearch {
 	// noticeStatus?: NoticeStatus;
 	// noticeCategory?: NoticeCategory;
-	faqCategory?: FaqCategory;
+	faqType?: FaqType;
 }
 
 export interface AllNoticesInquiry {

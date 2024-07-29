@@ -13,7 +13,6 @@ import { useTranslation } from 'next-i18next';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-import HeaderFilter from '../homepage/HeaderFilter';
 
 const withLayoutBasic = (Component: any) => {
 	return (props: any) => {
@@ -32,22 +31,22 @@ const withLayoutBasic = (Component: any) => {
 				case '/product':
 					title = 'Product Search';
 					desc = 'We are glad to see you again!';
-					bgImage = '/img/banner/products.webp';
+					bgImage = '/img/banner/product.jpg';
 					break;
 				case '/agent':
 					title = 'Agents';
 					desc = 'Home / For Sale';
-					bgImage = '/img/banner/aagents.jpg';
+					bgImage = '/img/banner/7.jpg';
 					break;
 				case '/agent/detail':
 					title = 'Agent Page';
 					desc = 'Home / For Sale';
-					bgImage = '/img/banner/header2.svg';
+					bgImage = '/img/banner/10.avif';
 					break;
 				case '/mypage':
 					title = 'my page';
 					desc = 'Home / For Sale';
-					bgImage = '/img/banner/mypage.avif';
+					bgImage = '/img/banner/mypage2.jpg';
 					break;
 				case '/community':
 					title = 'Community';
@@ -57,23 +56,23 @@ const withLayoutBasic = (Component: any) => {
 				case '/community/detail':
 					title = 'Community Detail';
 					desc = 'Home / For Sale';
-					bgImage = '/img/banner/header2.svg';
+					bgImage = '/img/banner/cmdetail.jpg';
 					break;
 				case '/cs':
 					title = 'CS';
 					desc = 'We are glad to see you again!';
-					bgImage = '/img/banner/header2.svg';
+					bgImage = '/img/banner/cs.webp';
 					break;
 				case '/account/join':
 					title = 'Login/Signup';
 					desc = 'Authentication Process';
-					bgImage = '/img/banner/header2.svg';
+					bgImage = '/img/banner/llogin.png';
 					setAuthHeader(true);
 					break;
 				case '/member':
 					title = 'Member Page';
 					desc = 'Home / For Sale';
-					bgImage = '/img/banner/header1.svg';
+					bgImage = '/img/banner/1.webp';
 					break;
 				default:
 					break;

@@ -35,7 +35,7 @@ interface PISearch {
 	memberId?: string;
 	locationList?: ProductLocation[];
 	typeList?: ProductType[];
-	yearList?: Number[]; //roomList
+	yearList?: string[]; //roomList
 	engineList?: Number[]; //bedList
 	options?: string[];
 	pricesRange?: Range;

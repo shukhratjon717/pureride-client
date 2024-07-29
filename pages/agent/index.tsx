@@ -141,6 +141,7 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 					<Stack className={'filter'}>
 						<Box component={'div'} className={'left'}>
 							<input
+								className="agent-search"
 								type="text"
 								placeholder={'Search for an agent'}
 								value={searchText}
@@ -186,13 +187,7 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 							</div>
 						) : (
 							agents.map((agent: Member) => {
-								return (
-									<AgentCard
-										agent={agent}
-										key={agent._id}
-										likeMemberHandler={likeMemberHandler}
-									/>
-								);
+								return <AgentCard agent={agent} key={agent._id} likeMemberHandler={likeMemberHandler} />;
 							})
 						)}
 					</Stack>

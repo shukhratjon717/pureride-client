@@ -51,13 +51,14 @@ const PopularPropertyCard = (props: PopularPropertyCardProps) => {
 						''
 					)}
 
-					<div className={'price'}>${product.productPrice}</div>
+					{/* <div className={'price'}>${product.productPrice}</div> */}
 				</Box>
 				<Box component={'div'} className={'info'}>
 					<strong className={'title'} onClick={() => pushDetailHandler(product._id)}>
 						{product.productTitle}
-					</strong>
 					<p className={'desc'}>{product.productAddress}</p>
+					</strong>
+						{/* <div className={'price'}>${product.productPrice}</div> */}
 					<div className={'options'}>
 						<div>
 							<span>{product?.productModel} Model</span>
@@ -73,7 +74,7 @@ const PopularPropertyCard = (props: PopularPropertyCardProps) => {
 					<div className={'bott'}>
 						<p>{product?.productBarter ? 'rent' : 'sale'}</p>
 						<div className="view-like-box">
-							<IconButton color={'default'}>
+							<IconButton color={'red'}>
 								<RemoveRedEyeIcon />
 							</IconButton>
 							<Typography className="view-cnt">{product?.productViews}</Typography>
