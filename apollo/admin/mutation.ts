@@ -161,3 +161,79 @@ export const REMOVE_COMMENT_BY_ADMIN = gql`
 		}
 	}
 `;
+
+/**************************
+ *         FAQ            *
+ *************************/
+
+export const CREATE_FAQ_BY_ADMIN = gql`
+	mutation CreateFaq($input: FaqInputDto!) {
+		createFaq(input: $input) {
+			_id
+			memberId
+			faqQuestion
+			faqAnswer
+			faqType
+			faqStatus
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
+export const UPDATE_FAQ_BY_ADMIN = gql`
+	mutation UpdateFaq($input: FaqUpdateDto!) {
+		updateFaq(input: $input) {
+			_id
+			memberId
+			faqQuestion
+			faqAnswer
+			faqType
+			faqStatus
+			createdAt
+			updatedAt
+			memberData {
+				_id
+				memberType
+				memberStatus
+				memberAuthType
+				memberPhone
+				memberNick
+				memberFullName
+				memberImage
+				memberAddress
+				memberDesc
+				memberProducts
+				memberArticles
+				memberFollowers
+				memberFollowings
+				memberPoints
+				memberLikes
+				memberViews
+				memberComments
+				memberRank
+				memberWarnings
+				memberBlocks
+				deletedAt
+				createdAt
+				updatedAt
+				accessToken
+			}
+		}
+	}
+`;
+
+export const DELETE_FAQ_BY_ADMIN = gql`
+	mutation DeleteFaq($input: String!) {
+		deleteFaq(input: $input) {
+			_id
+			memberId
+			faqQuestion
+			faqAnswer
+			faqType
+			faqStatus
+			createdAt
+			updatedAt
+		}
+	}
+`;

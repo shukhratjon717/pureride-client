@@ -370,7 +370,7 @@ export const UPDATE_NOTIFICATION = gql`
 			notificationDesc
 			authorId
 			receiverId
-			propertyId
+			productId
 			articleId
 		}
 	}

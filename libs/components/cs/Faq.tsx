@@ -73,9 +73,9 @@ const FaqsList: NextPage<FaqsListProps> = ({ initialInput, ...props }) => {
 		},
 	});
 
-	if (getFaqsError) {
-		router.push('_error');
-	}
+	// if (getFaqsError) {
+	// 	router.push('_error');
+	// }
 
 	/** LIFECYCLES **/
 	useEffect(() => {
@@ -115,7 +115,7 @@ const FaqsList: NextPage<FaqsListProps> = ({ initialInput, ...props }) => {
 							changeCategoryHandler('PRODUCT');
 						}}
 					>
-						Motorcycle
+						Product
 					</div>
 					<div
 						className={type === 'PAYMENT' ? 'active' : ''}
@@ -134,12 +134,12 @@ const FaqsList: NextPage<FaqsListProps> = ({ initialInput, ...props }) => {
 						Foy Buyers
 					</div>
 					<div
-						className={type === 'MAKLERS' ? 'active' : ''}
+						className={type === 'AGENTS' ? 'active' : ''}
 						onClick={() => {
-							changeCategoryHandler('MAKLERS');
+							changeCategoryHandler('AGENTS');
 						}}
 					>
-						Maklers
+						Agents
 					</div>
 					<div
 						className={type === 'MEMBERSHIP' ? 'active' : ''}

@@ -1,4 +1,3 @@
-import { BoardArticleCategory, BoardArticleStatus } from '../../enums/board-article.enum';
 import { FaqStatus, FaqType } from '../../enums/faqCategory.enum';
 import { Member } from '../member/member';
 import { TotalCounter } from '../product/property';

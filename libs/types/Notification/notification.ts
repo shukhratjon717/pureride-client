@@ -17,7 +17,7 @@ export interface Nottification {
 	notificationDesc?: string;
 	authorId: string;
 	receiverId: string;
-	propertyId?: string;
+	productId?: string;
 	articleId?: string;
 	memberData?: Member;
 }

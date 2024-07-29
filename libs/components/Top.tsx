@@ -174,12 +174,12 @@ const Top: NextPage = ({ intialValues, ...props }: any) => {
 	};
 
 	const handleMenuItemClick = (notification: Nottification) => {
-		if (!notification.propertyId && !notification.articleId) {
+		if (!notification.productId && !notification.articleId) {
 			router.push(`/member?memberId=${notification.authorId}`);
 		} else if (notification.articleId) {
 			router.push(`/community/detail?id=${notification.articleId}`);
-		} else if (notification.propertyId) {
-			router.push(`/product/detail?id=${notification.propertyId}`);
+		} else if (notification.productId) {
+			router.push(`/product/detail?id=${notification.productId}`);
 		}
 
 		const updateNotification: NotificationUpdate = {
@@ -398,10 +398,14 @@ const Top: NextPage = ({ intialValues, ...props }: any) => {
 															style={{
 																whiteSpace: 'normal',
 																wordWrap: 'break-word',
-																backgroundColor: isRead ? '#d2e4f7' : '#f8c2c2',
-																borderRadius: 20,
-																padding: '10px',
-																margin: 10,
+																backgroundColor: isRead ? '#d3d3d3' : '#1976d2', // Dark blue for unread, gray for read
+																borderRadius: 10,
+																padding: '15px',
+																margin: '10px 0',
+																boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
+																display: 'flex',
+																alignItems: 'center',
+																color: isRead ? '#000' : '#fff',
 															}}
 														>
 															<div style={{ display: 'flex', alignItems: 'center' }}>

@@ -548,7 +548,7 @@ export const GET_NOTIFICATIONS = gql`
 				notificationDesc
 				authorId
 				receiverId
-				propertyId
+				productId
 				articleId
 			}
 			metaCounter {
@@ -569,7 +569,7 @@ export const GET_NOTIFICATION = gql`
 			notificationDesc
 			authorId
 			receiverId
-			propertyId
+			productId
 			articleId
 			memberData {
 				_id
@@ -607,26 +607,61 @@ export const GET_NOTIFICATION = gql`
  *************************/
 
 export const GET_ALL_FAQS = gql`
-	query GetAllFaqsByAdmin($input: AllFaqsInquiry!) {
-		getAllFaqsByAdmin(ipnut: $input) {
+	query GetFaqs($input: FaqInquiryDto!) {
+		getFaqs(input: $input) {
 			list {
 				_id
-				faqCategory
-				faqStatus
 				faqQuestion
 				faqAnswer
-				faqTitle
-				faqContent
-				faqImage
-				faqLikes
-				faqViews
-				memberId
+				faqType
+				faqStatus
 				createdAt
 				updatedAt
+				memberData {
+					_id
+					memberType
+					memberStatus
+					memberAuthType
+					memberPhone
+					memberNick
+					memberFullName
+					memberImage
+					memberAddress
+					memberDesc
+					memberProducts
+					memberArticles
+					memberFollowers
+					memberFollowings
+					memberPoints
+					memberLikes
+					memberViews
+					memberComments
+					memberRank
+					memberWarnings
+					memberBlocks
+					deletedAt
+					createdAt
+					updatedAt
+					accessToken
+				}
 			}
 			metaCounter {
 				total
 			}
+		}
+	}
+`;
+
+export const GET_FAQ = gql`
+	query GetFaq($input: String!) {
+		getFaq(input: $input) {
+			_id
+			faqQuestion
+			faqAnswer
+			faqType
+			faqStatus
+			createdAt
+			updatedAt
 		}
 	}
 `;

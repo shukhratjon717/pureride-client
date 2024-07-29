@@ -1,28 +1,33 @@
+import { Direction } from '../../enums/common.enum';
 import { NotificationGroup, NotificationStatus, NotificationType } from '../../enums/notification.enum';
-import { Member } from '../member/member';
-import { TotalCounter } from '../product/property';
 
-export interface MeNotified {
-	authorId: string;
-	notificationRefId: string;
-	myNotification: boolean;
-}
+export interface NotificationInput {
+	notificationType: NotificationType;
 
-export interface NotificDto {
-	_id: string;
-	notificationType?: NotificationType;
-	notificationStatus?: NotificationStatus;
+	notificationStatus: NotificationStatus;
+
 	notificationGroup?: NotificationGroup;
-	notificationTitle: string;
+
+	notificationTitle?: string;
+
 	notificationDesc?: string;
+
 	authorId: string;
+
 	receiverId: string;
-	propertyId?: string;
+
+	productId?: string;
+
 	articleId?: string;
-	memberData?: Member;
 }
 
-export interface Notifications {
-	list: NotificDto[];
-	metaCounter: TotalCounter[];
+interface NISearch {
+	receiverId: string;
+}
+
+export interface NotificationsInquiry {
+	page: number;
+	limit: number;
+	direction?: Direction;
+	search: NISearch;
 }
