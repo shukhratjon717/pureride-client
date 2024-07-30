@@ -182,19 +182,47 @@ export const GET_COMMENTS = gql`
  *************************/
 
 export const GET_ALL_NOTICES_BY_ADMIN = gql`
-	query GetAllNoticesByAdmin($input: AllNoticesInquiry!) {
-		getAllNoticesByAdmin(input: $input) {
+	query GetAllNoticesByAdmin($input: NoticesInquiry!) {
+		getAllNoticesByAdmin(ipnut: $input) {
 			list {
 				_id
-				noticeCategory
-				noticeStatus
-				noticeTitle
+				noticeType
 				noticeContent
-				noticeImage
+				noticeStatus
 				noticeLikes
-				memberId
+				noticeViews
 				createdAt
 				updatedAt
+				memberData {
+					_id
+					memberType
+					memberStatus
+					memberAuthType
+					memberPhone
+					memberNick
+					memberFullName
+					memberImage
+					memberAddress
+					memberDesc
+					memberProducts
+					memberArticles
+					memberFollowers
+					memberFollowings
+					memberPoints
+					memberLikes
+					memberViews
+					memberComments
+					memberRank
+					memberWarnings
+					memberBlocks
+					deletedAt
+					createdAt
+					updatedAt
+					accessToken
+				}
+			}
+			metaCounter {
+				total
 			}
 		}
 	}

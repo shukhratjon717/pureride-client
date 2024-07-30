@@ -332,7 +332,7 @@ export const GET_ALL_NOTICES_BY_ADMIN = gql`
 	}
 `;
 
-export const REMOVE_NOTICES_BY_ADMIN = gql`
+export const REMOVE_NOTICE_BY_ADMIN = gql`
 	mutation RemoveNoticeByAdmin($input: String!) {
 		removeNoticeByAdmin(articleId: $input) {
 			_id
@@ -373,47 +373,87 @@ export const REMOVE_NOTICES_BY_ADMIN = gql`
 		}
 	}
 `;
+export const CREATE_NOTICE_BY_ADMIN = gql`
+	mutation CreateNoticeByAdmin($input: NoticeInput!) {
+		createNoticeByAdmin(input: $input) {
+			_id
+			noticeType
+			noticeContent
+			noticeStatus
+			noticeLikes
+			noticeViews
+			createdAt
+			updatedAt
+			memberData {
+				_id
+				memberType
+				memberStatus
+				memberAuthType
+				memberPhone
+				memberNick
+				memberFullName
+				memberImage
+				memberAddress
+				memberDesc
+				memberProducts
+				memberArticles
+				memberFollowers
+				memberFollowings
+				memberPoints
+				memberLikes
+				memberViews
+				memberComments
+				memberRank
+				memberWarnings
+				memberBlocks
+				deletedAt
+				createdAt
+				updatedAt
+				accessToken
+			}
+		}
+	}
+`;
 
+export const UPDATE_NOTICE_BY_ADMIN = gql`
+	mutation UpdateNoticeByAdmin($input: NoticeUpdate!) {
+		updateNoticeByAdmin(input: $input) {
+			_id
+			noticeType
+			noticeContent
+			noticeStatus
+			noticeLikes
+			noticeViews
+			createdAt
+			updatedAt
+			memberData {
+				_id
+				memberType
+				memberStatus
+				memberAuthType
+				memberPhone
+				memberNick
+				memberFullName
+				memberImage
+				memberAddress
+				memberDesc
+				memberProducts
+				memberArticles
+				memberFollowers
+				memberFollowings
+				memberPoints
+				memberLikes
+				memberViews
+				memberComments
+				memberRank
+				memberWarnings
+				memberBlocks
+				deletedAt
+				createdAt
+				updatedAt
+				accessToken
+			}
+		}
+	}
+`;
 
-export const UPDATE_NOTICES_BY_ADMIN = gql` 
-mutation UpdateNoticeByAdmin($input: NoticeUpdate!) {
-    updateNoticeByAdmin(input: $input) {
-        _id
-        noticeType
-        noticeContent
-        noticeStatus
-        noticeLikes
-        noticeViews
-        createdAt
-        updatedAt
-        memberData {
-            _id
-            memberType
-            memberStatus
-            memberAuthType
-            memberPhone
-            memberNick
-            memberFullName
-            memberImage
-            memberAddress
-            memberDesc
-            memberProducts
-            memberArticles
-            memberFollowers
-            memberFollowings
-            memberPoints
-            memberLikes
-            memberViews
-            memberComments
-            memberRank
-            memberWarnings
-            memberBlocks
-            deletedAt
-            createdAt
-            updatedAt
-            accessToken
-        }
-    }
-}
-
-`

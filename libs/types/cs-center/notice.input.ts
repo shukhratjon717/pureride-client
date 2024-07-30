@@ -4,7 +4,7 @@ import { NoticeCategory, NoticeStatus, NoticeType } from '../../enums/notice.enu
 
 export interface NoticeInput {
 	noticeType?: NoticeType;
-	noticeTitle?: string;
+	noticeTitle: string;
 	noticeContent?: string;
 	noticeImage?: string;
 	memberId?: string;
@@ -20,7 +20,10 @@ export interface NoticesInquiry {
 	limit: number;
 	sort?: string;
 	direction?: Direction;
-	search: NISearch;
+	search?: NISearch;
+	noticeType?: NoticeType;
+	noticeStatus?: NoticeStatus;
+	text?: string;
 }
 
 interface ANISearch {
