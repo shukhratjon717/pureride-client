@@ -72,13 +72,9 @@ const Join: NextPage = () => {
 					<Stack className={'main'}>
 						<Stack className={'left'}>
 							{/* @ts-ignore */}
-							<Box className={'logo'}>
-								<img src="/img/logo/logoText.svg" alt="" />
-								<span>PureRide</span>
-							</Box>
+
 							<Box className={'info'}>
 								<span>{loginView ? 'login' : 'signup'}</span>
-								<p>{loginView ? 'Login' : 'Sign'} in with this account across the following sites.</p>
 							</Box>
 							<Box className={'input-wrap'}>
 								<div className={'input-box'}>

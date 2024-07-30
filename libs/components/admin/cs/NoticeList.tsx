@@ -49,7 +49,7 @@ const headCells: readonly HeadCell[] = [
 	{ id: 'id', numeric: false, disablePadding: false, label: 'ID' },
 	{ id: 'writer', numeric: false, disablePadding: false, label: 'Writer' },
 	{ id: 'date', numeric: false, disablePadding: false, label: 'Date' },
-	{ id: 'view', numeric: false, disablePadding: false, label: 'View' },
+	{ id: 'view', numeric: true, disablePadding: false, label: 'Views' },
 	{ id: 'action', numeric: false, disablePadding: false, label: 'Action' },
 ];
 
@@ -82,7 +82,7 @@ const EnhancedTableToolbar = ({ numSelected, rowCount, onSelectAllClick }: Enhan
 			) : (
 				<TableHead>
 					<TableRow>
-						<TableCell padding="checkbox">
+						<TableCell padding="checkbox" align="left">
 							<Checkbox
 								color="primary"
 								indeterminate={numSelected > 0 && numSelected < rowCount}
@@ -91,15 +91,21 @@ const EnhancedTableToolbar = ({ numSelected, rowCount, onSelectAllClick }: Enhan
 								inputProps={{ 'aria-label': 'select all' }}
 							/>
 						</TableCell>
-						{headCells.map((headCell) => (
-							<TableCell
-								key={headCell.id}
-								align="left"
-								sx={{ width: `${100 / headCells.length}%`, minWidth: '150px' }} // Adjust width as needed
-							>
-								{headCell.label}
-							</TableCell>
-						))}
+						<TableCell align="center" sx={{ width: '12%', minWidth: '350px', ml: '100px' }}>
+							Type
+						</TableCell>
+
+						<TableCell align="center" sx={{ width: '12%', minWidth: '450px', ml: '100px' }}>
+							ID
+						</TableCell>
+
+						<TableCell align="center" sx={{ width: '12%', minWidth: '300px', ml: '100px' }}>
+							Date
+						</TableCell>
+
+						<TableCell align="right" sx={{ width: '12%', minWidth: '380px', ml: '100px' }}>
+							Action
+						</TableCell>
 					</TableRow>
 				</TableHead>
 			)}
@@ -120,6 +126,7 @@ interface NoticeListType {
 export const NoticeList = (props: NoticeListType) => {
 	const { notices, dense, anchorEl, menuIconCloseHandler, updateNoticeHandler, removeNoticeHandler } = props;
 	const router = useRouter();
+	console.log('notices:', notices);
 
 	const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
 		// Logic to handle select all
@@ -142,34 +149,22 @@ export const NoticeList = (props: NoticeListType) => {
 					<TableBody>
 						{notices.length === 0 ? (
 							<TableRow>
-								<TableCell align="center" colSpan={headCells.length}>
+								<TableCell align="center" colSpan={headCells.length + 1}>
 									<span className="no-data">Data not found!</span>
 								</TableCell>
 							</TableRow>
 						) : (
-							notices.map((notice) => (
+							notices.map((notice: any) => (
 								<TableRow hover key={notice._id}>
 									<TableCell padding="checkbox">
 										<Checkbox color="primary" />
 									</TableCell>
-									<TableCell align="left" sx={{ ml: '300px' }}>
-										{notice.noticeType}
-									</TableCell>
-									<TableCell align="left" sx={{ ml: '300px' }}>
-										{notice.noticeTitle}
-									</TableCell>
-									<TableCell align="left" sx={{ ml: '300px' }}>
-										{notice._id}
-									</TableCell>
-									<TableCell align="left" sx={{ ml: '300px' }}>
-										{notice.memberData?.memberNick}
-									</TableCell>
-									<TableCell align="left" sx={{ ml: '300px' }}>
-										{new Date(notice.createdAt).toLocaleDateString()}
-									</TableCell>
-									<TableCell align="left" sx={{ ml: '300px' }}>
-										{notice.noticeViews}
-									</TableCell>
+									<TableCell align="left">{notice.noticeType}</TableCell>
+									<TableCell align="left">{notice.noticeTitle}</TableCell>
+									<TableCell align="left">{notice._id}</TableCell>
+									<TableCell align="left">{notice.memberData?.memberNick}</TableCell>
+									<TableCell align="left">{new Date(notice.createdAt).toLocaleDateString()}</TableCell>
+									<TableCell align="right">{notice.noticeViews}</TableCell>
 									<TableCell align="right">
 										<Menu
 											className="menu-modal"
