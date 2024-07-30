@@ -1,142 +1,178 @@
-import React, { SyntheticEvent, useState } from 'react';
-import MuiAccordion, { AccordionProps } from '@mui/material/Accordion';
-import { AccordionDetails, Box, Stack, Typography } from '@mui/material';
-import MuiAccordionSummary, { AccordionSummaryProps } from '@mui/material/AccordionSummary';
-import { useRouter } from 'next/router';
-import { styled } from '@mui/material/styles';
-import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
-import useDeviceDetect from '../../../hooks/useDeviceDetect';
+import React from 'react';
+import {
+  TableCell,
+  TableHead,
+  TableBody,
+  TableRow,
+  Table,
+  TableContainer,
+  Button,
+  Menu,
+  Fade,
+  MenuItem,
+  Typography,
+  Stack,
+} from '@mui/material';
+import DeleteForeverTwoToneIcon from '@mui/icons-material/DeleteForeverTwoTone';
+import { FaqStatus } from '../../../enums/faqCategory.enum';
 
-const Accordion = styled((props: AccordionProps) => <MuiAccordion disableGutters elevation={0} square {...props} />)(
-	({ theme }) => ({
-		border: `1px solid ${theme.palette.divider}`,
-		'&:not(:last-child)': {
-			borderBottom: 0,
-		},
-		'&:before': {
-			display: 'none',
-		},
-	}),
-);
-const AccordionSummary = styled((props: AccordionSummaryProps) => (
-	<MuiAccordionSummary expandIcon={<KeyboardArrowDownRoundedIcon sx={{ fontSize: '1.4rem' }} />} {...props} />
-))(({ theme }) => ({
-	backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, .05)' : '#fff',
-	'& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
-		transform: 'rotate(180deg)',
-	},
-	'& .MuiAccordionSummary-content': {
-		marginLeft: theme.spacing(1),
-	},
-}));
+interface Data {
+  id: string;
+  question: string;
+  answer: string;
+  agent: string;
+  location: string;
+  type: string;
+  status: string;
+}
 
-const Faq = () => {
-	const device = useDeviceDetect();
-	const router = useRouter();
-	const [category, setCategory] = useState<string>('property');
-	const [expanded, setExpanded] = useState<string | false>('panel1');
+type Order = 'asc' | 'desc';
 
-	/** APOLLO REQUESTS **/
-	/** LIFECYCLES **/
-	
-	/** HANDLERS **/
-	const changeCategoryHandler = (category: string) => {
-		setCategory(category);
-	};
+interface HeadCell {
+  disablePadding: boolean;
+  id: keyof Data;
+  label: string;
+  numeric: boolean;
+}
 
-	const handleChange = (panel: string) => (event: SyntheticEvent, newExpanded: boolean) => {
-		setExpanded(newExpanded ? panel : false);
-	};
+const headCells: readonly HeadCell[] = [
+  {
+    id: 'type',
+    numeric: false,
+    disablePadding: false,
+    label: 'TYPE',
+  },
+  {
+    id: 'question',
+    numeric: true,
+    disablePadding: false,
+    label: 'QUESTION',
+  },
+  {
+    id: 'answer',
+    numeric: false,
+    disablePadding: false,
+    label: 'ANSWER',
+  },
+  {
+    id: 'status',
+    numeric: false,
+    disablePadding: false,
+    label: 'STATUS',
+  },
+];
 
+interface EnhancedTableProps {
+  numSelected: number;
+  onRequestSort: (event: React.MouseEvent<unknown>, faq: keyof Data) => void;
+  onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  order: Order;
+  orderBy: string;
+  rowCount: number;
+}
 
+function EnhancedTableHead(props: EnhancedTableProps) {
+  return (
+    <TableHead>
+      <TableRow>
+        {headCells.map((headCell) => (
+          <TableCell
+            key={headCell.id}
+            align={'center'}
+            padding={headCell.disablePadding ? 'none' : 'normal'}
+          >
+            {headCell.label}
+          </TableCell>
+        ))}
+      </TableRow>
+    </TableHead>
+  );
+}
 
-	if (device === 'mobile') {
-		return <div>FAQ MOBILE</div>;
-	} else {
-		return (
-			<Stack className={'faq-content'}>
-				<Box className={'categories'} component={'div'}>
-					<div
-						className={category === 'property' ? 'active' : ''}
-						onClick={() => {
-							changeCategoryHandler('property');
-						}}
-					>
-						Product
-					</div>
-					<div
-						className={category === 'payment' ? 'active' : ''}
-						onClick={() => {
-							changeCategoryHandler('payment');
-						}}
-					>
-						Payment
-					</div>
-					<div
-						className={category === 'buyers' ? 'active' : ''}
-						onClick={() => {
-							changeCategoryHandler('buyers');
-						}}
-					>
-						Foy Buyers
-					</div>
-					<div
-						className={category === 'agents' ? 'active' : ''}
-						onClick={() => {
-							changeCategoryHandler('agents');
-						}}
-					>
-						For Agents
-					</div>
-					<div
-						className={category === 'membership' ? 'active' : ''}
-						onClick={() => {
-							changeCategoryHandler('membership');
-						}}
-					>
-						Membership
-					</div>
-					<div
-						className={category === 'community' ? 'active' : ''}
-						onClick={() => {
-							changeCategoryHandler('community');
-						}}
-					>
-						Community
-					</div>
-					<div
-						className={category === 'other' ? 'active' : ''}
-						onClick={() => {
-							changeCategoryHandler('other');
-						}}
-					>
-						Other
-					</div>
-				</Box>
-				<Box className={'wrap'} component={'div'}>
-					{[category] &&
-						[category].map((ele: any) => (
-							<Accordion expanded={expanded === ele?.id} onChange={handleChange(ele?.id)} key={ele?.subject}>
-								<AccordionSummary id="panel1d-header" className="question" aria-controls="panel1d-content">
-									<Typography className="badge" variant={'h4'}>
-										Q
-									</Typography>
-									<Typography> {ele?.subject}</Typography>
-								</AccordionSummary>
-								<AccordionDetails>
-									<Stack className={'answer flex-box'}>
-										<Typography className="badge" variant={'h4'} color={'primary'}>
-											A
-										</Typography>
-										<Typography> {ele?.content}</Typography>
-									</Stack>
-								</AccordionDetails>
-							</Accordion>
-						))}
-				</Box>
-			</Stack>
-		);
-	}
+interface FaqPanelListType {
+  faqs: any[]; // Replace 'any' with your actual FAQ type if available
+  anchorEl: Record<string, HTMLElement | null>;
+  menuIconClickHandler: (event: React.MouseEvent<HTMLElement>, faqId: string) => void;
+  menuIconCloseHandler: (faqId: string) => void;
+  updateFaqHandler: (data: { _id: string; faqStatus: string }) => void;
+  removeFaqHandler: (faqId: string) => void;
+}
+
+export const FaqArticlesPanelList: React.FC<FaqPanelListType> = ({
+  faqs,
+  anchorEl,
+  menuIconClickHandler,
+  menuIconCloseHandler,
+  updateFaqHandler,
+  removeFaqHandler,
+}) => {
+  console.log(faqs, 'FAQS');
+
+  return (
+    <Stack>
+      <TableContainer>
+        <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size={'medium'}>
+          <EnhancedTableHead
+            numSelected={0}
+            onRequestSort={() => {}}
+            onSelectAllClick={() => {}}
+            order={'asc'}
+            orderBy={'type'}
+            rowCount={faqs.length}
+          />
+          <TableBody>
+            {faqs.length === 0 && (
+              <TableRow>
+                <TableCell align="center" colSpan={headCells.length}>
+                  <span className={'no-data'}>Data not found!</span>
+                </TableCell>
+              </TableRow>
+            )}
+
+            {faqs.length > 0 &&
+              faqs.map((faq) => (
+                <TableRow hover key={faq._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                  <TableCell align="center">{faq.faqType}</TableCell>
+                  <TableCell align="center">{faq.faqQuestion}</TableCell>
+                  <TableCell align="center">{faq.faqAnswer}</TableCell>
+                  <TableCell align="center">
+                    <Button onClick={(e) => menuIconClickHandler(e, faq._id)} className={'badge success'}>
+                      {faq.faqStatus}
+                    </Button>
+
+                    <Menu
+                      className={'menu-modal'}
+                      MenuListProps={{ 'aria-labelledby': 'fade-button' }}
+                      anchorEl={anchorEl[faq._id]}
+                      open={Boolean(anchorEl[faq._id])}
+                      onClose={() => menuIconCloseHandler(faq._id)}
+                      TransitionComponent={Fade}
+                      sx={{ p: 1 }}
+                    >
+                      {Object.values(FaqStatus)
+                        .filter((status) => status !== faq.faqStatus)
+                        .map((status) => (
+                          <MenuItem
+                            onClick={() => updateFaqHandler({ _id: faq._id, faqStatus: status })}
+                            key={status}
+                          >
+                            <Typography variant={'subtitle1'} component={'span'}>
+                              {status}
+                            </Typography>
+                          </MenuItem>
+                        ))}
+                    </Menu>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Button onClick={() => removeFaqHandler(faq._id)}>
+                      <DeleteForeverTwoToneIcon />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              )}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Stack>
+  );
 };
-
-export default Faq;

@@ -16,6 +16,7 @@ export interface Faq {
 }
 
 export interface Faqs {
+	_id: string;
 	list: Faq[];
 	metaCounter: TotalCounter[];
 }
