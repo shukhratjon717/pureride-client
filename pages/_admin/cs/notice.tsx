@@ -13,11 +13,63 @@ import TablePagination from '@mui/material/TablePagination';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import { NoticeList } from '../../../libs/components/admin/cs/NoticeList';
+import { Notices } from '../../../libs/types/cs-center/notice';
+import { NoticesInquiry } from '../../../libs/types/cs-center/notice.input';
+import { useRouter } from 'next/router';
+import { useMutation, useQuery } from '@apollo/client';
+import {
+	GET_ALL_NOTICES_BY_ADMIN,
+	REMOVE_NOTICES_BY_ADMIN,
+	UPDATE_NOTICES_BY_ADMIN,
+} from '../../../apollo/admin/mutation';
+import { T } from '../../../libs/types/common';
 
-const AdminNotice: NextPage = (props: any) => {
+const AdminNotice: NextPage = ({ initialInquiry, ...props }: any) => {
 	const [anchorEl, setAnchorEl] = useState<[] | HTMLElement[]>([]);
+	const router = useRouter();
+	const [faqsInquiry, setFaqsInquiry] = useState<NoticesInquiry>(initialInquiry);
+	const [type, setType] = useState<string>('PRODUCT');
 
+	const [faqsTotal, setFaqsTotal] = useState<number>(0);
+	const [value, setValue] = useState('ALL');
+	const [searchType, setSearchType] = useState('ALL');
+	const [searchText, setSearchText] = useState('');
+
+	const [faqs, setFaqs] = useState<Notices[]>([]);
+	const [total, setTotal] = useState<number>(0);
+	const dense = false;
 	/** APOLLO REQUESTS **/
+	const [updateNoticeByAdmin, { error: createError }] = useMutation(UPDATE_NOTICES_BY_ADMIN, {
+		onError: (error) => {
+			router.push('/_error');
+		},
+	});
+
+	const [deleteFaqByAdmin, { error: createDeleteError }] = useMutation(REMOVE_NOTICES_BY_ADMIN, {
+		onError: (error) => {
+			router.push('/_error');
+		},
+	});
+
+	const {
+		loading: getFaqsLoading,
+		data: getFaqsData,
+		refetch: getFaqsRefetch,
+		error: getFaqsError,
+	} = useQuery(GET_ALL_NOTICES_BY_ADMIN, {
+		fetchPolicy: 'network-only', // by default cache-first
+		variables: { input: { ...faqsInquiry, faqType: type.toUpperCase() } },
+		notifyOnNetworkStatusChange: true,
+		onCompleted: (data: T) => {
+			setFaqs(data?.getFaqs?.list || []);
+			setTotal(data?.getFaqs?.metaCounter[0]?.total || 0);
+		},
+	});
+
+	if (getFaqsError) {
+		router.push('/_error');
+	}
+
 	/** LIFECYCLES **/
 	/** HANDLERS **/
 

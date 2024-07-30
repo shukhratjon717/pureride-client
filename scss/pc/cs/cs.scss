@@ -171,13 +171,13 @@
             div {
               border-radius: 5px;
               // border: 1px solid red;
-              background: cyan;
+              background: rgba($color: gray, $alpha: 0.5);
               width: 14%;
               height: 40px;
               display: flex;
               justify-content: center;
               align-items: center;
-              color: rgb(255, 17, 17);
+              color: white;
               font-weight: bold;
               text-align: center;
               font-family: $font;
@@ -188,8 +188,8 @@
               letter-spacing: -0.225px;
               cursor: pointer;
               &.active {
-                border-bottom: 2px solid #000000;
-                color: rgb(98, 84, 74);
+                border-bottom: 2px solid #f40000;
+                color: black;
               }
             }
           }
@@ -211,7 +211,7 @@
               color: #725CE8;
             }
             .question {
-              background: rgb(104, 104, 230);
+              background: rgba($color: white, $alpha: 0.7);
               border-radius: 10px;
               .badge {
                 background: blue;
@@ -219,7 +219,7 @@
               }
             }
             .answer {
-              background: orange;
+              background: rgba($color: orange, $alpha: 1);
               border-radius: 10px;
               margin-left: 80px;
               display: flex;

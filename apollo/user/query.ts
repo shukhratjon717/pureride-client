@@ -95,7 +95,7 @@ export const GET_PROPERTY = gql`
 			productModel
 			productBrand
 			productYear
-			productMilage
+			productMileage
 			productViews
 			productLikes
 			productComments
@@ -129,7 +129,7 @@ export const GET_PROPERTIES = gql`
 				productModel
 				productBrand
 				productYear
-				productMilage
+				productMileage
 				productViews
 				productLikes
 				productComments
@@ -143,6 +143,33 @@ export const GET_PROPERTIES = gql`
 				constructedAt
 				createdAt
 				updatedAt
+				memberData {
+					_id
+					memberType
+					memberStatus
+					memberAuthType
+					memberPhone
+					memberNick
+					memberFullName
+					memberImage
+					memberAddress
+					memberDesc
+					memberProducts
+					memberArticles
+					memberFollowers
+					memberFollowings
+					memberPoints
+					memberLikes
+					memberViews
+					memberComments
+					memberRank
+					memberWarnings
+					memberBlocks
+					deletedAt
+					createdAt
+					updatedAt
+					accessToken
+				}
 			}
 			metaCounter {
 				total
@@ -167,7 +194,7 @@ export const GET_AGENT_PROPERTIES = gql`
 				productModel
 				productBrand
 				productYear
-				productMilage
+				productMileage
 				productViews
 				productLikes
 				productComments
@@ -205,7 +232,7 @@ export const GET_FAVORITES = gql`
 				productModel
 				productBrand
 				productYear
-				productMilage
+				productMileage
 				productViews
 				productLikes
 				productComments
@@ -243,7 +270,7 @@ export const GET_VISITED = gql`
 				productModel
 				productBrand
 				productYear
-				productMilage
+				productMileage
 				productViews
 				productLikes
 				productComments

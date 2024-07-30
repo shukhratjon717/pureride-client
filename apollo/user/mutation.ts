@@ -150,7 +150,7 @@ export const CREATE_PROPERTY = gql`
 			productColor
 			productBrand
 			productYear
-			productMilage
+			productMileage
 			productViews
 			productLikes
 			productComments
@@ -183,7 +183,7 @@ export const UPDATE_PROPERTY = gql`
 			productModel
 			productBrand
 			productYear
-			productMilage
+			productMileage
 			productViews
 			productLikes
 			productComments
@@ -216,7 +216,7 @@ export const LIKE_TARGET_PROPERTY = gql`
 			productModel
 			productBrand
 			productYear
-			productMilage
+			productMileage
 			productViews
 			productLikes
 			productComments

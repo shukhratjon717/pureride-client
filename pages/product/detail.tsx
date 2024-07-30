@@ -428,7 +428,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 											<Stack className={'left'}>
 												<Box component={'div'} className={'info'}>
 													<Typography className={'title'}>Mileage</Typography>
-													<Typography className={'data'}>{property?.productMilage} </Typography>
+													<Typography className={'data'}>{property?.productMileage} </Typography>
 												</Box>
 												<Box component={'div'} className={'info'}>
 													<Typography className={'title'}>Color</Typography>

@@ -20,7 +20,7 @@ export interface ProductInput {
 	productBrand: string;
 	productYear: number;
 	engineSize: number;
-	productMilage: number;
+	productMileage: number;
 	productRank: number;
 	productImages: string[];
 	productDesc: string;

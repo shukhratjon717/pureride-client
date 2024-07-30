@@ -27,12 +27,12 @@ export interface Product {
 	productPrice: number;
 	productEngineSize: ProductEngineSize;
 	productFuelType?: ProductFuelType;
-	engineSize: number,
+	engineSize: number;
 	productModel?: string;
 	productColor?: string;
 	productBrand?: string;
 	productYear?: number;
-	productMilage?: number;
+	productMileage?: number;
 	productViews: number;
 	productLikes: string;
 	productComments: string;

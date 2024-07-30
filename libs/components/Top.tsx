@@ -66,8 +66,6 @@ const Top: NextPage = ({ intialValues, ...props }: any) => {
 		},
 	});
 
-	console.log('notifications:', notifications);
-
 	/** LIFECYCLES **/
 
 	useEffect(() => {

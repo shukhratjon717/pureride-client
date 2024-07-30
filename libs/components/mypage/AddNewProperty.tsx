@@ -51,7 +51,7 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 			productFuelType: getProductData?.getProduct ? getProductData?.getProduct?.productFuelType : '',
 			productColor: getProductData?.getProduct ? getProductData?.getProduct?.productColor : '',
 			productYear: getProductData?.getProduct ? getProductData?.getProduct?.productYear : 0,
-			productMilage: getProductData?.getProduct ? getProductData?.getProduct?.productMilage : 0,
+			productMileage: getProductData?.getProduct ? getProductData?.getProduct?.productMileage : 0,
 			productDesc: getProductData?.getProduct ? getProductData?.getProduct?.productDesc : '',
 			productImages: getProductData?.getProduct ? getProductData?.getProduct?.productImages : [],
 		});
@@ -120,7 +120,7 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 			insertPropertyData.productColor === '' || // @ts-ignore
 			insertPropertyData.productFuelType === '' ||
 			insertPropertyData.productYear === 0 ||
-			insertPropertyData.productMilage === 0 || // @ts-ignore
+			insertPropertyData.productMileage === 0 || // @ts-ignore
 			insertPropertyData.productEngineSize === '' ||
 			insertPropertyData.productDesc === '' ||
 			insertPropertyData.productImages.length === 0
@@ -383,10 +383,10 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 									<input
 										type="number"
 										className={'select-description'}
-										value={insertPropertyData.productMilage || ''}
+										value={insertPropertyData.productMileage || ''}
 										placeholder="Enter mileage"
 										onChange={({ target: { value } }) =>
-											setInsertPropertyData({ ...insertPropertyData, productMilage: parseInt(value) })
+											setInsertPropertyData({ ...insertPropertyData, productMileage: parseInt(value) })
 										}
 									/>
 								</Stack>
@@ -551,7 +551,7 @@ AddProperty.defaultProps = {
 		productFuelType: '',
 		productColor: '',
 		productYear: 0,
-		productMilage: 0,
+		productMileage: 0,
 		productDesc: '',
 		productImages: [],
 	},

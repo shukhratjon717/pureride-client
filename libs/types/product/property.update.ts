@@ -13,7 +13,7 @@ export interface ProductUpdate {
 	productModel: string;
 	productBrand: string;
 	productYear: number;
-	productMilage: number;
+	productMileage: number;
 	productViews: number;
 	productLikes: string;
 	productComments: string;

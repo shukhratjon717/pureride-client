@@ -77,7 +77,7 @@ const PropertyCard = (props: PropertyCardType) => {
 							<Typography>Model {property.productModel} </Typography>
 						</Stack>
 						<Stack className="option">
-							<Typography> Milage {property.productMilage}</Typography>
+							<Typography> Milage {property.productMileage}</Typography>
 						</Stack>
 					</Stack>
 					<Stack className="divider"></Stack>

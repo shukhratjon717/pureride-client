@@ -39,7 +39,7 @@ const TrendPropertyCard = (props: TrendPropertyCardProps) => {
 					<div className={'options'}>
 						<div>
 							<img src="/img/icons/bed.svg" alt="" />
-							<span>{property.productMilage} Milage</span>
+							<span>{property.productMileage} Milage</span>
 						</div>
 						<div>
 							<img src="/img/icons/room.svg" alt="" />
@@ -90,15 +90,15 @@ const TrendPropertyCard = (props: TrendPropertyCardProps) => {
 					<div className={'options'}>
 						<div>
 							<img src="/img/icons/bed.svg" alt="" />
-							<span>{property.productEngineSize} bed</span>
+							<span>{property.productEngineSize} Engine</span>
 						</div>
 						<div>
 							<img src="/img/icons/room.svg" alt="" />
-							<span>{property.productFuelType} rooms</span>
+							<span>{property.productFuelType} Fuel Type</span>
 						</div>
 						<div>
 							<img src="/img/icons/expand.svg" alt="" />
-							<span>{property.productMilage} m2</span>
+							<span>{property.productMileage} </span>
 						</div>
 					</div>
 					<Divider sx={{ mt: '15px', mb: '17px' }} />

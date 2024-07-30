@@ -52,7 +52,7 @@ export const UPDATE_PROPERTY_BY_ADMIN = gql`
 			productModel
 			productBrand
 			productYear
-			productMilage
+			productMileage
 			productViews
 			productLikes
 			productComments
@@ -71,7 +71,7 @@ export const UPDATE_PROPERTY_BY_ADMIN = gql`
 `;
 
 export const REMOVE_PROPERTY_BY_ADMIN = gql`
-	query RemoveProductByAdmin($input: String!) {
+	mutation RemoveProductByAdmin($input: String!) {
 		removeProductByAdmin(productId: $input) {
 			_id
 			productType
@@ -83,9 +83,10 @@ export const REMOVE_PROPERTY_BY_ADMIN = gql`
 			productEngineSize
 			productFuelType
 			productModel
+			productColor
 			productBrand
 			productYear
-			productMilage
+			productMileage
 			productViews
 			productLikes
 			productComments
@@ -168,43 +169,43 @@ export const REMOVE_COMMENT_BY_ADMIN = gql`
 
 export const CREATE_FAQ_BY_ADMIN = gql`
 	mutation CreateFaq($input: FaqInputDto!) {
-    createFaq(input: $input) {
-        _id
-        faqQuestion
-        faqAnswer
-        faqType
-        faqStatus
-        createdAt
-        updatedAt
-        memberData {
-            _id
-            memberType
-            memberStatus
-            memberAuthType
-            memberPhone
-            memberNick
-            memberFullName
-            memberImage
-            memberAddress
-            memberDesc
-            memberProducts
-            memberArticles
-            memberFollowers
-            memberFollowings
-            memberPoints
-            memberLikes
-            memberViews
-            memberComments
-            memberRank
-            memberWarnings
-            memberBlocks
-            deletedAt
-            createdAt
-            updatedAt
-            accessToken
-        }
-    }
-}
+		createFaq(input: $input) {
+			_id
+			faqQuestion
+			faqAnswer
+			faqType
+			faqStatus
+			createdAt
+			updatedAt
+			memberData {
+				_id
+				memberType
+				memberStatus
+				memberAuthType
+				memberPhone
+				memberNick
+				memberFullName
+				memberImage
+				memberAddress
+				memberDesc
+				memberProducts
+				memberArticles
+				memberFollowers
+				memberFollowings
+				memberPoints
+				memberLikes
+				memberViews
+				memberComments
+				memberRank
+				memberWarnings
+				memberBlocks
+				deletedAt
+				createdAt
+				updatedAt
+				accessToken
+			}
+		}
+	}
 `;
 
 export const UPDATE_FAQ_BY_ADMIN = gql`
@@ -288,3 +289,131 @@ export const REMOVE_FAQ_BY_ADMIN = gql`
 		}
 	}
 `;
+
+export const GET_ALL_NOTICES_BY_ADMIN = gql`
+	mutation UpdateNoticeByAdmin($input: NoticeUpdate!) {
+		updateNoticeByAdmin(input: $input) {
+			_id
+			noticeType
+			noticeContent
+			noticeStatus
+			noticeLikes
+			noticeViews
+			createdAt
+			updatedAt
+			memberData {
+				_id
+				memberType
+				memberStatus
+				memberAuthType
+				memberPhone
+				memberNick
+				memberFullName
+				memberImage
+				memberAddress
+				memberDesc
+				memberProducts
+				memberArticles
+				memberFollowers
+				memberFollowings
+				memberPoints
+				memberLikes
+				memberViews
+				memberComments
+				memberRank
+				memberWarnings
+				memberBlocks
+				deletedAt
+				createdAt
+				updatedAt
+				accessToken
+			}
+		}
+	}
+`;
+
+export const REMOVE_NOTICES_BY_ADMIN = gql`
+	mutation RemoveNoticeByAdmin($input: String!) {
+		removeNoticeByAdmin(articleId: $input) {
+			_id
+			noticeType
+			noticeContent
+			noticeStatus
+			noticeLikes
+			noticeViews
+			createdAt
+			updatedAt
+			memberData {
+				_id
+				memberType
+				memberStatus
+				memberAuthType
+				memberPhone
+				memberNick
+				memberFullName
+				memberImage
+				memberAddress
+				memberDesc
+				memberProducts
+				memberArticles
+				memberFollowers
+				memberFollowings
+				memberPoints
+				memberLikes
+				memberViews
+				memberComments
+				memberRank
+				memberWarnings
+				memberBlocks
+				deletedAt
+				createdAt
+				updatedAt
+				accessToken
+			}
+		}
+	}
+`;
+
+
+export const UPDATE_NOTICES_BY_ADMIN = gql` 
+mutation UpdateNoticeByAdmin($input: NoticeUpdate!) {
+    updateNoticeByAdmin(input: $input) {
+        _id
+        noticeType
+        noticeContent
+        noticeStatus
+        noticeLikes
+        noticeViews
+        createdAt
+        updatedAt
+        memberData {
+            _id
+            memberType
+            memberStatus
+            memberAuthType
+            memberPhone
+            memberNick
+            memberFullName
+            memberImage
+            memberAddress
+            memberDesc
+            memberProducts
+            memberArticles
+            memberFollowers
+            memberFollowings
+            memberPoints
+            memberLikes
+            memberViews
+            memberComments
+            memberRank
+            memberWarnings
+            memberBlocks
+            deletedAt
+            createdAt
+            updatedAt
+            accessToken
+        }
+    }
+}
+
+`

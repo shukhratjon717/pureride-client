@@ -14,9 +14,9 @@ import { Product } from '../../../libs/types/product/property';
 import { ProductLocation, ProductStatus } from '../../../libs/enums/property.enum';
 import { ProductUpdate } from '../../../libs/types/product/property.update';
 import { PropertyPanelList } from '../../../libs/components/admin/properties/PropertyList';
-import { REMOVE_PROPERTY_BY_ADMIN, UPDATE_PROPERTY_BY_ADMIN } from '../../../apollo/admin/mutation';
+import {  REMOVE_PROPERTY_BY_ADMIN, UPDATE_PROPERTY_BY_ADMIN } from '../../../apollo/admin/mutation';
 import { useMutation, useQuery } from '@apollo/client';
-import { GET_ALL_PROPERTIES_BY_ADMIN } from '../../../apollo/admin/query';
+import { GET_ALL_PROPERTIES_BY_ADMIN} from '../../../apollo/admin/query';
 import { T } from '../../../libs/types/common';
 
 const AdminProperties: NextPage = ({ initialInquiry, ...props }: any) => {
@@ -43,8 +43,8 @@ const AdminProperties: NextPage = ({ initialInquiry, ...props }: any) => {
 		variables: { input: propertiesInquiry },
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: T) => {
-			setProperties(data?.getAllPropertiesByAdmin?.list);
-			setPropertiesTotal(data?.getAllPropertiesByAdmin?.metaCounter[0]?.total ?? 0);
+			setProperties(data?.getAllProductsByAdmin?.list);
+			setPropertiesTotal(data?.getAllProductsByAdmin?.metaCounter[0]?.total ?? 0);
 		},
 	});
 	/** LIFECYCLES **/

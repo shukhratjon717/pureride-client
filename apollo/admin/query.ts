@@ -58,7 +58,7 @@ export const GET_ALL_PROPERTIES_BY_ADMIN = gql`
 				productModel
 				productBrand
 				productYear
-				productMilage
+				productMileage
 				productViews
 				productLikes
 				productComments
@@ -183,7 +183,7 @@ export const GET_COMMENTS = gql`
 
 export const GET_ALL_NOTICES_BY_ADMIN = gql`
 	query GetAllNoticesByAdmin($input: AllNoticesInquiry!) {
-		getAllNoticesByAdmin(ipnut: $input) {
+		getAllNoticesByAdmin(input: $input) {
 			list {
 				_id
 				noticeCategory
@@ -201,48 +201,47 @@ export const GET_ALL_NOTICES_BY_ADMIN = gql`
 `;
 
 export const GET_ALL_FAQ_BY_ADMIN = gql`
-query GetFaqs($input: FaqInquiryDto!) {
-    getFaqs(input: $input) {
-        list {
-            _id
-            faqQuestion
-            faqAnswer
-            faqType
-            faqStatus
-            createdAt
-            updatedAt
-            memberData {
-                _id
-                memberType
-                memberStatus
-                memberAuthType
-                memberPhone
-                memberNick
-                memberFullName
-                memberImage
-                memberAddress
-                memberDesc
-                memberProducts
-                memberArticles
-                memberFollowers
-                memberFollowings
-                memberPoints
-                memberLikes
-                memberViews
-                memberComments
-                memberRank
-                memberWarnings
-                memberBlocks
-                deletedAt
-                createdAt
-                updatedAt
-                accessToken
-            }
-        }
-        metaCounter {
-            total
-        }
-    }
-}
-
-`
+	query GetFaqs($input: FaqInquiryDto!) {
+		getFaqs(input: $input) {
+			list {
+				_id
+				faqQuestion
+				faqAnswer
+				faqType
+				faqStatus
+				createdAt
+				updatedAt
+				memberData {
+					_id
+					memberType
+					memberStatus
+					memberAuthType
+					memberPhone
+					memberNick
+					memberFullName
+					memberImage
+					memberAddress
+					memberDesc
+					memberProducts
+					memberArticles
+					memberFollowers
+					memberFollowings
+					memberPoints
+					memberLikes
+					memberViews
+					memberComments
+					memberRank
+					memberWarnings
+					memberBlocks
+					deletedAt
+					createdAt
+					updatedAt
+					accessToken
+				}
+			}
+			metaCounter {
+				total
+			}
+		}
+	}
+`;
