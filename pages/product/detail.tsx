@@ -24,10 +24,18 @@ import { Direction, Message } from '../../libs/enums/common.enum';
 import { T } from '../../libs/types/common';
 import { Product } from '../../libs/types/product/property';
 import Review from '../../libs/components/product/Review';
-import { CREATE_COMMENT, LIKE_TARGET_PROPERTY } from '../../apollo/user/mutation';
-import { sweetErrorHandling, sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
+import { CREATE_COMMENT, CREATE_MESSAGE, GET_MESSAGES, LIKE_TARGET_PROPERTY } from '../../apollo/user/mutation';
+import {
+	sweetErrorHandling,
+	sweetMixinErrorAlert,
+	sweetMixinSuccessAlert,
+	sweetTopSmallSuccessAlert,
+} from '../../libs/sweetAlert';
 import 'swiper/css';
 import 'swiper/css/pagination';
+import { MessageGroup, MessageStatus } from '../../libs/enums/message.enum';
+import { MessageInput, MessageInquiry } from '../../libs/types/message/message.input';
+import { AgentMessage } from '../../libs/types/message/message';
 
 SwiperCore.use([Autoplay, Navigation, Pagination]);
 
@@ -37,26 +45,42 @@ export const getStaticProps = async ({ locale }: any) => ({
 	},
 });
 
-const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
+const PropertyDetail: NextPage = ({ initialComment, initialValues, ...props }: any) => {
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
 	const [propertyId, setPropertyId] = useState<string | null>(null);
+	const [messageId, setMessageId] = useState<string | null>(null);
 	const [property, setProperty] = useState<Product | null>(null);
 	const [slideImage, setSlideImage] = useState<string>('');
 	const [destinationProperties, setDestinationProperties] = useState<Product[]>([]);
 	const [commentInquiry, setCommentInquiry] = useState<CommentsInquiry>(initialComment);
+	const [messageInquiry, setMessageInquiry] = useState<MessageInquiry>(initialComment);
 	const [propertyComments, setPropertyComments] = useState<Comment[]>([]);
+	const [messageTotal, setMessageTotal] = useState<number>(0);
 	const [commentTotal, setCommentTotal] = useState<number>(0);
 	const [insertCommentData, setInsertCommentData] = useState<CommentInput>({
 		commentGroup: CommentGroup.PRODUCT,
 		commentContent: '',
 		commentRefId: '',
 	});
+	const [insertMessageData, setInsertMessageData] = useState<MessageInput>(initialValues);
+
+	const [name, setName] = useState('');
+	const [phone, setPhone] = useState('');
+	const [email, setEmail] = useState('');
+	const [message, setMessage] = useState<AgentMessage[]>([]);
+
+	// Handler functions to update state
+	const handleNameChange = (e: any) => setName(e.target.value);
+	const handlePhoneChange = (e: any) => setPhone(e.target.value);
+	const handleEmailChange = (e: any) => setEmail(e.target.value);
+	const handleMessageChange = (e: any) => setMessage(e.target.value);
 
 	/** APOLLO REQUESTS **/
 	const [likeTargerProperty] = useMutation(LIKE_TARGET_PROPERTY);
 	const [createComment] = useMutation(CREATE_COMMENT);
+	const [createMessage] = useMutation(CREATE_MESSAGE);
 
 	const {
 		loading: getPropertyLoading,
@@ -116,6 +140,47 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 		},
 	});
 
+	const {
+		loading: getMessagesLoading,
+		data: getMessagesData,
+		error: getMessagesError,
+		refetch: getMessagesRefetch,
+	} = useQuery(GET_MESSAGES, {
+		fetchPolicy: 'network-only',
+		variables: {
+			input: {
+				page: 1,
+				limit: 4,
+				sort: 'createdAt',
+				direction: Direction.DESC,
+				search: {
+					messageStatus: MessageStatus.ACTIVE,
+					input: messageId,
+				},
+			},
+			skip: !messageId,
+			notifyOnNetworkStatusChange: true,
+			onCompleted: (data: T) => {
+				if (data?.getMessages?.list) setMessage(data?.getMessages?.list);
+				setMessageTotal(data?.getMessages?.metaCounter[0]?.total ?? 0);
+			},
+		},
+	});
+
+	console.log('InsertData;', insertMessageData);
+
+	const handleSubmit = (e: any) => {
+		e.preventDefault();
+		const formData = {
+			name,
+			phone,
+			email,
+			message,
+		};
+		console.log('Form Data:', formData);
+		// You can now send formData to an API or handle it as needed
+	};
+
 	/** LIFECYCLES **/
 	useEffect(() => {
 		if (router.query.id) {
@@ -134,10 +199,32 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 	}, [router]);
 
 	useEffect(() => {
-		if (commentInquiry.search.commentRefId) {
-			getCommentsRefetch({ input: commentInquiry });
+		if (messageInquiry.search.messageRefId) {
+			getMessagesRefetch({ input: messageInquiry });
 		}
-	}, [commentInquiry]);
+	}, [messageInquiry]);
+
+	useEffect(() => {
+		if (router.query.id) {
+			setMessageId(router.query.id as string);
+			setMessageInquiry({
+				...messageInquiry,
+				search: {
+					messageRefId: router.query.id as string,
+				},
+			});
+			setInsertMessageData({
+				...insertMessageData,
+				messageRefId: router.query.id as string,
+			});
+		}
+	}, [router]);
+
+	useEffect(() => {
+		if (messageInquiry.search.messageRefId) {
+			getMessagesRefetch({ input: messageInquiry });
+		}
+	}, [messageInquiry]);
 
 	/** HANDLERS **/
 	const changeImageHandler = (image: string) => {
@@ -160,7 +247,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 					search: {
 						locationList: [property?.productLocation],
 					},
-					// await getCommentsRefetch({ input: id 
+					// await getCommentsRefetch({ input: id
 				},
 			});
 
@@ -188,6 +275,30 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 		}
 	};
 	if (getPropertyLoading) {
+		return (
+			<Stack sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: ' 1080px' }}>
+				<CircularProgress size={'4rem'} />
+			</Stack>
+		);
+	}
+
+	const createMessageHandler = async () => {
+		try {
+			insertMessageData.messageRefId = `${property?._id}`;
+			await createMessage({ variables: { input: insertMessageData } });
+
+			setInsertMessageData({ ...insertMessageData, messageContent: '' });
+			getMessagesRefetch({ input: messageInquiry });
+			await sweetMixinSuccessAlert('This message has been updated successfully.');
+			await router.push({
+				pathname: `/product`,
+				//
+			});
+		} catch (err: any) {
+			await sweetErrorHandling(err);
+		}
+	};
+	if (getMessagesLoading) {
 		return (
 			<Stack sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: ' 1080px' }}>
 				<CircularProgress size={'4rem'} />
@@ -566,22 +677,88 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 								</Stack>
 								<Stack className={'info-box'}>
 									<Typography className={'sub-title'}>Name</Typography>
-									<input type={'text'} placeholder={'Enter your name'} />
+									{/* <input
+											type="text"
+											onChange={({ target: { value } }: any) => {
+												setInsertMessageData({ ...insertMessageData, memberName: value });
+											}}
+											value={insertMessageData.memberName}
+											placeholder="Enter your name"
+										/> */}
+									<input
+										type="text"
+										className="description-input"
+										placeholder={'Title'}
+										value={insertMessageData.memberName}
+										onChange={({ target: { value } }) =>
+											setInsertMessageData({ ...insertMessageData, memberName: value })
+										}
+									/>
 								</Stack>
 								<Stack className={'info-box'}>
 									<Typography className={'sub-title'}>Phone</Typography>
-									<input type={'text'} placeholder={'Enter your phone'} />
+									{/* <input
+										type="text"
+										onChange={({ target: { value } }: any) => {
+											setInsertMessageData({ ...insertMessageData, memberPhone: value });
+										}}
+										value={insertMessageData.memberPhone}
+										placeholder="Enter your phone"
+									/> */}
+
+									<input
+										type="text"
+										className="description-input"
+										placeholder={'Title'}
+										value={insertMessageData.memberPhone}
+										onChange={({ target: { value } }) =>
+											setInsertMessageData({ ...insertMessageData, memberPhone: value })
+										}
+									/>
 								</Stack>
 								<Stack className={'info-box'}>
 									<Typography className={'sub-title'}>Email</Typography>
-									<input type={'text'} placeholder={'creativelayers088'} />
+									{/* <input
+										type="text"
+										onChange={({ target: { value } }: any) => {
+											setInsertMessageData({ ...insertMessageData, memberEmail: value });
+										}}
+										value={insertMessageData.memberEmail}
+										placeholder="creativelayers088"
+									/> */}
+
+									<input
+										type="text"
+										className="description-input"
+										placeholder={'Title'}
+										value={insertMessageData.memberEmail}
+										onChange={({ target: { value } }) =>
+											setInsertMessageData({ ...insertMessageData, memberEmail: value })
+										}
+									/>
 								</Stack>
 								<Stack className={'info-box'}>
 									<Typography className={'sub-title'}>Message</Typography>
-									<textarea placeholder={'Hello, I am interested in \n' + '[Renovated property at  floor]'}></textarea>
+									{/* <textarea
+										onChange={({ target: { value } }: any) => {
+											setInsertMessageData({ ...insertMessageData, messageContent: value });
+										}}
+										value={insertMessageData.messageContent}
+										placeholder={'Hello, I am interested in \n[Renovated property at floor]'}
+									></textarea> */}
+
+									<textarea
+										name=""
+										id=""
+										className="description-text"
+										value={insertMessageData.messageContent}
+										onChange={({ target: { value } }) =>
+											setInsertMessageData({ ...insertMessageData, messageContent: value })
+										}
+									></textarea>
 								</Stack>
 								<Stack className={'info-box'}>
-									<Button className={'send-message'}>
+									<Button className={'send-message'} type="submit" onClick={createMessageHandler}>
 										<Typography className={'title'}>Send Message</Typography>
 										<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
 											<g clipPath="url(#clip0_6975_593)">
@@ -616,6 +793,15 @@ PropertyDetail.defaultProps = {
 		search: {
 			commentRefId: '',
 		},
+	},
+
+	initialValues: {
+		messageGroup: 'AGENT',
+		memberName: '',
+		memberPhone: '',
+		memberEmail: '',
+		messageContent: '',
+		messageRefId: '',
 	},
 };
 

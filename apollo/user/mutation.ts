@@ -354,7 +354,6 @@ export const UNSUBSCRIBE = gql`
 	}
 `;
 
-
 /**************************
  *      NOTIFICATION      *
  *************************/
@@ -372,6 +371,45 @@ export const UPDATE_NOTIFICATION = gql`
 			receiverId
 			productId
 			articleId
+		}
+	}
+`;
+
+/**************************
+ *      Admin Message     *
+ *************************/
+
+export const CREATE_MESSAGE = gql`
+	mutation CreateMessage($input: MessageInput!) {
+		createMessage(input: $input) {
+			_id
+			messageStatus
+			messageGroup
+			messageContent
+			messageRefId
+			memberId
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
+export const GET_MESSAGES = gql`
+	query GetMessages($input: MessagesInquiry!) {
+		getMessages(input: $input) {
+			list {
+				_id
+				messageStatus
+				messageGroup
+				messageContent
+				messageRefId
+				memberId
+				createdAt
+				updatedAt
+			}
+			metaCounter {
+				total
+			}
 		}
 	}
 `;
