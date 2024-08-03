@@ -623,7 +623,6 @@ export const GET_NOTIFICATION = gql`
 				deletedAt
 				createdAt
 				updatedAt
-				accessToken
 			}
 		}
 	}

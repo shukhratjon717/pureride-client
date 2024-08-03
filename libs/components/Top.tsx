@@ -38,11 +38,12 @@ const Top: NextPage = ({ intialValues, ...props }: any) => {
 	const [bgColor, setBgColor] = useState<boolean>(false);
 	const [logoutAnchor, setLogoutAnchor] = React.useState<null | HTMLElement>(null);
 	const logoutOpen = Boolean(logoutAnchor);
-	// notification part
+
 	const [notificationAnchorEl, setNotificationAnchorEl] = useState<HTMLElement | null>(null);
 	const [notifications, setNotifications] = useState<Nottification[]>([]);
 	const notificationOpen = Boolean(notificationAnchorEl);
 	const [updateData, setUpdateData] = useState<NotificationUpdate>(intialValues);
+	const [unreadCount, setUnreadCount] = useState(0);
 
 	//Apollo query
 	const [updateNotification] = useMutation(UPDATE_NOTIFICATION);
@@ -54,14 +55,16 @@ const Top: NextPage = ({ intialValues, ...props }: any) => {
 		refetch: refetchNotifications,
 	} = useQuery(GET_NOTIFICATIONS, {
 		fetchPolicy: 'cache-and-network',
-		variables: { input: { page: 1, limit: 100, search: { receiverId: '' } } },
-		skip: !notificationOpen,
+		variables: { input: { page: 1, limit: 30, search: { receiverId: '' } } },
 		notifyOnNetworkStatusChange: true,
 
 		onCompleted: (data) => {
 			if (data?.getNotifcations?.list) {
-				console.log('Notifications data', data.getNotifcations.list);
 				setNotifications(data?.getNotifcations?.list);
+				const unread = data?.getNotifcations?.list.filter(
+					(notification: any) => notification.notificationStatus === NotificationStatus.WAIT,
+				).length;
+				setUnreadCount(unread);
 			}
 		},
 	});
@@ -70,7 +73,11 @@ const Top: NextPage = ({ intialValues, ...props }: any) => {
 
 	useEffect(() => {
 		if (notificationsData) {
-			console.log('Fetched notifications:', notificationsData.getNotifications.list);
+			setNotifications(notificationsData.getNotifications.list);
+			const unread = notificationsData.getNotifications.list.filter(
+				(notification: any) => notification.notificationStatus === NotificationStatus.WAIT,
+			).length;
+			setUnreadCount(unread);
 		}
 	}, [notificationsData]);
 
@@ -78,7 +85,7 @@ const Top: NextPage = ({ intialValues, ...props }: any) => {
 		if (notificationsData?.getNotifcations?.list) {
 			setNotifications(notificationsData.getNotifcations.list);
 			notificationsData.getNotifications.list.forEach((notification: { _id: any }) => {
-				console.log('Notification_id:', notification._id);
+				console.log('Notification_id:', notification._id); // check if id is exist
 			});
 		}
 	}, [notificationsData]);
@@ -349,14 +356,22 @@ const Top: NextPage = ({ intialValues, ...props }: any) => {
 											<div
 												style={{
 													position: 'absolute',
-													top: 0,
-													right: 0,
-													width: '10px',
-													height: '10px',
-													borderRadius: '40%',
+													top: '-10px',
+													right: '-3px',
+													width: '15px',
+													height: '15px',
+													borderRadius: '50%',
 													backgroundColor: '#ef1d26',
 												}}
-											/>
+											>
+												{unreadCount > 0 && (
+													<span
+														style={{ fontSize: '12px', fontWeight: '600', display: 'flex', justifyContent: 'center' }}
+													>
+														{unreadCount}
+													</span>
+												)}
+											</div>
 										)}
 										<Menu
 											anchorEl={notificationAnchorEl}
@@ -481,19 +496,6 @@ const Top: NextPage = ({ intialValues, ...props }: any) => {
 							<Stack></Stack>
 						</Box>
 					</Stack>
-					{/* <Stack className={"intro"}>
-						<Stack className={'intro-left'}>
-							<p className={'intro1'}>Discover</p>
-							<p className={'intro2'}>DesertX Discovery</p>
-							<p className={'intro3'}>
-								Designed and accessorised to offer unprecedented versatility, DesertX Discovery is the ideal choice for
-								those seeking touring agility and off-road character.
-							</p>
-						</Stack>
-						<Stack className={'intro-right'}>
-							<Button className={'intro-btn'}>Discover More</Button>
-						</Stack>
-					</Stack> */}
 				</Stack>
 			</Stack>
 		);

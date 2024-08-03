@@ -155,7 +155,7 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 				},
 			});
 			await getCommentsRefetch({ input: searchFilter });
-			await boardArticleRefetch({ ipnut: articleId });
+			await boardArticleRefetch({ input: articleId });
 			setComment('');
 			await sweetMixinSuccessAlert('Successfully commented!');
 		} catch (err: any) {
