@@ -34,8 +34,8 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 		variables: { input: searchFilter },
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: T) => {
-			setAgentProperties(data?.getAgentProperties?.list);
-			setTotal(data?.getAgentProperties?.metaCounter[0]?.total ?? 0);
+			setAgentProperties(data?.getAgentProducts?.list);
+			setTotal(data?.getAgentProducts?.metaCounter[0]?.total ?? 0);
 		},
 	});
 	/** HANDLERS **/
@@ -54,7 +54,7 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 					variables: {
 						input: {
 							_id: id,
-							propertyStatus: 'DELETE',
+							productStatus: 'DELETE',
 						},
 					},
 				});
@@ -72,7 +72,7 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 					variables: {
 						input: {
 							_id: id,
-							propertyStatus: status,
+							productStatus: status,
 						},
 					},
 				});
@@ -155,7 +155,7 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 									/>
 								</Stack>
 								<Stack className="total-result">
-									<Typography>{total} property available</Typography>
+									<Typography>{total} product available</Typography>
 								</Stack>
 							</Stack>
 						)}
@@ -172,7 +172,7 @@ MyProperties.defaultProps = {
 		limit: 5,
 		sort: 'createdAt',
 		search: {
-			propertyStatus: 'ACTIVE',
+			productStatus: 'ACTIVE',
 		},
 	},
 };
