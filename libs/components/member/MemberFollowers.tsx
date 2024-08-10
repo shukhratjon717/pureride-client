@@ -31,7 +31,6 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 	const user = useReactiveVar(userVar);
 
 	/** APOLLO REQUESTS **/
-
 	const {
 		loading: getMemberFollowersLoading,
 		data: getMemberFollowersData,
@@ -65,7 +64,7 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 	};
 
 	if (device === 'mobile') {
-		return <div>NESTAR FOLLOWS MOBILE</div>;
+		return <div>PureRide FOLLOWS MOBILE</div>;
 	} else {
 		return (
 			<div id="member-follows-page">
