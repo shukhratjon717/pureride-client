@@ -49,8 +49,8 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 	/** LIFECYCLES **/
 	useEffect(() => {
 		if (router.query.memberId)
-			setFollowInquiry({ ...followInquiry, search: { followingId: router.query.memberId as string } });
-		else setFollowInquiry({ ...followInquiry, search: { followingId: user?._id } });
+			setFollowInquiry({ ...followInquiry, search: { followerId: router.query.memberId as string } });
+		else setFollowInquiry({ ...followInquiry, search: { followerId: user?._id } });
 	}, [router]);
 
 	useEffect(() => {
@@ -102,7 +102,7 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 								<Stack className={'details-box'}>
 									<Box className={'info-box'} component={'div'}>
 										<p>Followers</p>
-										<span>({follower?.followerData?.memberFollowers})</span>
+										<span>({follower?.followerData?.memberFollowings})</span>
 									</Box>
 									<Box className={'info-box'} component={'div'}>
 										<p>Followings</p>
