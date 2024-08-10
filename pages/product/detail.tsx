@@ -738,13 +738,7 @@ const PropertyDetail: NextPage = ({ initialComment, initialValues, ...props }: a
 								</Stack>
 								<Stack className={'info-box'}>
 									<Typography className={'sub-title'}>Message</Typography>
-									{/* <textarea
-										onChange={({ target: { value } }: any) => {
-											setInsertMessageData({ ...insertMessageData, messageContent: value });
-										}}
-										value={insertMessageData.messageContent}
-										placeholder={'Hello, I am interested in \n[Renovated property at floor]'}
-									></textarea> */}
+									
 
 									<textarea
 										name=""

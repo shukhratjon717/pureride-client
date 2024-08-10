@@ -92,8 +92,8 @@ const Footer = () => {
 							<p>THE LAND OF JOY</p>
 							<p>SCRAMBLER CONFIGURATOR</p>
 						</div>
-						<div className={"ftr-middle"}>
-							<p>icons</p>
+						<div className={"ftr-middle"} >
+							
 						</div>
 						<div className={"ftr-right"}>International Sale</div>
 					</Stack>

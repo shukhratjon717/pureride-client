@@ -8,15 +8,17 @@ import { Product } from '../../../types/product/property';
 import useDeviceDetect from '../../../hooks/useDeviceDetect';
 import { useReactiveVar } from '@apollo/client';
 import { REACT_APP_API_URL, topPropertyRank } from '../../../config';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { userVar } from '../../../../apollo/store';
 
 interface SkuterCardProps {
 	product: Product;
 	likePropertyHandler: any;
+	myFavorites?: any;
 }
 
 const SkuterCard = (props: SkuterCardProps) => {
-	const { product, likePropertyHandler } = props;
+	const { product, likePropertyHandler, myFavorites } = props;
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
@@ -120,7 +122,7 @@ const SkuterCard = (props: SkuterCardProps) => {
 					</div>
 					<Divider sx={{ mt: '15px', mb: '17px' }} />
 					<div className={'bott'}>
-					<p className={"def"}>
+						<p className={'def'}>
 							<p> {product.productFuelType}</p>
 							<p> {product.productLocation}</p>
 						</p>
@@ -130,10 +132,12 @@ const SkuterCard = (props: SkuterCardProps) => {
 							</IconButton>
 							<Typography className="view-cnt">{product?.productViews}</Typography>
 							<IconButton color={'default'} onClick={() => likePropertyHandler(user, product?._id)}>
-								{product?.meLiked && product?.meLiked[0]?.myFavorite ? (
-									<FavoriteIcon style={{ color: 'red' }} />
+								{myFavorites ? (
+									<FavoriteIcon color="primary" />
+								) : product?.meLiked && product?.meLiked[0]?.myFavorite ? (
+									<FavoriteIcon color="primary" />
 								) : (
-									<FavoriteIcon />
+									<FavoriteBorderIcon />
 								)}
 							</IconButton>
 							<Typography className="view-cnt">{product?.productLikes}</Typography>

@@ -6,6 +6,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useRouter } from 'next/router';
 import { Product } from '../../../types/product/property';
 import useDeviceDetect from '../../../hooks/useDeviceDetect';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useReactiveVar } from '@apollo/client';
 import { REACT_APP_API_URL, topPropertyRank } from '../../../config';
 import { userVar } from '../../../../apollo/store';
@@ -13,10 +14,11 @@ import { userVar } from '../../../../apollo/store';
 interface LightweightProductsCardProps {
 	product: Product;
 	likePropertyHandler: any;
+	myFavorites?: any;
 }
 
 const LightweightProductsCard = (props: LightweightProductsCardProps) => {
-	const { product, likePropertyHandler } = props;
+	const { product, likePropertyHandler, myFavorites } = props;
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
@@ -114,7 +116,7 @@ const LightweightProductsCard = (props: LightweightProductsCardProps) => {
 					</div>
 					<Divider sx={{ mt: '15px', mb: '17px' }} />
 					<div className={'bott'}>
-						<p className={"def"}>
+						<p className={'def'}>
 							<p> {product.productFuelType}</p>
 							<p> {product.productLocation}</p>
 						</p>
@@ -124,12 +126,15 @@ const LightweightProductsCard = (props: LightweightProductsCardProps) => {
 							</IconButton>
 							<Typography className="view-cnt">{product?.productViews}</Typography>
 							<IconButton color={'default'} onClick={() => likePropertyHandler(user, product?._id)}>
-								{product?.meLiked && product?.meLiked[0]?.myFavorite ? (
-									<FavoriteIcon style={{ color: 'red' }} />
+								{myFavorites ? (
+									<FavoriteIcon color="primary" />
+								) : product?.meLiked && product?.meLiked[0]?.myFavorite ? (
+									<FavoriteIcon color="primary" />
 								) : (
-									<FavoriteIcon />
+									<FavoriteBorderIcon />
 								)}
 							</IconButton>
+
 							<Typography className="view-cnt">{product?.productLikes}</Typography>
 						</div>
 					</div>
