@@ -3,6 +3,8 @@ import { Stack, Box, Divider, Typography } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+
 import { useRouter } from 'next/router';
 import { Product } from '../../../types/product/property';
 import useDeviceDetect from '../../../hooks/useDeviceDetect';
@@ -13,10 +15,12 @@ import { userVar } from '../../../../apollo/store';
 interface QuadricycleCardProps {
 	product: Product;
 	likePropertyHandler: any;
+	myFavorites?: boolean;
+	recentlyVisited?: boolean;
 }
 
 const QuadricycleCard = (props: QuadricycleCardProps) => {
-	const { product, likePropertyHandler } = props;
+	const { product, likePropertyHandler, myFavorites, recentlyVisited } = props;
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
@@ -130,10 +134,12 @@ const QuadricycleCard = (props: QuadricycleCardProps) => {
 							</IconButton>
 							<Typography className="view-cnt">{product?.productViews}</Typography>
 							<IconButton color={'default'} onClick={() => likePropertyHandler(user, product?._id)}>
-								{product?.meLiked && product?.meLiked[0]?.myFavorite ? (
-									<FavoriteIcon style={{ color: 'red' }} />
+								{myFavorites ? (
+									<FavoriteIcon color="primary" />
+								) : product?.meLiked && product?.meLiked[0]?.myFavorite ? (
+									<FavoriteIcon color="primary" />
 								) : (
-									<FavoriteIcon />
+									<FavoriteBorderIcon />
 								)}
 							</IconButton>
 							<Typography className="view-cnt">{product?.productLikes}</Typography>
