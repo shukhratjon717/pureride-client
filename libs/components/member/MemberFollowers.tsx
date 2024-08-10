@@ -39,7 +39,7 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 	} = useQuery(GET_MEMBER_FOLLOWERS, {
 		fetchPolicy: 'network-only',
 		variables: { input: followInquiry },
-		skip: !followInquiry?.search?.followerId,
+		skip: !followInquiry?.search?.followingId,
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: T) => {
 			setMemberFollowers(data?.getMemberFollowers?.list);
