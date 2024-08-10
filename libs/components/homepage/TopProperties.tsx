@@ -90,8 +90,8 @@ const TopProperties = (props: TopPropertiesProps) => {
 				<Stack className={'container'}>
 					<Stack className={'info-box'}>
 						<Box component={'div'} className={'left'}>
-							<span>Top properties</span>
-							<p>Check out our Top Properties</p>
+							<span>Top products</span>
+							<p>Check out our Top Products</p>
 						</Box>
 						<Box component={'div'} className={'right'}>
 							<div className={'pagination-box'}>
@@ -117,10 +117,7 @@ const TopProperties = (props: TopPropertiesProps) => {
 						>
 							{topProperties.map((property: Product) => {
 								return (
-									<SwiperSlide
-										className={'top-property-slide'}
-										key={property?._id}
-									>
+									<SwiperSlide className={'top-property-slide'} key={property?._id}>
 										<TopPropertyCard property={property} likePropertyHandler={likePropertyHandler} />
 									</SwiperSlide>
 								);
