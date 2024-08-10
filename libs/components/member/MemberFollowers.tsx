@@ -25,7 +25,7 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const [total, setTotal] = useState<number>(0);
-	const category: any = router.query?.category ?? 'properties';
+	const category: any = router.query?.category ?? 'followers'; // Default to 'followers' if not set
 	const [followInquiry, setFollowInquiry] = useState<FollowInquiry>(initialInput);
 	const [memberFollowers, setMemberFollowers] = useState<Follower[]>([]);
 	const user = useReactiveVar(userVar);
@@ -39,19 +39,33 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 	} = useQuery(GET_MEMBER_FOLLOWERS, {
 		fetchPolicy: 'network-only',
 		variables: { input: followInquiry },
-		skip: !followInquiry?.search?.followingId,
+		skip: !followInquiry?.search?.followingId && !followInquiry?.search?.followerId,
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: T) => {
 			setMemberFollowers(data?.getMemberFollowers?.list);
 			setTotal(data?.getMemberFollowers?.metaCounter[0]?.total);
 		},
 	});
+
 	/** LIFECYCLES **/
 	useEffect(() => {
-		if (router.query.memberId)
-			setFollowInquiry({ ...followInquiry, search: { followerId: router.query.memberId as string } });
-		else setFollowInquiry({ ...followInquiry, search: { followerId: user?._id } });
-	}, [router]);
+		const fetchType = category === 'followers' ? 'followingId' : 'followerId';
+		if (router.query.memberId) {
+			setFollowInquiry({
+				...followInquiry,
+				search: {
+					[fetchType]: router.query.memberId as string,
+				},
+			});
+		} else {
+			setFollowInquiry({
+				...followInquiry,
+				search: {
+					[fetchType]: user?._id,
+				},
+			});
+		}
+	}, [router, category, user]);
 
 	useEffect(() => {
 		getMemberFollowersRefetch({ input: followInquiry }).then();
@@ -82,7 +96,7 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 					{memberFollowers?.length === 0 && (
 						<div className={'no-data'}>
 							<img src="/img/icons/icoAlert.svg" alt="" />
-							<p>No Followers yet!</p>
+							<p>No {category === 'followers' ? 'Followers' : 'Followings'} yet!</p>
 						</div>
 					)}
 					{memberFollowers.map((follower: Follower) => {
@@ -102,7 +116,7 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 								<Stack className={'details-box'}>
 									<Box className={'info-box'} component={'div'}>
 										<p>Followers</p>
-										<span>({follower?.followerData?.memberFollowings})</span>
+										<span>({follower?.followerData?.memberFollowers})</span>
 									</Box>
 									<Box className={'info-box'} component={'div'}>
 										<p>Followings</p>
@@ -170,7 +184,9 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 							/>
 						</Stack>
 						<Stack className="total-result">
-							<Typography>{total} followers</Typography>
+							<Typography>
+								{total} {category === 'followers' ? 'followers' : 'followings'}
+							</Typography>
 						</Stack>
 					</Stack>
 				)}
@@ -184,7 +200,7 @@ MemberFollowers.defaultProps = {
 		page: 1,
 		limit: 5,
 		search: {
-			followingId: '',
+			followingId: '', // Default to followingId
 		},
 	},
 };
