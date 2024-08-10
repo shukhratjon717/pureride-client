@@ -25,7 +25,7 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const [total, setTotal] = useState<number>(0);
-	const category: any = router.query?.category ?? 'properties';
+	const category: any = router.query?.category ?? 'followers';
 	const [followInquiry, setFollowInquiry] = useState<FollowInquiry>(initialInput);
 	const [memberFollowers, setMemberFollowers] = useState<Follower[]>([]);
 	const user = useReactiveVar(userVar);
@@ -39,19 +39,43 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 	} = useQuery(GET_MEMBER_FOLLOWERS, {
 		fetchPolicy: 'network-only',
 		variables: { input: followInquiry },
-		skip: !followInquiry?.search?.followingId,
+		skip: !followInquiry?.search?.followingId && !followInquiry?.search?.followerId,
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: T) => {
 			setMemberFollowers(data?.getMemberFollowers?.list);
 			setTotal(data?.getMemberFollowers?.metaCounter[0]?.total);
 		},
 	});
+
 	/** LIFECYCLES **/
 	useEffect(() => {
-		if (router.query.memberId)
-			setFollowInquiry({ ...followInquiry, search: { followingId: router.query.memberId as string } });
-		else setFollowInquiry({ ...followInquiry, search: { followingId: user?._id } });
-	}, [router]);
+		const fetchType = category === 'followers' ? 'followingId' : 'followerId';
+		let memberId = router.query.memberId as string;
+
+		// Check if memberId is a valid 24-character hex string
+		if (memberId && /^[0-9a-fA-F]{24}$/.test(memberId)) {
+			setFollowInquiry({
+				...followInquiry,
+				search: {
+					[fetchType]: memberId
+				}
+			});
+		} else if (user?._id) {
+			// Use the logged-in user's ID if memberId is not valid
+			setFollowInquiry({
+				...followInquiry,
+				search: {
+					[fetchType]: user._id
+				}
+			});
+		} else {
+			// Clear the search if neither is valid
+			setFollowInquiry({
+				...followInquiry,
+				search: {}
+			});
+		}
+	}, [router, category, user]);
 
 	useEffect(() => {
 		getMemberFollowersRefetch({ input: followInquiry }).then();
@@ -70,7 +94,9 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 			<div id="member-follows-page">
 				<Stack className="main-title-box">
 					<Stack className="right-box">
-						<Typography className="main-title">{category === 'followers' ? 'Followers' : 'Followings'}</Typography>
+						<Typography className="main-title">
+							{category === 'followers' ? 'Followers' : 'Followings'}
+						</Typography>
 					</Stack>
 				</Stack>
 				<Stack className="follows-list-box">
@@ -82,7 +108,7 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 					{memberFollowers?.length === 0 && (
 						<div className={'no-data'}>
 							<img src="/img/icons/icoAlert.svg" alt="" />
-							<p>No Followers yet!</p>
+							<p>No {category === 'followers' ? 'Followers' : 'Followings'} yet!</p>
 						</div>
 					)}
 					{memberFollowers.map((follower: Follower) => {
@@ -170,7 +196,7 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 							/>
 						</Stack>
 						<Stack className="total-result">
-							<Typography>{total} followers</Typography>
+							<Typography>{total} {category === 'followers' ? 'followers' : 'followings'}</Typography>
 						</Stack>
 					</Stack>
 				)}
@@ -184,7 +210,7 @@ MemberFollowers.defaultProps = {
 		page: 1,
 		limit: 5,
 		search: {
-			followingId: '',
+			followingId: '', // Default to followingId
 		},
 	},
 };
