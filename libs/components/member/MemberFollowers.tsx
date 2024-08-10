@@ -25,7 +25,7 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const [total, setTotal] = useState<number>(0);
-	const category: any = router.query?.category ?? 'properties';
+	const category: any = router.query?.category ?? 'products';
 	const [followInquiry, setFollowInquiry] = useState<FollowInquiry>(initialInput);
 	const [memberFollowers, setMemberFollowers] = useState<Follower[]>([]);
 	const user = useReactiveVar(userVar);
@@ -49,8 +49,8 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 	/** LIFECYCLES **/
 	useEffect(() => {
 		if (router.query.memberId)
-			setFollowInquiry({ ...followInquiry, search: { followerId: router.query.memberId as string } });
-		else setFollowInquiry({ ...followInquiry, search: { followerId: user?._id } });
+			setFollowInquiry({ ...followInquiry, search: { followingId: router.query.memberId as string } });
+		else setFollowInquiry({ ...followInquiry, search: { followingId: user?._id } });
 	}, [router]);
 
 	useEffect(() => {
@@ -102,7 +102,7 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 								<Stack className={'details-box'}>
 									<Box className={'info-box'} component={'div'}>
 										<p>Followers</p>
-										<span>({follower?.followerData?.memberFollowings})</span>
+										<span>({follower?.followerData?.memberFollowers})</span>
 									</Box>
 									<Box className={'info-box'} component={'div'}>
 										<p>Followings</p>
