@@ -41,7 +41,7 @@ interface MessagePayload {
 	event: string;
 	text: string;
 	memberData: Member;
-	id: string;  // Add a unique identifier here
+	id: string; // Add a unique identifier here
 }
 
 interface InfoPayload {
@@ -148,14 +148,14 @@ const Chat = () => {
 								<div className={'welcome'}>Welcome to Live chat!</div>
 							</Box>
 							{messagesList.map((ele: MessagePayload) => {
-								const { text, memberData, id } = ele;  // Destructure id here
+								const { text, memberData, id } = ele; // Destructure id here
 								const memberImage = memberData?.memberImage
 									? `${REACT_APP_API_URL}/${memberData.memberImage}`
 									: '/img/profile/defaultUser.svg';
 								return memberData?._id === user?._id ? (
 									<Box
 										component={'div'}
-										key={id}  // Use id as key here
+										key={id} // Use id as key here
 										flexDirection={'row'}
 										style={{ display: 'flex' }}
 										alignItems={'flex-end'}
@@ -167,7 +167,7 @@ const Chat = () => {
 								) : (
 									<Box
 										component={'div'}
-										key={id}  // Use id as key here
+										key={id} // Use id as key here
 										flexDirection={'row'}
 										style={{ display: 'flex' }}
 										sx={{ m: '10px 0px' }}
@@ -185,12 +185,9 @@ const Chat = () => {
 									alignItems={'flex-end'}
 									justifyContent={'flex-end'}
 									sx={{ m: '10px 0px' }}
-								>
-									<div className={'msg-right'}>hi</div>
-								</Box>
+								></Box>
 								<Box flexDirection={'row'} style={{ display: 'flex' }} sx={{ m: '10px 0px' }} component={'div'}>
 									<Avatar alt={'jonik'} src={'/img/profile/defaultUser.svg'} />
-									<div className={'msg-left'}>Hi</div>
 								</Box>
 							</>
 						</Stack>

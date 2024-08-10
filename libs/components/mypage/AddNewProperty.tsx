@@ -137,7 +137,7 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 				},
 			});
 
-			await sweetMixinSuccessAlert('This property has been created successfully.');
+			await sweetMixinSuccessAlert('This product has been created successfully.');
 			await router.push({
 				pathname: '/mypage',
 				query: {
@@ -159,7 +159,7 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 				},
 			});
 
-			await sweetMixinSuccessAlert('This property has been updated successfully.');
+			await sweetMixinSuccessAlert('This product has been updated successfully.');
 			await router.push({
 				pathname: '/mypage',
 				query: {
@@ -175,10 +175,10 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 		router.back();
 	}
 
-	console.log('+insertPropertyData', insertPropertyData);
+	console.log('+insertProductData', insertPropertyData);
 
 	if (device === 'mobile') {
-		return <div>ADD NEW PROPERTY MOBILE PAGE</div>;
+		return <div>ADD NEW PRODUCT MOBILE PAGE</div>;
 	} else {
 		return (
 			<div id="add-property-page">
