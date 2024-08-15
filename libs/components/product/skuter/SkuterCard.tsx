@@ -132,7 +132,7 @@ const SkuterCard = (props: SkuterCardProps) => {
 							</IconButton>
 							<Typography className="view-cnt">{product?.productViews}</Typography>
 							<IconButton color={'default'} onClick={() => likePropertyHandler(user, product?._id)}>
-								{myFavorites ? (
+							{myFavorites ? (
 									<FavoriteIcon color="primary" />
 								) : product?.meLiked && product?.meLiked[0]?.myFavorite ? (
 									<FavoriteIcon color="primary" />
