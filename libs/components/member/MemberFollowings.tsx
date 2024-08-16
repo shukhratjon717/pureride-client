@@ -16,8 +16,8 @@ interface MemberFollowingsProps {
 	initialInput: FollowInquiry;
 	subscribeHandler: any;
 	unsubscribeHandler: any;
-	redirectToMemberPageHandler: any;
 	likeMemberHandler: any;
+	redirectToMemberPageHandler: any;
 }
 
 const MemberFollowings = (props: MemberFollowingsProps) => {
@@ -31,6 +31,7 @@ const MemberFollowings = (props: MemberFollowingsProps) => {
 	const user = useReactiveVar(userVar);
 
 	/** APOLLO REQUESTS **/
+
 	const {
 		loading: getMemberFollowingsLoading,
 		data: getMemberFollowingsData,
@@ -46,6 +47,7 @@ const MemberFollowings = (props: MemberFollowingsProps) => {
 			setTotal(data?.getMemberFollowings?.metaCounter[0]?.total);
 		},
 	});
+
 	/** LIFECYCLES **/
 	useEffect(() => {
 		if (router.query.memberId)
@@ -64,7 +66,7 @@ const MemberFollowings = (props: MemberFollowingsProps) => {
 	};
 
 	if (device === 'mobile') {
-		return <div>NESTAR FOLLOWS MOBILE</div>;
+		return <div>HUSHPAW FOLLOWS MOBILE</div>;
 	} else {
 		return (
 			<div id="member-follows-page">
