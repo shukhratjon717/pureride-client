@@ -107,12 +107,13 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 
 	const paginationChangeHandler = async (memberId: any, value: number) => {
 		searchFilter.page = value;
-		await await router.push(`/mypage?memberId=${memberId}`),
-			{
-				scroll: false,
-			};
+		await router.push(`/agent?input=${JSON.stringify(searchFilter)}`, `/agent?input=${JSON.stringify(searchFilter)}`, {
+			scroll: false,
+		});
 		setCurrentPage(value);
 	};
+
+	
 
 	const likeMemberHandler = async (user: any, id: string) => {
 		try {
