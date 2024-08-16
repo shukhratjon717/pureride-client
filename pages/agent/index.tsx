@@ -10,12 +10,13 @@ import { useRouter } from 'next/router';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { Member } from '../../libs/types/member/member';
 import { LIKE_TARGET_MEMBER } from '../../apollo/user/mutation';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import { GET_AGENTS } from '../../apollo/user/query';
 import { T } from '../../libs/types/common';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
 import { Messages } from '../../libs/config';
 import TopAgents from '../../libs/components/homepage/TopAgents';
+import { userVar } from '../../apollo/store';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -26,6 +27,7 @@ export const getStaticProps = async ({ locale }: any) => ({
 const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 	const device = useDeviceDetect();
 	const router = useRouter();
+	const user = useReactiveVar(userVar);
 	const [anchorEl2, setAnchorEl2] = useState<null | HTMLElement>(null);
 	const [filterSortName, setFilterSortName] = useState('Recent');
 	const [sortingOpen, setSortingOpen] = useState(false);
@@ -106,12 +108,31 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 	};
 
 	const paginationChangeHandler = async (event: ChangeEvent<unknown>, value: number) => {
-		searchFilter.page = value;
-		await router.push(`/agent?input=${JSON.stringify(searchFilter)}`, `/agent?input=${JSON.stringify(searchFilter)}`, {
-			scroll: false,
-		});
-		setCurrentPage(value);
+		try {
+			// Update the page number in the search filter
+			const updatedFilter = { ...searchFilter, page: value };
+			setSearchFilter(updatedFilter);
+	
+			// Redirect based on the member ID
+			const memberId = ''; // Replace with logic to get the current member ID if needed
+			if (memberId === user?._id) {
+				// Redirect to my page if the member is the current user
+				await router.push(`/mypage?memberId=${memberId}`, undefined, { scroll: false });
+			} else {
+				// Redirect to member page if the member is not the current user
+				await router.push(`/member?memberId=${memberId}`, undefined, { scroll: false });
+			}
+			
+			// Update the current page state
+			setCurrentPage(value);
+		} catch (error) {
+			console.error('Pagination change error:', error);
+			await sweetMixinErrorAlert("Refetch error");
+		}
 	};
+	
+
+	
 
 	const likeMemberHandler = async (user: any, id: string) => {
 		try {
