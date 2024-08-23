@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useMutation } from '@apollo/client';
+import { useMutation, ApolloError } from '@apollo/client';
 import { NextPage } from 'next';
 import {
 	Box,
@@ -29,7 +29,7 @@ const FaqCreate: NextPage = () => {
 			return;
 		}
 		try {
-			await createFaq({
+			const { data, errors } = await createFaq({
 				variables: {
 					input: {
 						faqType,
@@ -39,16 +39,33 @@ const FaqCreate: NextPage = () => {
 					},
 				},
 			});
+
+			if (errors) {
+				console.error('GraphQL errors:', errors);
+				alert('Failed to create FAQ due to server-side errors.');
+				return;
+			}
+
+			console.log('FAQ created successfully:', data);
 			router.push('/_admin/cs/faq');
 		} catch (error) {
-			console.error('Error creating FAQ:', error);
+			if (error instanceof ApolloError) {
+				// Log more detailed information about the error
+				console.error('ApolloError:', error.message);
+				console.error('GraphQL error details:', error.graphQLErrors);
+				console.error('Network error details:', error.networkError);
+				alert(`GraphQL error: ${error.message}`);
+			} else {
+				console.error('Unexpected error:', error);
+				alert(`Unexpected error: ${error}`);
+			}
 		}
 	};
 
 	return (
 		<Box
 			sx={{
-				backgroundImage: `url('/img/banner/cmdetail.jpg')`, // Set the background image
+				backgroundImage: `url('/img/banner/cmdetail.jpg')`,
 				backgroundSize: 'cover',
 				backgroundPosition: 'center',
 				minHeight: '100vh',
@@ -59,24 +76,44 @@ const FaqCreate: NextPage = () => {
 			}}
 		>
 			<Container maxWidth="sm">
-				<Paper elevation={6} sx={{ p: 4, backgroundColor: 'rgba(255, 255, 255, 0.9)', borderRadius: 2 }}>
-					<Typography variant="h4" component="h1" gutterBottom align="center" sx={{ mb: 3 }}>
+				<Paper
+					elevation={6}
+					sx={{
+						p: 4,
+						backgroundColor: 'rgba(255, 255, 255, 0.9)',
+						borderRadius: 2,
+					}}
+				>
+					<Typography
+						variant="h4"
+						component="h1"
+						gutterBottom
+						align="center"
+						sx={{ mb: 3 }}
+					>
 						Create New FAQ
 					</Typography>
-					<Box component="form" sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+					<Box
+						component="form"
+						sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}
+					>
 						<FormControl fullWidth variant="outlined">
 							<InputLabel id="faq-type-label">FAQ Type</InputLabel>
 							<Select
 								labelId="faq-type-label"
 								value={faqType}
-								onChange={(e) => setFaqType(e.target.value as string)}
+								onChange={(e) =>
+									setFaqType(e.target.value as string)
+								}
 								label="FAQ Type"
 							>
 								<MenuItem value="PRODUCT">PRODUCT</MenuItem>
 								<MenuItem value="PAYMENT">PAYMENT</MenuItem>
 								<MenuItem value="BUYERS">BUYERS</MenuItem>
 								<MenuItem value="AGENTS">AGENTS</MenuItem>
-								<MenuItem value="MEMBERSHIP">MEMBERSHIP</MenuItem>
+								<MenuItem value="MEMBERSHIP">
+									MEMBERSHIP
+								</MenuItem>
 								<MenuItem value="COMMUNITY">COMMUNITY</MenuItem>
 								<MenuItem value="OTHER">OTHER</MenuItem>
 							</Select>
@@ -84,9 +121,12 @@ const FaqCreate: NextPage = () => {
 						<TextField
 							label="Question"
 							value={faqQuestion}
-							onChange={(e) => setFaqQuestion(e.target.value)}
+							onChange={(e) =>
+								setFaqQuestion(e.target.value)
+							}
 							fullWidth
 							variant="outlined"
+							multiline
 							rows={4}
 						/>
 						<TextField
@@ -95,6 +135,7 @@ const FaqCreate: NextPage = () => {
 							onChange={(e) => setFaqAnswer(e.target.value)}
 							fullWidth
 							variant="outlined"
+							multiline
 							rows={4}
 						/>
 						<Button
@@ -125,7 +166,8 @@ const FaqCreate: NextPage = () => {
 						fontSize: '8rem', // Adjust the font size as needed
 						fontFamily: 'Kalnia Glaze, serif', // Use the imported font
 						color: '#ff5722', // Optional: adjust the color for better visibility
-						textShadow: '3px 3px 6px rgba(0, 0, 0, 0.3)', // Optional: add text shadow for better visibility
+						textShadow:
+							'3px 3px 6px rgba(0, 0, 0, 0.3)', // Optional: add text shadow for better visibility
 						mb: 4,
 						ml: '-20px', // Move the text 20px to the left
 					}}
