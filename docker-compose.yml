@@ -1,5 +1,5 @@
 services:
-  pureride-api:
+  pureride-client:
     container_name: pureride-client
     restart: always
     image: node:20.10.0
