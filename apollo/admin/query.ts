@@ -183,7 +183,7 @@ export const GET_COMMENTS = gql`
 
 export const GET_ALL_NOTICES_BY_ADMIN = gql`
 	query GetAllNoticesByAdmin($input: NoticesInquiry!) {
-		getAllNoticesByAdmin(ipnut: $input) {
+		getAllNoticesByAdmin(input: $input) {
 			list {
 				_id
 				noticeType

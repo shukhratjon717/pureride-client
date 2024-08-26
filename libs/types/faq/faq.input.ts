@@ -4,7 +4,7 @@ export interface FaqInput {
 	faqQuestion: string
 	faqAnswer: string
 	faqType: FaqType
-	faqStatus: FaqStatus
+	faqStatus?: FaqStatus
 	memberId?: string
 }
 

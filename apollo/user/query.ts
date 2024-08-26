@@ -694,7 +694,7 @@ export const GET_FAQ = gql`
 
 export const GET_NOTICES = gql`
 	query GetAllNoticesByAdmin($input: NoticesInquiry!) {
-		getAllNoticesByAdmin(ipnut: $input) {
+		getAllNoticesByAdmin(input: $input) {
 			list {
 				_id
 				noticeType
