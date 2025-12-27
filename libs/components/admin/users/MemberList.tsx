@@ -11,6 +11,7 @@ import {
 	Menu,
 	Fade,
 	MenuItem,
+	CircularProgress,
 } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
@@ -130,15 +131,17 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 }
 
 interface MemberPanelListType {
-	members: Member[];
-	anchorEl: any;
-	menuIconClickHandler: any;
-	menuIconCloseHandler: any;
-	updateMemberHandler: any;
+  members: Member[];
+  anchorEl: any;
+  menuIconClickHandler: any;
+  menuIconCloseHandler: any;
+  updateMemberHandler: any;
+  loading?: boolean;
 }
 
+
 export const MemberPanelList = (props: MemberPanelListType) => {
-	const { members, anchorEl, menuIconClickHandler, menuIconCloseHandler, updateMemberHandler } = props;
+	const { members, anchorEl, menuIconClickHandler, menuIconCloseHandler, updateMemberHandler, loading } = props;
 
 	return (
 		<Stack>
@@ -147,15 +150,21 @@ export const MemberPanelList = (props: MemberPanelListType) => {
 					{/*@ts-ignore*/}
 					<EnhancedTableHead />
 					<TableBody>
-						{members.length === 0 && (
+						{loading ? (
+							<TableRow>
+								<TableCell colSpan={8}>
+									<Stack sx={{ py: 5 }} alignItems={'center'}>
+										<CircularProgress />
+									</Stack>
+								</TableCell>
+							</TableRow>
+						) : members.length === 0 ? (
 							<TableRow>
 								<TableCell align="center" colSpan={8}>
 									<span className={'no-data'}>data not found!</span>
 								</TableCell>
 							</TableRow>
-						)}
-
-						{members.length !== 0 &&
+						) : (
 							members.map((member: Member, index: number) => {
 								const member_image = member.memberImage
 									? `${REACT_APP_API_URL}/${member.memberImage}`
@@ -245,7 +254,8 @@ export const MemberPanelList = (props: MemberPanelListType) => {
 										</TableCell>
 									</TableRow>
 								);
-							})}
+							})
+						)}
 					</TableBody>
 				</Table>
 			</TableContainer>

@@ -14,44 +14,42 @@ import { Message } from '../../enums/common.enum';
 import { sweetErrorHandling, sweetTopSuccessAlert } from '../../sweetAlert';
 
 const TuiEditor = () => {
-	const editorRef = useRef<Editor>(null),
-		token = getJwtToken(),
-		router = useRouter();
+	const editorRef = useRef<Editor>(null);
+	const token = getJwtToken();
+	const router = useRouter();
 	const [articleCategory, setArticleCategory] = useState<BoardArticleCategory>(BoardArticleCategory.FREE);
 
-	/** APOLLO REQUESTS **/
 	const [createBoardArticle] = useMutation(CREATE_BOARD_ARTICLE);
 
-	const memoizedValues = useMemo(() => {
-		const articleTitle = '',
-			articleContent = '',
-			articleImage = '';
+	const memoizedValues = useMemo(
+		() => ({
+			articleTitle: '',
+			articleContent: '',
+			articleImage: '',
+		}),
+		[],
+	);
 
-		return { articleTitle, articleContent, articleImage };
-	}, []);
-
-	/** HANDLERS **/
-	const uploadImage = async (image: any) => {
+	/** UPLOAD IMAGE USING imagesUploader **/
+	const uploadImage = async (image: File) => {
 		try {
 			const formData = new FormData();
+
+			// GraphQL multipart request
 			formData.append(
 				'operations',
 				JSON.stringify({
-					query: `mutation ImageUploader($file: Upload!, $target: String!) {
-						imageUploader(file: $file, target: $target) 
-				  }`,
-					variables: {
-						file: null,
-						target: 'article',
-					},
+					query: `
+						mutation ImagesUploader($files: [Upload!]!, $target: String!) {
+							imagesUploader(files: $files, target: $target)
+						}
+					`,
+					variables: { files: [null], target: 'article' }, // array of files
 				}),
 			);
-			formData.append(
-				'map',
-				JSON.stringify({
-					'0': ['variables.file'],
-				}),
-			);
+
+			formData.append('map', JSON.stringify({ '0': ['variables.files.0'] }));
+
 			formData.append('0', image);
 
 			const response = await axios.post(`${process.env.REACT_APP_API_GRAPHQL_URL}`, formData, {
@@ -62,24 +60,18 @@ const TuiEditor = () => {
 				},
 			});
 
-			const responseImage = response.data.data.imageUploader;
-			console.log('=responseImage: ', responseImage);
-			memoizedValues.articleImage = responseImage;
+			// Get the uploaded image path
+			const uploadedImageUrl = response.data.data.imagesUploader[0];
+			memoizedValues.articleImage = uploadedImageUrl;
 
-			return `${REACT_APP_API_URL}/${responseImage}`;
+			return `${REACT_APP_API_URL}/${uploadedImageUrl}`;
 		} catch (err) {
-			console.log('Error, uploadImage:', err);
+			console.error('Error uploading image:', err);
 		}
 	};
 
-	const changeCategoryHandler = (e: any) => {
-		setArticleCategory(e.target.value);
-	};
-
-	const articleTitleHandler = (e: T) => {
-		console.log(e.target.value);
-		memoizedValues.articleTitle = e.target.value;
-	};
+	const changeCategoryHandler = (e: any) => setArticleCategory(e.target.value);
+	const articleTitleHandler = (e: T) => (memoizedValues.articleTitle = e.target.value);
 
 	const handleRegisterButton = async () => {
 		try {
@@ -87,64 +79,48 @@ const TuiEditor = () => {
 			const articleContent = editor?.getInstance().getHTML() as string;
 			memoizedValues.articleContent = articleContent;
 
-			if (memoizedValues.articleContent === '' && memoizedValues.articleTitle === '') {
+			if (!memoizedValues.articleContent || !memoizedValues.articleTitle) {
 				throw new Error(Message.INSERT_ALL_INPUTS);
 			}
+
 			await createBoardArticle({
-				variables: {
-					input: { ...memoizedValues, articleCategory },
-				},
+				variables: { input: { ...memoizedValues, articleCategory } },
 			});
 
 			await sweetTopSuccessAlert('Article is created successfully', 700);
-			await router.push({
+			router.push({
 				pathname: 'mypage',
-				query: {
-					category: 'myArticles',
-				},
+				query: { category: 'myArticles' },
 			});
-		} catch (err: any) {
-			console.log(err);
-			sweetErrorHandling(new Error(Message.INSERT_ALL_INPUTS)).then();
+		} catch (err) {
+			sweetErrorHandling(err as Error);
 		}
 	};
 
-	const doDisabledCheck = () => {
-		if (memoizedValues.articleContent === '' || memoizedValues.articleTitle === '') {
-			return true;
-		}
-	};
+	const doDisabledCheck = () => !memoizedValues.articleContent || !memoizedValues.articleTitle;
 
 	return (
 		<Stack>
 			<Stack direction="row" style={{ margin: '40px' }} justifyContent="space-evenly">
-				<Box component={'div'} className={'form_row'} style={{ width: '300px' }}>
+				<Box style={{ width: '300px' }}>
 					<Typography style={{ color: '#7f838d', margin: '10px' }} variant="h3">
 						Category
 					</Typography>
 					<FormControl sx={{ width: '100%', background: 'white' }}>
-						<Select
-							value={articleCategory}
-							onChange={changeCategoryHandler}
-							displayEmpty
-							inputProps={{ 'aria-label': 'Without label' }}
-						>
-							<MenuItem value={BoardArticleCategory.FREE}>
-								<span>Free</span>
-							</MenuItem>
+						<Select value={articleCategory} onChange={changeCategoryHandler} displayEmpty>
+							<MenuItem value={BoardArticleCategory.FREE}>Free</MenuItem>
 							<MenuItem value={BoardArticleCategory.HUMOR}>Humor</MenuItem>
 							<MenuItem value={BoardArticleCategory.NEWS}>News</MenuItem>
 							<MenuItem value={BoardArticleCategory.RECOMMEND}>Recommendation</MenuItem>
 						</Select>
 					</FormControl>
 				</Box>
-				<Box component={'div'} style={{ width: '300px', flexDirection: 'column' }}>
+				<Box style={{ width: '300px' }}>
 					<Typography style={{ color: '#7f838d', margin: '10px' }} variant="h3">
 						Title
 					</Typography>
 					<TextField
 						onChange={articleTitleHandler}
-						id="filled-basic"
 						label="Type Title"
 						style={{ width: '300px', background: 'white' }}
 					/>
@@ -152,12 +128,11 @@ const TuiEditor = () => {
 			</Stack>
 
 			<Editor
-				initialValue={'Type here'}
-				placeholder={'Type here'}
-				previewStyle={'vertical'}
-				height={'640px'}
-				// @ts-ignore
-				initialEditType={'WYSIWYG'}
+				initialValue="Type here"
+				placeholder="Type here"
+				previewStyle="vertical"
+				height="640px"
+				initialEditType="wysiwyg"
 				toolbarItems={[
 					['heading', 'bold', 'italic', 'strike'],
 					['image', 'table', 'link'],
@@ -171,9 +146,6 @@ const TuiEditor = () => {
 						return false;
 					},
 				}}
-				events={{
-					load: function (param: any) {},
-				}}
 			/>
 
 			<Stack direction="row" justifyContent="center">
@@ -182,6 +154,7 @@ const TuiEditor = () => {
 					color="primary"
 					style={{ margin: '30px', width: '250px', height: '45px' }}
 					onClick={handleRegisterButton}
+					disabled={doDisabledCheck()}
 				>
 					Register
 				</Button>

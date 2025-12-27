@@ -1,0 +1,263 @@
+/* ===================================
+   ADMIN THEME - SUN & MOON SYSTEM
+   Glassmorphism-based Light/Dark Mode
+   =================================== */
+
+/* Theme CSS Variables */
+:root[data-theme='light'] {
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F5F7FA;
+  --bg-glass: rgba(255, 255, 255, 0.7);
+  
+  --text-primary: #1E293B;
+  --text-secondary: #64748B;
+  --text-accent: #6366F1;
+  
+  --accent-primary: #6366F1;
+  --accent-secondary: #8B5CF6;
+  --accent-glow: rgba(99, 102, 241, 0.15);
+  
+  --border-color: #E8ECF1;
+  --border-glass: rgba(99, 102, 241, 0.2);
+  
+  --shadow-glass: 0 8px 32px 0 rgba(99, 102, 241, 0.1);
+  --shadow-card: 0 4px 16px 0 rgba(0, 0, 0, 0.08);
+}
+
+:root[data-theme='dark'] {
+  --bg-primary: #0F172A;
+  --bg-secondary: #1E293B;
+  --bg-glass: rgba(30, 41, 59, 0.7);
+  
+  --text-primary: #F1F5F9;
+  --text-secondary: #94A3B8;
+  --text-accent: #A78BFA;
+  
+  --accent-primary: #8B5CF6;
+  --accent-secondary: #A78BFA;
+  --accent-glow: rgba(139, 92, 246, 0.25);
+  
+  --border-color: #334155;
+  --border-glass: rgba(139, 92, 246, 0.3);
+  
+  --shadow-glass: 0 8px 32px 0 rgba(139, 92, 246, 0.15);
+  --shadow-card: 0 4px 16px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* Smooth Theme Transition */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Glassmorphism Utility Classes */
+.glass-card {
+  background: var(--bg-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-glass);
+  border-radius: 20px;
+  box-shadow: var(--shadow-glass);
+}
+
+.glass-card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px 0 var(--accent-glow);
+  border-color: var(--accent-primary);
+}
+
+.glass-sidebar {
+  background: var(--bg-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-right: 1px solid var(--border-glass);
+  box-shadow: var(--shadow-glass);
+}
+
+.glass-header {
+  background: var(--bg-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-glass);
+}
+
+/* Gradient Backgrounds */
+.gradient-bg-light {
+  background: linear-gradient(135deg, #F5F7FA 0%, #E8ECF1 100%);
+}
+
+.gradient-bg-dark {
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+}
+
+/* Accent Glow Effect */
+.accent-glow {
+  position: relative;
+}
+
+.accent-glow::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.accent-glow::before {
+  opacity: 1;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+}
+
+/* Pulse Animation for Live Stats */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+.pulse-animation {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Heartbeat Animation */
+@keyframes heartbeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  10%, 30% {
+    transform: scale(1.1);
+  }
+  20%, 40% {
+    transform: scale(1.05);
+  }
+}
+
+.heartbeat-animation {
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+/* Shimmer Loading Effect */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--bg-secondary) 0%,
+    var(--bg-glass) 50%,
+    var(--bg-secondary) 100%
+  );
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-primary);
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-secondary);
+}
+
+/* Admin Layout Overrides */
+.admin-layout {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+}
+
+.admin-sidebar {
+  background: var(--bg-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-right: 1px solid var(--border-glass);
+}
+
+.admin-content {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+/* Card Styles */
+.metric-card {
+  background: var(--bg-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-glass);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: var(--shadow-glass);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.metric-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px 0 var(--accent-glow);
+  border-color: var(--accent-primary);
+}
+
+/* Typography */
+.admin-title {
+  color: var(--text-primary);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.admin-subtitle {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.admin-accent {
+  color: var(--accent-primary);
+  font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .glass-card {
+    border-radius: 16px;
+    padding: 16px;
+  }
+  
+  .metric-card {
+    border-radius: 16px;
+    padding: 16px;
+  }
+}
