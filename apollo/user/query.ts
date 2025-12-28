@@ -70,6 +70,11 @@ query GetMember($input: String!) {
         createdAt
         updatedAt
         accessToken
+        meFollowed {
+            followerId
+            followingId
+            myFollowing
+        }
     }
 }
 
