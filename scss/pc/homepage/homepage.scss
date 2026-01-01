@@ -128,6 +128,17 @@
 			display: flex;
 			flex-direction: row;
 			justify-content: center;
+
+			@include mobile {
+				padding: 40px 0px 40px;
+				height: auto;
+			}
+
+			@include tablet {
+				padding: 60px 0px 50px;
+				height: auto;
+			}
+
 			.container {
 				flex-direction: column;
 				.hgts-container {
@@ -150,8 +161,19 @@
 							align-items: center;
 							font-weight: bold;
 							background-color: rgb(250, 250, 250);
-
 							box-shadow: 0 4px 8px rgba(255, 255, 255, 0.902);
+
+							@include mobile {
+								flex-direction: column;
+								height: auto;
+								padding: 20px 10px;
+							}
+
+							@include tablet {
+								flex-direction: column;
+								height: auto;
+								padding: 25px 15px;
+							}
 							.hgts-hold {
 								display: flex;
 								flex-direction: column;
@@ -163,11 +185,22 @@
 								margin-left: 20px;
 							}
 							.hgts-text {
-								width: 570px;
+								max-width: 570px;
+								width: 100%;
 								color: rgb(15, 15, 15);
 								font-family: $font;
 								font-size: 27px;
 								margin-left: 20px;
+
+								@include mobile {
+									font-size: 18px;
+									margin-left: 10px;
+								}
+
+								@include tablet {
+									font-size: 22px;
+									margin-left: 15px;
+								}
 							}
 							.hgts-place {
 								color: gray;
@@ -183,8 +216,20 @@
 								letter-spacing: -1px;
 							}
 							.hgts-img {
-								width: 650px;
+								max-width: 650px;
+								width: 100%;
 								height: 215px;
+								object-fit: cover;
+
+								@include mobile {
+									height: auto;
+									max-height: 150px;
+								}
+
+								@include tablet {
+									height: auto;
+									max-height: 180px;
+								}
 							}
 						}
 						.hgts-down {
@@ -197,6 +242,20 @@
 							align-items: center;
 							border-left: 5px solid red;
 							background-color: rgb(250, 250, 250);
+
+							@include mobile {
+								flex-direction: column;
+								height: auto;
+								padding: 20px 10px;
+								margin-top: 30px;
+							}
+
+							@include tablet {
+								flex-direction: column;
+								height: auto;
+								padding: 25px 15px;
+								margin-top: 40px;
+							}
 							.hgts-hold {
 								display: flex;
 								flex-direction: column;
@@ -210,16 +269,38 @@
 								margin-left: 20px;
 							}
 							.hgts-text {
-								width: 550px;
+								max-width: 550px;
+								width: 100%;
 								color: rgb(35, 35, 35);
 								font-size: 27px;
 								margin-left: 20px;
+
+								@include mobile {
+									font-size: 18px;
+									margin-left: 10px;
+								}
+
+								@include tablet {
+									font-size: 22px;
+									margin-left: 15px;
+								}
 							}
 							.hgts-place {
-								width: 600px;
+								max-width: 600px;
+								width: 100%;
 								color: gray;
 								font-size: 18px;
 								margin-left: 20px;
+
+								@include mobile {
+									font-size: 14px;
+									margin-left: 10px;
+								}
+
+								@include tablet {
+									font-size: 16px;
+									margin-left: 15px;
+								}
 							}
 							.hgts-section {
 								color: red;
@@ -413,6 +494,16 @@
 			display: flex;
 			flex-direction: row;
 			background: #f6f6f6;
+
+			@include mobile {
+				padding: 40px 0px 40px;
+				height: auto;
+			}
+
+			@include tablet {
+				padding: 60px 0px 50px;
+				height: auto;
+			}
 			.container {
 				display: flex;
 				flex-direction: column;
@@ -647,6 +738,16 @@
 			flex-direction: row;
 			display: flex;
 			justify-content: center;
+
+			@include mobile {
+				padding: 40px 0px 40px;
+				height: auto;
+			}
+
+			@include tablet {
+				padding: 60px 0px 50px;
+				height: auto;
+			}
 			.container {
 				flex-direction: column;
 				display: flex;

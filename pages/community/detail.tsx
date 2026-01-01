@@ -241,7 +241,7 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 					<Stack className="main-box">
 						<Stack className="left-config">
 							<Stack className={'image-info'}>
-								<img src={'/img/logo/logoText.svg'} />
+								<img src={'/img/logo/logoText.svg'} loading="lazy" />
 								<Stack className={'community-name'}>
 									<Typography className={'name'}>Community Board Article</Typography>
 								</Stack>
@@ -399,7 +399,7 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 														className="name-date"
 														onClick={() => goMemberPage(commentData?.memberData?._id as string)}
 													>
-														<img src={getCommentMemberImage(commentData?.memberData?.memberImage)} alt="" />
+														<img src={getCommentMemberImage(commentData?.memberData?.memberImage)} alt="" loading="lazy" />
 														<Stack className="name-date-column">
 															<Typography className="name">{commentData?.memberData?.memberNick}</Typography>
 															<Typography className="date">

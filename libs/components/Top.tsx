@@ -8,6 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import { alpha, styled } from '@mui/material/styles';
 import Menu, { MenuProps } from '@mui/material/Menu';
+import Drawer from '@mui/material/Drawer';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import { CaretDown } from 'phosphor-react';
 import useDeviceDetect from '../hooks/useDeviceDetect';
@@ -23,6 +24,44 @@ import { GET_NOTIFICATIONS } from '../../apollo/user/query';
 import { NotificationUpdate } from '../types/Notification/notification.update';
 import { NotificationStatus } from '../enums/notification.enum';
 import { Nottification } from '../types/Notification/notification';
+
+const StyledMenu = styled((props: MenuProps) => (
+	<Menu
+		elevation={0}
+		anchorOrigin={{
+			vertical: 'bottom',
+			horizontal: 'right',
+		}}
+		transformOrigin={{
+			vertical: 'top',
+			horizontal: 'right',
+		}}
+		{...props}
+	/>
+))(({ theme }) => ({
+	'& .MuiPaper-root': {
+		top: '109px',
+		borderRadius: 6,
+		marginTop: theme.spacing(1),
+		minWidth: 160,
+		color: theme.palette.mode === 'light' ? 'rgb(55, 65, 81)' : theme.palette.grey[300],
+		boxShadow:
+			'rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px',
+		'& .MuiMenu-list': {
+			padding: '4px 0',
+		},
+		'& .MuiMenuItem-root': {
+			'& .MuiSvgIcon-root': {
+				fontSize: 18,
+				color: theme.palette.text.secondary,
+				marginRight: theme.spacing(1.5),
+			},
+			'&:active': {
+				backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.selectedOpacity),
+			},
+		},
+	},
+}));
 
 const Top: NextPage = ({ intialValues, ...props }: any) => {
 	const device = useDeviceDetect();
@@ -212,66 +251,72 @@ const Top: NextPage = ({ intialValues, ...props }: any) => {
 		}
 	};
 
-	const StyledMenu = styled((props: MenuProps) => (
-		<Menu
-			elevation={0}
-			anchorOrigin={{
-				vertical: 'bottom',
-				horizontal: 'right',
-			}}
-			transformOrigin={{
-				vertical: 'top',
-				horizontal: 'right',
-			}}
-			{...props}
-		/>
-	))(({ theme }) => ({
-		'& .MuiPaper-root': {
-			top: '109px',
-			borderRadius: 6,
-			marginTop: theme.spacing(1),
-			minWidth: 160,
-			color: theme.palette.mode === 'light' ? 'rgb(55, 65, 81)' : theme.palette.grey[300],
-			boxShadow:
-				'rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px',
-			'& .MuiMenu-list': {
-				padding: '4px 0',
-			},
-			'& .MuiMenuItem-root': {
-				'& .MuiSvgIcon-root': {
-					fontSize: 18,
-					color: theme.palette.text.secondary,
-					marginRight: theme.spacing(1.5),
-				},
-				'&:active': {
-					backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.selectedOpacity),
-				},
-			},
-		},
-	}));
+	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+	const toggleMobileMenu = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+		if (
+			event.type === 'keydown' &&
+			((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift')
+		) {
+			return;
+		}
+		setMobileMenuOpen(open);
+	};
 
 	if (typeof window !== 'undefined') {
 		window.addEventListener('scroll', changeNavbarColor);
 	}
 
 	if (device == 'mobile') {
+
 		return (
 			<Stack className={'top'}>
-				<Link href={'/'}>
-					<div>{t('Home')}</div>
-				</Link>
-				<Link href={'/product'}>
-					<div>{t('Products')}</div>
-				</Link>
-				<Link href={'/agent'}>
-					<div> {t('Agents')} </div>
-				</Link>
-				<Link href={'/community?articleCategory=FREE'}>
-					<div> {t('Community')} </div>
-				</Link>
-				<Link href={'/cs'}>
-					<div> {t('CS')} </div>
-				</Link>
+				<Box display="flex" justifyContent="space-between" alignItems="center" p={2} bgcolor="white" boxShadow={1}>
+					<Link href={'/'}>
+						<img src="/img/logo/PureRide.png" alt="PureRide" style={{ height: '30px' }} />
+					</Link>
+					<Button onClick={toggleMobileMenu(true)}>
+						<div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+							<span style={{ width: '24px', height: '2px', backgroundColor: '#333' }}></span>
+							<span style={{ width: '24px', height: '2px', backgroundColor: '#333' }}></span>
+							<span style={{ width: '24px', height: '2px', backgroundColor: '#333' }}></span>
+						</div>
+					</Button>
+				</Box>
+				<Drawer anchor={'right'} open={mobileMenuOpen} onClose={toggleMobileMenu(false)}>
+					<Box
+						sx={{ width: 250 }}
+						role="presentation"
+						onClick={toggleMobileMenu(false)}
+						onKeyDown={toggleMobileMenu(false)}
+					>
+						<Stack direction="column" p={2} spacing={2}>
+							<Link href={'/'}>
+								<MenuItem>{t('Home')}</MenuItem>
+							</Link>
+							<Link href={'/product'}>
+								<MenuItem>{t('Products')}</MenuItem>
+							</Link>
+							<Link href={'/agent'}>
+								<MenuItem>{t('Agents')}</MenuItem>
+							</Link>
+							<Link href={'/community?articleCategory=FREE'}>
+								<MenuItem>{t('Community')}</MenuItem>
+							</Link>
+							<Link href={'/cs'}>
+								<MenuItem>{t('CS')}</MenuItem>
+							</Link>
+							{user?._id ? (
+								<Link href={'/mypage'}>
+									<MenuItem>{t('My Page')}</MenuItem>
+								</Link>
+							) : (
+								<Link href={'/account/join'}>
+									<MenuItem>{t('Login')} / {t('Register')}</MenuItem>
+								</Link>
+							)}
+						</Stack>
+					</Box>
+				</Drawer>
 			</Stack>
 		);
 	} else {
@@ -453,9 +498,9 @@ const Top: NextPage = ({ intialValues, ...props }: any) => {
 								>
 									<Box component={'div'} className={'flag'}>
 										{lang !== null ? (
-											<img src={`/img/flag/lang${lang}.png`} alt={'usaFlag'} />
+											<img src={`/img/flag/lang${lang}.png`} alt={'usaFlag'} loading="lazy" />
 										) : (
-											<img src={`/img/flag/langen.png`} alt={'usaFlag'} />
+											<img src={`/img/flag/langen.png`} alt={'usaFlag'} loading="lazy" />
 										)}
 									</Box>
 								</Button>

@@ -19,7 +19,24 @@ const CommunityCard = (props: CommunityCardProps) => {
 		: '/img/event.svg';
 
 	if (device === 'mobile') {
-		return <div>COMMUNITY CARD (MOBILE)</div>;
+		return (
+			<Link href={`/community/detail?articleCategory=${article?.articleCategory}&id=${article?._id}`}>
+				<Box component={'div'} className="community-card-mobile" sx={{ display: 'flex', flexDirection: 'column', padding: '10px', borderBottom: '1px solid #eee' }}>
+					<Box sx={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
+						<img src={articleImage} alt="" style={{ width: '100px', height: '80px', objectFit: 'cover', borderRadius: '8px' }} />
+						<Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', width: '100%' }}>
+							<strong style={{ fontSize: '16px', fontWeight: 600, color: '#333', overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>{article.articleTitle}</strong>
+							<Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+								<span style={{ fontSize: '12px', color: '#777' }}>
+									<Moment format="DD.MM.YY">{article?.createdAt}</Moment>
+								</span>
+								<span style={{ fontSize: '12px', color: '#eb6753', fontWeight: 500 }}>Free Board</span>
+							</Box>
+						</Box>
+					</Box>
+				</Box>
+			</Link>
+		);
 	} else {
 		if (vertical) {
 			return (

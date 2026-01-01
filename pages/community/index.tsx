@@ -113,7 +113,7 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 						<Stack className="main-box">
 							<Stack className="left-config">
 								<Stack className={'image-info'}>
-									<img src={'/img/banner/llogo.webp'} />
+									<img src={'/img/banner/llogo.webp'} loading="lazy" />
 									<Stack className={'community-name'}>
 										<Typography className={'name'}>PureRide Community</Typography>
 									</Stack>
@@ -190,7 +190,7 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 												})
 											) : (
 												<Stack className={'no-data'}>
-													<img src="/img/icons/icoAlert.svg" alt="" />
+													<img src="/img/icons/icoAlert.svg" alt="" loading="lazy" />
 													<p>No Article found!</p>
 												</Stack>
 											)}
@@ -210,7 +210,7 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 												})
 											) : (
 												<Stack className={'no-data'}>
-													<img src="/img/icons/icoAlert.svg" alt="" />
+													<img src="/img/icons/icoAlert.svg" alt="" loading="lazy" />
 													<p>No Article found!</p>
 												</Stack>
 											)}
@@ -230,7 +230,7 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 												})
 											) : (
 												<Stack className={'no-data'}>
-													<img src="/img/icons/icoAlert.svg" alt="" />
+													<img src="/img/icons/icoAlert.svg" alt="" loading="lazy" />
 													<p>No Article found!</p>
 												</Stack>
 											)}
@@ -250,7 +250,7 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 												})
 											) : (
 												<Stack className={'no-data'}>
-													<img src="/img/icons/icoAlert.svg" alt="" />
+													<img src="/img/icons/icoAlert.svg" alt="" loading="lazy" />
 													<p>No Article found!</p>
 												</Stack>
 											)}

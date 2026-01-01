@@ -11,24 +11,23 @@ const Footer = () => {
 
 	if (device == 'mobile') {
 		return (
-			<Stack className={'footer-container'}>
-				<Stack className={'main'}>
-					<Stack className={'left'}>
+			<Stack className={'footer-container'} sx={{ background: '#f5f5f5', padding: '20px 0' }}>
+				<Stack className={'main'} sx={{ padding: '0 20px' }}>
+					<Stack className={'left'} spacing={3}>
 						<Box component={'div'} className={'footer-box'}>
-							{/* <img src="/img/logo/logoWhite.svg" alt="" className={'logo'} /> */}
+							{/* <img src="/img/logo/logoWhite.svg" alt="" className={'logo'} loading="lazy" /> */}
 						</Box>
 						<Box component={'div'} className={'footer-box'}>
-							<span>total free customer care</span>
+							<span style={{ fontWeight: 'bold', display: 'block', marginBottom: '5px' }}>Total Free Customer Care</span>
 							<p>+82 10 4867 2909</p>
 						</Box>
 						<Box component={'div'} className={'footer-box'}>
-							<span>nee live</span>
+							<span style={{ fontWeight: 'bold', display: 'block', marginBottom: '5px' }}>Need Live Support?</span>
 							<p>+82 10 4867 2909</p>
-							<span>Support?</span>
 						</Box>
 						<Box component={'div'} className={'footer-box'}>
-							<p>follow us on social media</p>
-							<div className={'media-box'}>
+							<p style={{ marginBottom: '10px' }}>Follow us on social media</p>
+							<div className={'media-box'} style={{ display: 'flex', gap: '15px' }}>
 								<FacebookOutlinedIcon />
 								<TelegramIcon />
 								<InstagramIcon />
@@ -36,33 +35,31 @@ const Footer = () => {
 							</div>
 						</Box>
 					</Stack>
-					<Stack className={'right'}>
-						<Box component={'div'} className={'bottom'}>
+					<Divider sx={{ my: 3 }} />
+					<Stack className={'right'} spacing={3}>
+						<Box component={'div'} className={'bottom'} sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
 							<div>
-								<strong>Popular Search</strong>
-								<span>Property for Rent</span>
-								<span>Property Low to hide</span>
+								<strong style={{ display: 'block', marginBottom: '10px' }}>Popular Search</strong>
+								<Stack spacing={1}>
+									<span>Property for Rent</span>
+									<span>Property Low to hide</span>
+								</Stack>
 							</div>
 							<div>
-								<strong>Quick Links</strong>
-								<span>Terms of Use</span>
-								<span>Privacy Policy</span>
-								<span>Pricing Plans</span>
-								<span>Our Services</span>
-								<span>Contact Support</span>
-								<span>FAQs</span>
-							</div>
-							<div>
-								<strong>Discover</strong>
-								<span>Seoul</span>
-								<span>Gyeongido</span>
-								<span>Busan</span>
-								<span>Jejudo</span>
+								<strong style={{ display: 'block', marginBottom: '10px' }}>Quick Links</strong>
+								<Stack spacing={1}>
+									<span>Terms of Use</span>
+									<span>Privacy Policy</span>
+									<span>Pricing Plans</span>
+									<span>Our Services</span>
+									<span>Contact Support</span>
+									<span>FAQs</span>
+								</Stack>
 							</div>
 						</Box>
 					</Stack>
 				</Stack>
-				<Stack className={'second'}>
+				<Stack className={'second'} sx={{ textAlign: 'center', marginTop: '30px', fontSize: '12px', color: '#666' }}>
 					<span>© PureRide - All rights reserved. PureRide {moment().year()}</span>
 				</Stack>
 			</Stack>

@@ -186,7 +186,7 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 					<Stack className={'card-wrap'}>
 						{agents?.length === 0 ? (
 							<div className={'no-data'}>
-								<img src="/img/icons/icoAlert.svg" alt="" />
+								<img src="/img/icons/icoAlert.svg" alt="" loading="lazy" />
 								<p>No Agents found!</p>
 							</div>
 						) : (

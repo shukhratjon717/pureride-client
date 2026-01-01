@@ -40,7 +40,7 @@ const SkuterCard = (props: SkuterCardProps) => {
 				>
 					{product && product?.productRank && product?.productRank >= topPropertyRank ? (
 						<div className={'status'}>
-							<img src="/img/icons/electricity.svg" alt="" />
+							<img src="/img/icons/electricity.svg" alt="" loading="lazy" />
 							<span>top</span>
 						</div>
 					) : (
@@ -92,7 +92,7 @@ const SkuterCard = (props: SkuterCardProps) => {
 				>
 					{product && product?.productRank && product?.productRank >= topPropertyRank ? (
 						<div className={'status'}>
-							<img src="/img/icons/electricity.svg" alt="" />
+							<img src="/img/icons/electricity.svg" alt="" loading="lazy" />
 							<span>top</span>
 						</div>
 					) : (

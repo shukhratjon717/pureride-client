@@ -3,14 +3,28 @@
 		position: relative;
 		padding-bottom: 135px;
 
+		@include mobile {
+			padding-bottom: 40px;
+		}
+
 		.container {
 			padding-top: 100px;
 			flex-direction: column;
 			gap: 64px;
 
+			@include mobile {
+				padding-top: 20px;
+				gap: 30px;
+			}
+
 			.main-box {
 				flex-direction: row;
 				gap: 31px;
+
+				@include mobile {
+					flex-direction: column;
+					gap: 20px;
+				}
 
 				.left-config {
 					width: 266px;
@@ -22,6 +36,12 @@
 					border: 1px solid rgba(196, 196, 196, 0.79);
 					background: #fff;
 					box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
+
+					@include mobile {
+						width: 100%;
+						margin-top: 0;
+						padding: 20px;
+					}
 
 					.image-info {
 						width: 100%;
@@ -65,6 +85,10 @@
 						line-height: 150%;
 						letter-spacing: -0.266px;
 
+						@include mobile {
+							width: 100%;
+						}
+
 						&.active {
 							background-color: #000000;
 							color: #ffffff;
@@ -73,6 +97,8 @@
 				}
 
 				.community-detail-config {
+					width: 100%; // Ensure it takes full width of parent flex item
+
 					.title-box {
 						width: 100%;
 						height: auto;
@@ -81,8 +107,19 @@
 						align-items: center;
 						margin-bottom: 45px;
 
+						@include mobile {
+							flex-direction: column;
+							gap: 10px;
+							align-items: flex-start;
+							margin-bottom: 20px;
+						}
+
 						.left {
 							width: 60%;
+
+							@include mobile {
+								width: 100%;
+							}
 
 							.title {
 								color: #000;
@@ -92,6 +129,10 @@
 								font-weight: 600;
 								line-height: normal;
 								letter-spacing: 0.24px;
+
+								@include mobile {
+									font-size: 20px;
+								}
 							}
 
 							.sub-title {
@@ -128,6 +169,11 @@
 							border: 1px solid #eee;
 							box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 
+							@include mobile {
+								width: 100%;
+								min-height: auto;
+							}
+
 							.content-and-info {
 								width: 100%;
 								height: 126px;
@@ -135,6 +181,13 @@
 								flex-direction: row;
 								justify-content: space-between;
 								border-bottom: 1px solid #eee;
+
+								@include mobile {
+									height: auto;
+									flex-direction: column;
+									gap: 15px;
+									padding: 20px;
+								}
 
 								.content {
 									gap: 12px;
@@ -197,6 +250,10 @@
 									flex-direction: row;
 									align-items: flex-end;
 
+									@include mobile {
+										align-items: flex-start;
+									}
+
 									.icon-info {
 										flex-direction: row;
 										align-items: center;
@@ -236,6 +293,12 @@
 								gap: 60px;
 								padding: 25px 25px;
 
+								@include mobile {
+									justify-content: center;
+									gap: 20px;
+									padding: 20px;
+								}
+
 								.top {
 									width: 100%;
 									height: auto;
@@ -271,6 +334,11 @@
 							height: auto;
 							padding: 30px 24px;
 							gap: 11px;
+
+							@include mobile {
+								width: 100%;
+								padding: 20px;
+							}
 
 							.title-text {
 								align-self: flex-start;
@@ -380,11 +448,20 @@
 								border: 1px solid #efefef;
 								border-top: none;
 
+								@include mobile {
+									padding: 15px;
+								}
+
 								.member-info {
 									width: 100%;
 									height: auto;
 									flex-direction: row;
 									justify-content: space-between;
+
+									@include mobile {
+										flex-direction: column;
+										gap: 10px;
+									}
 
 									.name-date {
 										width: auto;
@@ -456,6 +533,11 @@
 				border-radius: 10px;
 				border: 1px solid #c4c4c4;
 
+				@include mobile {
+					gap: 30px;
+					padding: 20px 10px;
+				}
+
 				.similar-articles-title {
 					padding-left: 56px;
 					color: #000;
@@ -464,6 +546,12 @@
 					font-style: normal;
 					font-weight: 600;
 					line-height: normal;
+
+					@include mobile {
+						padding-left: 0;
+						font-size: 24px;
+						text-align: center;
+					}
 				}
 
 				.articles-box-row {
@@ -471,6 +559,11 @@
 					height: auto;
 					flex-direction: row;
 					gap: 5px;
+
+					@include mobile {
+						flex-direction: column;
+						gap: 15px;
+					}
 				}
 			}
 		}

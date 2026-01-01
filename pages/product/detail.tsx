@@ -369,13 +369,13 @@ const PropertyDetail: NextPage = ({ initialComment, initialValues, ...props }: a
 									</Stack>
 									<Stack className={'bottom-box'}>
 										<Stack className="option">
-											<img src="/img/icons/bed.svg" alt="" /> <Typography>{product?.productYear} Year</Typography>
+											<img src="/img/icons/bed.svg" alt="" loading="lazy" /> <Typography>{product?.productYear} Year</Typography>
 										</Stack>
 										<Stack className="option">
-											<img src="/img/icons/room.svg" alt="" /> <Typography>{product?.productModel} Model</Typography>
+											<img src="/img/icons/room.svg" alt="" loading="lazy" /> <Typography>{product?.productModel} Model</Typography>
 										</Stack>
 										<Stack className="option">
-											<img src="/img/icons/expand.svg" alt="" />{' '}
+											<img src="/img/icons/expand.svg" alt="" loading="lazy" />{' '}
 											<Typography>{product?.productEngineSize} Engine Size</Typography>
 										</Stack>
 									</Stack>
@@ -414,7 +414,7 @@ const PropertyDetail: NextPage = ({ initialComment, initialValues, ...props }: a
 										const imagePath: string = `${REACT_APP_API_URL}/${subImg}`;
 										return (
 											<Stack className={'sub-img-box'} onClick={() => changeImageHandler(subImg)} key={subImg}>
-												<img src={imagePath} alt={'sub-image'} />
+												<img src={imagePath} alt={'sub-image'} loading="lazy" />
 											</Stack>
 										);
 									})}
@@ -440,7 +440,7 @@ const PropertyDetail: NextPage = ({ initialComment, initialValues, ...props }: a
 									</Stack>
 									<Stack className={'option'}>
 										<Stack className={'svg-box'}>
-											<img src={'/img/icons/room.svg'} />
+											<img src={'/img/icons/room.svg'} loading="lazy" />
 										</Stack>
 										<Stack className={'option-includes'}>
 											<Typography className={'title'}>Model</Typography>

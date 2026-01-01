@@ -393,7 +393,7 @@ const Filter = (props: FilterType) => {
 								</>
 							}
 						/>
-						<img src={'/img/icons/search_icon.png'} alt={''} />
+						<img src={'/img/icons/search_icon.png'} alt={''} loading="lazy" />
 						<Tooltip title="Reset">
 							<IconButton onClick={refreshHandler}>
 								<RefreshIcon />

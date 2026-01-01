@@ -112,7 +112,7 @@ const About: NextPage = () => {
 						</Stack>
 						<Stack className={'btn'}>
 							Learn More
-							<img src="/img/icons/rightup.svg" alt="" />
+								<img src="/img/icons/rightup.svg" alt="" loading="lazy" />
 						</Stack>
 					</Stack>
 				</Stack>
@@ -137,10 +137,10 @@ const About: NextPage = () => {
 						<Box component={'div'} className={'right'}>
 							<div className={'white'}>
 								Contact Us
-								<img src="/img/icons/rightup.svg" alt="" />
+									<img src="/img/icons/rightup.svg" alt="" loading="lazy" />
 							</div>
 							<div className={'black'}>
-								<img src="/img/icons/call.svg" alt="" />
+								<img src="/img/icons/call.svg" alt="" loading="lazy" />
 								920 851 9087
 							</div>
 						</Box>

@@ -75,6 +75,12 @@ body::-webkit-scrollbar {
 				box-sizing: border-box;
 				z-index: 99;
 				align-items: center;
+
+				@include mobile {
+					height: auto;
+					padding: 10px 0;
+				}
+
 				.container {
 					border-radius: 15px;
 					flex-direction: row;
@@ -83,6 +89,13 @@ body::-webkit-scrollbar {
 					background-color: rgb(238, 237, 237);
 					color: black;
 					justify-content: space-between;
+
+					@include mobile {
+						height: auto;
+						flex-direction: column;
+						padding: 10px;
+					}
+
 					.logo-box {
 						img {
 							width: 150px;
@@ -96,6 +109,11 @@ body::-webkit-scrollbar {
 						display: flex;
 						flex-direction: row;
 						justify-content: space-between;
+
+						@include mobile {
+							display: none; // Hide desktop menu on mobile
+						}
+
 						div {
 							position: relative;
 							color: rgb(59, 59, 59);
@@ -133,6 +151,13 @@ body::-webkit-scrollbar {
 						display: flex;
 						flex-direction: row;
 						justify-content: flex-end;
+
+						@include mobile {
+							width: 100%;
+							justify-content: center;
+							margin-top: 10px;
+						}
+
 						.join-box {
 							width: 184px;
 							height: 47px;
@@ -210,11 +235,28 @@ body::-webkit-scrollbar {
 			justify-content: space-between;
 			background: rgba(12, 65, 209, 0.28);
 			border-radius: 12px;
+
+			@include mobile {
+				width: 90%;
+				height: auto;
+				flex-direction: column;
+				margin-top: -150px;
+				padding: 15px;
+				gap: 10px;
+			}
+
 			.select-box {
 				width: 712px;
 				display: flex;
 				flex-direction: row;
 				justify-content: space-between;
+
+				@include mobile {
+					width: 100%;
+					flex-direction: column;
+					gap: 10px;
+				}
+
 				.box {
 					padding: 24px 22px;
 					width: 213px;
@@ -227,6 +269,11 @@ body::-webkit-scrollbar {
 					background: rgba(255, 255, 255, 0.575);
 					box-sizing: border-box;
 					cursor: pointer;
+
+					@include mobile {
+						width: 100%;
+					}
+
 					&.on {
 						background: #ffffff;
 						border: 1px solid #000;
@@ -248,6 +295,13 @@ body::-webkit-scrollbar {
 				display: flex;
 				flex-direction: row;
 				align-items: center;
+
+				@include mobile {
+					width: 100%;
+					justify-content: space-between;
+					margin-top: 10px;
+				}
+
 				.advanced-filter {
 					display: flex;
 					flex-direction: row;
@@ -303,6 +357,14 @@ body::-webkit-scrollbar {
 				box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 				box-sizing: border-box;
 				z-index: 2;
+
+				@include mobile {
+					width: 100%;
+					padding: 20px;
+					top: auto;
+					bottom: -300px; // Adjust as needed or use modal
+				}
+
 				&.on {
 					visibility: visible;
 					transition: 0.2s ease-out;
@@ -313,6 +375,11 @@ body::-webkit-scrollbar {
 					display: flex;
 					flex-direction: row;
 					align-items: center;
+
+					@include mobile {
+						width: 100%;
+					}
+
 					img {
 						width: 122px;
 						height: 85px;
@@ -352,6 +419,14 @@ body::-webkit-scrollbar {
 				box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 				box-sizing: border-box;
 				z-index: 1;
+
+				@include mobile {
+					width: 100%;
+					flex-direction: column;
+					padding: 20px;
+					gap: 15px;
+				}
+
 				&.on {
 					visibility: visible;
 					transition: 0.2s ease-out;
@@ -364,6 +439,11 @@ body::-webkit-scrollbar {
 					border-radius: 15px;
 					cursor: pointer;
 					background-size: cover;
+
+					@include mobile {
+						width: 100%;
+					}
+
 					span {
 						position: absolute;
 						top: 13px;
@@ -400,6 +480,14 @@ body::-webkit-scrollbar {
 				box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 				box-sizing: border-box;
 				z-index: 1;
+
+				@include mobile {
+					width: 100%;
+					flex-wrap: wrap;
+					padding: 20px;
+					gap: 10px;
+				}
+
 				&.on {
 					visibility: visible;
 					transition: 0.2s ease-out;
@@ -437,6 +525,13 @@ body::-webkit-scrollbar {
 			border-radius: 10px;
 			border: 1px solid red;
 			background: white;
+
+			@include mobile {
+				height: auto;
+				margin-left: 0;
+				width: 100%;
+			}
+
 			.container {
 				margin-bottom: 100px;
 				width: 100%;
@@ -465,6 +560,14 @@ body::-webkit-scrollbar {
 					gap: 15px;
 					margin: 10px;
 					color: rgb(0, 0, 0);
+
+					@include mobile {
+						width: 100%;
+						height: auto;
+						flex-wrap: wrap;
+						justify-content: center;
+					}
+
 					span {
 						font-size: 15px;
 					}
@@ -478,6 +581,11 @@ body::-webkit-scrollbar {
 					display: flex;
 					flex-direction: column;
 					justify-content: space-between;
+
+					@include mobile {
+						margin-bottom: 50px;
+					}
+
 					.popular-property-swiper {
 						position: absolute;
 						margin-top: 10px;
@@ -485,10 +593,22 @@ body::-webkit-scrollbar {
 						height: 390px;
 						display: flex;
 						flex-direction: row;
+
+						@include mobile {
+							position: relative;
+							height: auto;
+							flex-direction: column;
+						}
+
 						.popular-property-slide {
 							width: 300px;
 							height: auto;
 							display: flex;
+
+							@include mobile {
+								width: 100%;
+								margin-bottom: 20px;
+							}
 						}
 					}
 					.popular-card-box {
@@ -683,6 +803,12 @@ body::-webkit-scrollbar {
 		background-size: cover;
 		display: flex;
 		align-items: center;
+
+		@include mobile {
+			height: 600px;
+			background-position: center;
+		}
+
 		.intro {
 			width: 1300px;
 			// border: 1px solid red;
@@ -693,6 +819,14 @@ body::-webkit-scrollbar {
 			justify-content: center;
 			// margin-left: 5%;
 			margin-top: 40%;
+
+			@include mobile {
+				width: 100%;
+				flex-direction: column;
+				margin-top: 20%;
+				padding: 20px;
+			}
+
 			.intro-left {
 				width: 100%;
 				height: auto;
@@ -711,6 +845,11 @@ body::-webkit-scrollbar {
 					font-size: 35px;
 					font-weight: $font;
 					color: white;
+
+					@include mobile {
+						width: 100%;
+						font-size: 28px;
+					}
 				}
 				.intro3 {
 					width: 50%;
@@ -719,11 +858,22 @@ body::-webkit-scrollbar {
 					color: white;
 					font-size: 15px;
 					letter-spacing: 2px;
+
+					@include mobile {
+						width: 100%;
+					}
 				}
 			}
 			.intro-right {
 				margin-top: 200px;
 				margin-right: 20px;
+
+				@include mobile {
+					margin-top: 50px;
+					margin-right: 0;
+					align-self: flex-start;
+				}
+
 				.intro-btn {
 					width: 150px;
 					height: 50px;
@@ -760,11 +910,27 @@ body::-webkit-scrollbar {
 				justify-content: space-between;
 				background: rgba(255, 255, 255, 0.28);
 				border-radius: 12px;
+
+				@include mobile {
+					width: 90%;
+					height: auto;
+					flex-direction: column;
+					padding: 15px;
+					gap: 10px;
+				}
+
 				.select-box {
 					width: 712px;
 					display: flex;
 					flex-direction: row;
 					justify-content: space-between;
+
+					@include mobile {
+						width: 100%;
+						flex-direction: column;
+						gap: 10px;
+					}
+
 					.box {
 						padding: 24px 22px;
 						width: 213px;
@@ -777,6 +943,11 @@ body::-webkit-scrollbar {
 						background: rgba(255, 255, 255, 0.575);
 						box-sizing: border-box;
 						cursor: pointer;
+
+						@include mobile {
+							width: 100%;
+						}
+
 						&.on {
 							background: #ffffff;
 							border: 1px solid #000;
@@ -798,6 +969,13 @@ body::-webkit-scrollbar {
 					display: flex;
 					flex-direction: row;
 					align-items: center;
+
+					@include mobile {
+						width: 100%;
+						justify-content: space-between;
+						margin-top: 10px;
+					}
+
 					.advanced-filter {
 						display: flex;
 						flex-direction: row;

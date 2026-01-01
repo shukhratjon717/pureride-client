@@ -128,7 +128,7 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 
 						{agentProperties?.length === 0 ? (
 							<div className={'no-data'}>
-								<img src="/img/icons/icoAlert.svg" alt="" />
+								<img src="/img/icons/icoAlert.svg" alt="" loading="lazy" />
 								<p>No Product found!</p>
 							</div>
 						) : (

@@ -4,11 +4,23 @@
 		background: #fff;
 		padding-top: 87px;
 		padding-bottom: 200px;
+
+		@include mobile {
+			padding-top: 20px;
+			padding-bottom: 50px;
+		}
+
 		.property-detail-config {
 			width: 100%;
 			height: auto;
 			padding-top: 56px;
 			gap: 30px;
+
+			@include mobile {
+				padding-top: 20px;
+				gap: 15px;
+			}
+
 			.property-info-config {
 				width: 100%;
 				height: auto;
@@ -18,9 +30,20 @@
 					height: auto;
 					flex-direction: row;
 					justify-content: space-between;
+
+					@include mobile {
+						flex-direction: column;
+						gap: 20px;
+					}
+
 					.left-box {
 						width: 50%;
 						height: auto;
+
+						@include mobile {
+							width: 100%;
+						}
+
 						.title-main {
 							color: #181a20;
 							font-family: $font;
@@ -30,6 +53,10 @@
 							line-height: normal;
 							letter-spacing: 0.6px;
 							text-transform: capitalize;
+
+							@include mobile {
+								font-size: 24px;
+							}
 						}
 						.top-box {
 							width: auto;
@@ -38,6 +65,11 @@
 							align-items: center;
 							gap: 10px;
 							margin-bottom: 17px;
+
+							@include mobile {
+								flex-wrap: wrap;
+							}
+
 							.city {
 								color: #717171;
 								font-family: $font;
@@ -78,6 +110,11 @@
 							height: auto;
 							flex-direction: row;
 							gap: 15px;
+
+							@include mobile {
+								flex-wrap: wrap;
+							}
+
 							.option {
 								width: auto;
 								height: auto;
@@ -98,6 +135,12 @@
 						width: auto;
 						height: auto;
 						align-items: flex-end;
+
+						@include mobile {
+							width: 100%;
+							align-items: flex-start;
+						}
+
 						.buttons {
 							width: auto;
 							height: auto;
@@ -105,6 +148,11 @@
 							align-items: center;
 							gap: 11px;
 							margin: 0 10px 27px 0;
+
+							@include mobile {
+								margin: 0 0 15px 0;
+							}
+
 							p {
 								color: #181a20;
 								text-align: right;
@@ -141,6 +189,10 @@
 							line-height: normal;
 							letter-spacing: 0.52px;
 							text-transform: capitalize;
+
+							@include mobile {
+								text-align: left;
+							}
 						}
 						span {
 							color: #181a20;
@@ -152,6 +204,10 @@
 							line-height: normal;
 							letter-spacing: 0.3px;
 							text-transform: capitalize;
+
+							@include mobile {
+								text-align: left;
+							}
 						}
 					}
 				}
@@ -162,6 +218,11 @@
 					.main-image {
 						width: 100%;
 						height: 600px;
+
+						@include mobile {
+							height: 300px;
+						}
+
 						img {
 							width: 100%;
 							height: 100%;
@@ -174,10 +235,18 @@
 						height: auto;
 						flex-direction: row;
 						gap: 10px;
+
+						@include mobile {
+							overflow-x: auto;
+							padding-bottom: 10px;
+						}
+
 						.sub-img-box {
 							width: 120px;
 							height: 120px;
 							cursor: pointer;
+							flex-shrink: 0; // Prevent shrinking in flex container
+
 							img {
 								width: 100%;
 								height: 100%;
@@ -193,15 +262,32 @@
 				height: auto;
 				flex-direction: row;
 				gap: 22px;
+
+				@include mobile {
+					flex-direction: column;
+				}
+
 				.left-config {
 					width: 960px;
 					height: auto;
 					gap: 40px;
+
+					@include mobile {
+						width: 100%;
+						gap: 20px;
+					}
+
 					.options-config {
 						width: 100%;
 						height: auto;
 						flex-direction: row;
 						gap: 47.5px;
+
+						@include mobile {
+							flex-wrap: wrap;
+							gap: 20px;
+						}
+
 						.option {
 							width: auto;
 							height: auto;
@@ -251,6 +337,12 @@
 						padding: 29px 38px 50px 38px;
 						border-radius: 12px;
 						border: 1px solid #c4c4c4;
+
+						@include mobile {
+							padding: 20px;
+							gap: 30px;
+						}
+
 						.top {
 							width: 100%;
 							height: 0px;
@@ -269,6 +361,12 @@
 								align-items: center;
 								text-align: center;
 								line-height: normal;
+
+								@include mobile {
+									width: 100%;
+									text-align: left;
+									justify-content: flex-start;
+								}
 							}
 							.desc {
 								color: #181a20;
@@ -300,6 +398,12 @@
 								height: auto;
 								flex-direction: row;
 								gap: 230px;
+
+								@include mobile {
+									flex-direction: column;
+									gap: 20px;
+								}
+
 								.left,
 								.right {
 									.info {
@@ -308,6 +412,12 @@
 										display: flex;
 										flex-direction: row;
 										gap: 38px;
+
+										@include mobile {
+											justify-content: space-between;
+											gap: 10px;
+										}
+
 										.title {
 											width: 121px;
 											color: #181a20;
@@ -338,6 +448,11 @@
 						padding: 30px 38px;
 						border-radius: 12px;
 						border: 1px solid #c4c4c4;
+
+						@include mobile {
+							padding: 20px;
+						}
+
 						.title {
 							color: #181a20;
 							font-family: $font;
@@ -350,6 +465,11 @@
 							width: 100%;
 							height: 510px;
 							border: 1px solid #c4c4c4;
+
+							@include mobile {
+								height: 300px;
+							}
+
 							img {
 								width: 100%;
 								height: 100%;
@@ -364,6 +484,11 @@
 						padding: 30px 38px;
 						border-radius: 12px;
 						border: 1px solid #c4c4c4;
+
+						@include mobile {
+							padding: 20px;
+						}
+
 						.title {
 							color: #181a20;
 							font-family: $font;
@@ -375,6 +500,11 @@
 						.map-box {
 							width: 100%;
 							height: 400px;
+
+							@include mobile {
+								height: 300px;
+							}
+
 							iframe {
 								border-radius: 12px;
 							}
@@ -386,12 +516,23 @@
 						padding: 30px 38px 45px 38px;
 						border-radius: 12px;
 						border: 1px solid #c4c4c4;
+
+						@include mobile {
+							padding: 20px;
+						}
+
 						.filter-box {
 							width: 100%;
 							height: auto;
 							flex-direction: row;
 							justify-content: space-between;
 							margin-bottom: 30px;
+
+							@include mobile {
+								flex-direction: column;
+								gap: 15px;
+							}
+
 							.review-cnt {
 								width: auto;
 								height: auto;
@@ -453,6 +594,11 @@
 										flex-direction: row;
 										align-items: center;
 										gap: 20px;
+
+										@include mobile {
+											width: 100%;
+										}
+
 										.img-box {
 											width: 65px;
 											height: 65px;
@@ -516,6 +662,11 @@
 						background: #fff;
 						box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
 						padding: 30px 38px;
+
+						@include mobile {
+							padding: 20px;
+						}
+
 						.main-title {
 							color: #181a20;
 							font-family: $font;
@@ -586,6 +737,11 @@
 					border: 1px solid rgba(196, 196, 196, 0.79);
 					background: #fff;
 					box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
+
+					@include mobile {
+						width: 100%;
+					}
+
 					.info-box {
 						position: relative;
 						width: 100%;
@@ -726,8 +882,20 @@
 					flex-direction: row;
 					justify-content: space-between;
 					align-items: flex-end;
+
+					@include mobile {
+						flex-direction: column;
+						align-items: flex-start;
+						gap: 10px;
+					}
+
 					.title-box {
 						width: 30%;
+
+						@include mobile {
+							width: 100%;
+						}
+
 						.main-title {
 							color: #181a20;
 							font-family: $font;
@@ -760,6 +928,10 @@
 						width: 100%;
 						.similar-homes-slide {
 							width: 411px;
+
+							@include mobile {
+								width: 100%;
+							}
 						}
 					}
 				}

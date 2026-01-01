@@ -70,7 +70,7 @@ const MyFavorites: NextPage = () => {
 						})
 					) : (
 						<div className={'no-data'}>
-							<img src="/img/icons/icoAlert.svg" alt="" />
+							<img src="/img/icons/icoAlert.svg" alt="" loading="lazy" />
 							<p>No Favorites found!</p>
 						</div>
 					)}

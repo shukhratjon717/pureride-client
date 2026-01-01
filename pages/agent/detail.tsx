@@ -200,7 +200,7 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 						<Box component={'div'} className={'info'} onClick={() => redirectToMemberPageHandler(agent?._id as string)}>
 							<strong>{agent?.memberFullName ?? agent?.memberNick}</strong>
 							<div>
-								<img src="/img/icons/call.svg" alt="" />
+								<img src="/img/icons/call.svg" alt="" loading="lazy" />
 								<span>{agent?.memberPhone}</span>
 							</div>
 						</Box>
@@ -237,7 +237,7 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 								</>
 							) : (
 								<div className={'no-data'}>
-									<img src="/img/icons/icoAlert.svg" alt="" />
+									<img src="/img/icons/icoAlert.svg" alt="" loading="lazy" />
 									<p>No products found!</p>
 								</div>
 							)}

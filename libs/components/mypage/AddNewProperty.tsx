@@ -514,7 +514,7 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 									const imagePath: string = `${REACT_APP_API_URL}/${image}`;
 									return (
 										<Stack className="image-box">
-											<img src={imagePath} alt="" />
+											<img src={imagePath} alt="" loading="lazy" />
 										</Stack>
 									);
 								})}
