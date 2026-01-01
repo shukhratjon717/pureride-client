@@ -8,7 +8,7 @@ import { sweetErrorHandling, sweetMixinErrorAlert, sweetMixinSuccessAlert } from
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 import { ProductInput } from '../../types/product/property.input';
-import { ProductEngineSize, ProductFuelType, ProductLocation, ProductType } from '../../enums/property.enum';
+import { ProductEngineSize, ProductEngineSizeCC, ProductFuelType, ProductLocation, ProductType } from '../../enums/property.enum';
 import { REACT_APP_API_URL, engineSize } from '../../config';
 import { CREATE_PROPERTY, UPDATE_PROPERTY } from '../../../apollo/user/mutation';
 import { GET_PROPERTY } from '../../../apollo/user/query';
@@ -390,30 +390,31 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 									/>
 								</Stack>
 
-								<Stack className="price-year-after-price">
-									<Typography className="title">Engine</Typography>
-									<select
-										className={'select-description'}
-										value={insertPropertyData.productEngineSize || ''}
-										defaultValue={insertPropertyData.productEngineSize || ''}
-										onChange={({ target: { value } }) =>
-											//@ts-ignore
-											setInsertPropertyData({ ...insertPropertyData, productEngineSize: value })
-										}
-									>
-										<option disabled={true} selected={true} value={'select'}>
-											Select
-										</option>
-										{engineSize.map((square: string) => {
-											if (square !== '') {
-												return <option value={`${square}`}>{square}</option>;
-											}
-										})}
-									</select>
+	<Stack className="price-year-after-price">
+  <Typography className="title">Engine</Typography>
+  <select
+    className="select-description"
+    value={insertPropertyData.productEngineSize || ''}
+    onChange={({ target: { value } }) =>
+      setInsertPropertyData({ ...insertPropertyData, productEngineSize: value as ProductEngineSize })
+    }
+  >
+    <option disabled value="">
+      Select
+    </option>
 
-									<div className={'divider'}></div>
-									<img src={'/img/icons/Vector.svg'} className={'arrow-down'} />
-								</Stack>
+    {Object.values(ProductEngineSize).map((engine) => (
+      <option key={engine} value={engine}>
+        {ProductEngineSizeCC[engine]} cc
+      </option>
+    ))}
+  </select>
+
+  <div className="divider"></div>
+  <img src="/img/icons/Vector.svg" className="arrow-down" />
+</Stack>
+
+
 							</Stack>
 
 							<Typography className="property-title">Product Description</Typography>

@@ -36,6 +36,7 @@ import 'swiper/css/pagination';
 import { MessageGroup, MessageStatus } from '../../libs/enums/message.enum';
 import { MessageInput, MessageInquiry } from '../../libs/types/message/message.input';
 import { AgentMessage } from '../../libs/types/message/message';
+import { ProductEngineSizeCC } from '../../libs/enums/property.enum';
 
 SwiperCore.use([Autoplay, Navigation, Pagination]);
 
@@ -369,10 +370,12 @@ const PropertyDetail: NextPage = ({ initialComment, initialValues, ...props }: a
 									</Stack>
 									<Stack className={'bottom-box'}>
 										<Stack className="option">
-											<img src="/img/icons/bed.svg" alt="" loading="lazy" /> <Typography>{product?.productYear} Year</Typography>
+											<img src="/img/icons/bed.svg" alt="" loading="lazy" />{' '}
+											<Typography>{product?.productYear} Year</Typography>
 										</Stack>
 										<Stack className="option">
-											<img src="/img/icons/room.svg" alt="" loading="lazy" /> <Typography>{product?.productModel} Model</Typography>
+											<img src="/img/icons/room.svg" alt="" loading="lazy" />{' '}
+											<Typography>{product?.productModel} Model</Typography>
 										</Stack>
 										<Stack className="option">
 											<img src="/img/icons/expand.svg" alt="" loading="lazy" />{' '}
@@ -524,8 +527,11 @@ const PropertyDetail: NextPage = ({ initialComment, initialValues, ...props }: a
 												</Box>
 												<Box component={'div'} className={'info'}>
 													<Typography className={'title'}>Engine Size</Typography>
-													<Typography className={'data'}>{product?.productEngineSize} m2</Typography>
+													<Typography className={'data'}>
+														{product?.productEngineSize ? `${ProductEngineSizeCC[product.productEngineSize]} cc` : '-'}
+													</Typography>
 												</Box>
+
 												<Box component={'div'} className={'info'}>
 													<Typography className={'title'}>Model</Typography>
 													<Typography className={'data'}>{product?.productModel}</Typography>
@@ -542,8 +548,9 @@ const PropertyDetail: NextPage = ({ initialComment, initialValues, ...props }: a
 												</Box>
 												<Box component={'div'} className={'info'}>
 													<Typography className={'title'}>Color</Typography>
-													<Typography className={'data'}>{product?.productColor}</Typography>
+													<Typography className={'data'}>{product?.productColor || '-'}</Typography>
 												</Box>
+
 												<Box component={'div'} className={'info'}>
 													<Typography className={'title'}>Fuel Type</Typography>
 													<Typography className={'data'}>{product?.productFuelType}</Typography>
@@ -738,7 +745,6 @@ const PropertyDetail: NextPage = ({ initialComment, initialValues, ...props }: a
 								</Stack>
 								<Stack className={'info-box'}>
 									<Typography className={'sub-title'}>Message</Typography>
-									
 
 									<textarea
 										name=""

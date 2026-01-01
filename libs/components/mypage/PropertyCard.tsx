@@ -18,7 +18,7 @@ interface PropertyCardProps {
 }
 
 export const PropertyCard = (props: PropertyCardProps) => {
-	const { property, deletePropertyHandler, memberPage, updatePropertyHandler, } = props;
+	const { property, deletePropertyHandler, memberPage, updatePropertyHandler } = props;
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -62,7 +62,7 @@ export const PropertyCard = (props: PropertyCardProps) => {
 					<Typography className="name">{property.productTitle}</Typography>
 					<Typography className="address">{property.productAddress}</Typography>
 					<Typography className="price">
-					<strong>${formatterStr(property?.productPrice)}</strong>
+						<strong>${formatterStr(property?.productPrice)}</strong>
 					</Typography>
 				</Stack>
 				<Stack className="date-box">
